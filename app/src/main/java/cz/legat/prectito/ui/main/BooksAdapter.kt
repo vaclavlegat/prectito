@@ -27,9 +27,9 @@ class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
         holder.bind(books[position])
     }
 
-    fun update(newPopularBooks: List<Book>) {
+    fun update(updatedBooks: List<Book>) {
         books.clear()
-        books.addAll(newPopularBooks)
+        books.addAll(updatedBooks)
         notifyDataSetChanged()
     }
 

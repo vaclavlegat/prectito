@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Prectito</string>
+    <string name="pt_tab_title_popular">Popular</string>
+    <string name="pt_tab_title_new">New</string>
 </resources>

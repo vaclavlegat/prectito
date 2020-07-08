@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
         booksAdapter = BooksAdapter()
         booksRv = view.findViewById(R.id.pt_books_rw)
         booksRv.apply {
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = GridLayoutManager(context, 3)
             adapter = booksAdapter
             setHasFixedSize(true)
         }

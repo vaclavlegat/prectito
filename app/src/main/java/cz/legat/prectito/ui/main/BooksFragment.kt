@@ -51,11 +51,15 @@ class BooksFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         arguments?.takeIf { it.containsKey(BOOKS_TYPE_KEY) }?.let {
-            viewModel.getBooks(it[BOOKS_TYPE_KEY] as Int)
-            viewModel.books?.observe(viewLifecycleOwner, Observer { books ->
-                booksAdapter.update(books)
-            })
-
+            if (it[BOOKS_TYPE_KEY] as Int == 0) {
+                viewModel.popularBooks.observe(viewLifecycleOwner, Observer { books ->
+                    booksAdapter.update(books)
+                })
+            } else {
+                viewModel.newBooks.observe(viewLifecycleOwner, Observer { books ->
+                    booksAdapter.update(books)
+                })
+            }
         }
     }
 }

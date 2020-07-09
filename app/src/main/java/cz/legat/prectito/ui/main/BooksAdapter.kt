@@ -39,8 +39,8 @@ class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
         private val titleTv = view.findViewById<TextView>(R.id.pt_book_title_tv)
         private val imageIv = view.findViewById<ImageView>(R.id.pt_book_image_iv)
 
-        internal fun bind(popularBook: Book) {
-            with(popularBook) {
+        internal fun bind(book: Book) {
+            with(book) {
                 authorTv.text = author?.name
                 titleTv.text = title
                 Glide.with(imageIv).load(imgLink).into(imageIv);

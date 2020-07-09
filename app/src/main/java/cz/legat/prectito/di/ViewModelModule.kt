@@ -1,6 +1,7 @@
 package cz.legat.prectito.di
 
 import cz.legat.prectito.repository.BooksRepository
+import cz.legat.prectito.ui.main.BookDetailViewModel
 import cz.legat.prectito.ui.main.BooksViewModel
 import dagger.Module
 import dagger.Provides
@@ -14,5 +15,10 @@ object ViewModelModule {
     @Provides
     fun provideMainViewModel(booksRepository: BooksRepository): BooksViewModel {
         return BooksViewModel(booksRepository)
+    }
+
+    @Provides
+    fun provideBookDetailViewModel(): BookDetailViewModel {
+        return BookDetailViewModel()
     }
 }

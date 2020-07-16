@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.progressindicator.ProgressIndicator
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +27,7 @@ class BooksFragment : Fragment() {
 
     lateinit var booksRv: RecyclerView
     lateinit var booksAdapter: BooksAdapter
+    lateinit var progress: ProgressBar
 
     companion object {
         fun newInstance(booksType: Int) = BooksFragment().apply {
@@ -43,6 +46,7 @@ class BooksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         booksAdapter = BooksAdapter()
         booksRv = view.findViewById(R.id.pt_books_rw)
+        progress = view.findViewById(R.id.pt_progress)
         booksRv.apply {
             layoutManager = GridLayoutManager(context, 3)
             adapter = booksAdapter
@@ -52,13 +56,16 @@ class BooksFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        progress.visibility = View.VISIBLE
         arguments?.takeIf { it.containsKey(BOOKS_TYPE_KEY) }?.let {
             if (it[BOOKS_TYPE_KEY] as Int == 0) {
                 viewModel.popularBooks.observe(viewLifecycleOwner, Observer { books ->
+                    progress.visibility = View.GONE
                     booksAdapter.update(books)
                 })
             } else {
                 viewModel.newBooks.observe(viewLifecycleOwner, Observer { books ->
+                    progress.visibility = View.GONE
                     booksAdapter.update(books)
                 })
             }

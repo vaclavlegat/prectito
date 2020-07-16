@@ -7,11 +7,21 @@ import javax.inject.Inject
 class BooksRepository @Inject constructor(private val booksService: BooksService) {
 
     suspend fun getPopularBooks(): List<Book> {
-        return booksService.getPopularBooks()
+        val response = booksService.getPopularBooks()
+        return if (response.isSuccessful) {
+            booksService.getPopularBooks().body()!!
+        } else {
+            getPopularBooks()
+        }
     }
 
     suspend fun getNewBooks(): List<Book> {
-        return booksService.getNewBooks()
+        val response = booksService.getNewBooks()
+        return if (response.isSuccessful) {
+            booksService.getNewBooks().body()!!
+        } else {
+            getNewBooks()
+        }
     }
 
     suspend fun getBook(id: String): Book {

@@ -1,0 +1,36 @@
+object Versions {
+
+    // core
+    const val appcompatVersion = "1.1.0"
+    const val coreKtxVersion = "1.3.0"
+    const val kotlinStdlibJdkVersion  = "1.3.71"
+    const val legacySupportV4Version = "1.0.0"
+
+    // di
+    const val hiltVersion = "2.28-alpha"
+
+    // images
+    const val glideVersion = "4.11.0"
+
+    // lifecycle
+    const val lifecycleVersion = "2.2.0"
+
+    // navigation
+    const val navVersion = "2.3.0"
+
+    // network
+    const val retrofitVersion = "2.9.0"
+    const val converterMoshiVersion = "2.4.0"
+    const val okhttpVersion = "4.7.2"
+
+    // ui
+    const val constraintlayoutVersion = "1.1.3"
+    const val materialVersion = "1.3.0-alpha01"
+    const val viewPager2Version = "1.0.0"
+    const val recyclerViewVersion = "1.1.0"
+
+    // test
+    const val junitVersion = "4.13"
+    const val junitextVersion = "1.1.1"
+    const val espressoVersion = "3.2.0"
+}

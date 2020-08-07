@@ -10,7 +10,11 @@ import com.bumptech.glide.Glide
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
 
-class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
+class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
+
+    interface OnBookClickedListener {
+        fun onBook(book: Book)
+    }
 
     private var books = mutableListOf<Book>()
 
@@ -33,17 +37,20 @@ class BooksAdapter : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class BookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class BookViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         private val authorTv = view.findViewById<TextView>(R.id.pt_book_author_tv)
         private val titleTv = view.findViewById<TextView>(R.id.pt_book_title_tv)
         private val imageIv = view.findViewById<ImageView>(R.id.pt_book_image_iv)
 
         internal fun bind(book: Book) {
+            view.setOnClickListener {
+                onBookClickedListener.onBook(book)
+            }
             with(book) {
                 authorTv.text = author?.name
                 titleTv.text = title
-                Glide.with(imageIv).load(imgLink).into(imageIv);
+                Glide.with(imageIv).load(imgLink).into(imageIv)
             }
         }
     }

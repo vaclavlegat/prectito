@@ -9,6 +9,25 @@
         android:id="@+id/homeFragment"
         android:name="cz.legat.prectito.ui.main.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/pt_home_fragment" />
+        tools:layout="@layout/pt_home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment">
+            <argument
+                android:name="title"
+                app:argType="string"
+                android:defaultValue="@null" />
+            <argument
+                android:name="imageLink"
+                app:argType="string"
+                android:defaultValue="@null" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="cz.legat.prectito.ui.main.BookDetailFragment"
+        android:label="Book Detail"
+        tools:layout="@layout/pt_book_detail_fragment" />
 
 </navigation>

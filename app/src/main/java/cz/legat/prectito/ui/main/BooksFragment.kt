@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
+import cz.legat.prectito.model.Book
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -41,7 +43,15 @@ class BooksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        booksAdapter = BooksAdapter()
+        booksAdapter = BooksAdapter(object:BooksAdapter.OnBookClickedListener{
+            override fun onBook(book: Book) {
+                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, Bundle().apply {
+                    putString("title", book.title)
+                    putString("imgLink", book.imgLink)
+                    putString("desc", book.description)
+                })
+            }
+        })
         booksRv = view.findViewById(R.id.pt_books_rw)
         progress = view.findViewById(R.id.pt_progress)
         booksRv.apply {

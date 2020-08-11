@@ -26,8 +26,8 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="cz.legat.prectito.ui.main.BookDetailFragment"
-        android:label="Book Detail"
-        tools:layout="@layout/pt_book_detail_fragment" />
+        android:name="cz.legat.prectito.ui.main.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/pt_detail_tabs_fragment" />
 
 </navigation>

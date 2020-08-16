@@ -26,9 +26,7 @@ class BookDetailFragment : Fragment() {
         fun newInstance(book: Book) : BookDetailFragment {
             return BookDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString("title", book.title)
-                    putString("imgLink", book.imgLink)
-                    putString("desc", book.description)
+                    putParcelable("book", book)
                 }
             }
         }
@@ -51,13 +49,11 @@ class BookDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val title = arguments?.getString("title")
-        val imgLink = arguments?.getString("imgLink")
-        val desc = arguments?.getString("desc")
+        val book = arguments?.getParcelable<Book>("book")
 
-        titleTv.text = title
-        descTv.text = desc
-        Glide.with(this).load(imgLink).into(imageIv)
+        titleTv.text = book?.title
+        descTv.text = book?.description
+        Glide.with(this).load(book?.imgLink).into(imageIv)
 
     }
 }

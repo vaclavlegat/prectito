@@ -1,5 +1,7 @@
 package cz.legat.prectito.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.squareup.moshi.Json
 
 data class Book(
@@ -17,4 +19,53 @@ data class Book(
         @Json(name = "publisher") val publisher: String? = null,
         @Json(name = "rating") val rating: String? = null,
         @Json(name = "ratingsCount") val ratingsCount: String? = null
-)
+) : Parcelable {
+        constructor(parcel: Parcel) : this(
+                parcel.readString()!!,
+                parcel.readString()!!,
+                parcel.readParcelable(Author::class.java.classLoader),
+                parcel.readString()!!,
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString()!!,
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString(),
+                parcel.readString()
+        ) {
+        }
+
+        override fun writeToParcel(parcel: Parcel?, flag: Int) {
+                parcel?.writeString(id)
+                parcel?.writeString(title)
+                parcel?.writeParcelable(author, flag)
+                parcel?.writeString(description)
+                parcel?.writeString(isbn)
+                parcel?.writeString(published)
+                parcel?.writeString(numberOfPages)
+                parcel?.writeString(imgLink)
+                parcel?.writeString(genre)
+                parcel?.writeString(language)
+                parcel?.writeString(translator)
+                parcel?.writeString(publisher)
+                parcel?.writeString(rating)
+                parcel?.writeString(ratingsCount)
+        }
+
+        override fun describeContents(): Int {
+                return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<Book> {
+                override fun createFromParcel(parcel: Parcel): Book {
+                        return Book(parcel)
+                }
+
+                override fun newArray(size: Int): Array<Book?> {
+                        return arrayOfNulls(size)
+                }
+        }
+}

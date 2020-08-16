@@ -26,9 +26,7 @@ class DetailFragment : Fragment() {
         fun newInstance(book: Book) : DetailFragment {
             return DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString("title", book.title)
-                    putString("imgLink", book.imgLink)
-                    putString("desc", book.description)
+                    putParcelable("book", book)
                 }
             }
         }
@@ -49,10 +47,8 @@ class DetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val title = arguments?.getString("title")
-        val imgLink = arguments?.getString("imgLink")
-        val desc = arguments?.getString("desc")
-        pager.adapter = DetailAdapter(this, Book(id = "id", title = title!!, imgLink = imgLink!!, description = desc!!))
+        val book = arguments?.getParcelable<Book>("book")
+        pager.adapter = DetailAdapter(this, Book(id = "id", title = book?.title!!, imgLink = book.imgLink, description = book.description))
         TabLayoutMediator(tabs, pager) { tab, position ->
             tab.text = "Info"
         }.attach()

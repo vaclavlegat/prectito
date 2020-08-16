@@ -46,9 +46,7 @@ class BooksFragment : Fragment() {
         booksAdapter = BooksAdapter(object:BooksAdapter.OnBookClickedListener{
             override fun onBook(book: Book) {
                 findNavController().navigate(R.id.action_homeFragment_to_detailFragment, Bundle().apply {
-                    putString("title", book.title)
-                    putString("imgLink", book.imgLink)
-                    putString("desc", book.description)
+                    putParcelable("book", book)
                 })
             }
         })

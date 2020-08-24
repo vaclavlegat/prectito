@@ -38,11 +38,18 @@ import cz.legat.prectito.barcode.camera.CameraSourcePreview
 import cz.legat.prectito.barcode.camera.GraphicOverlay
 import cz.legat.prectito.barcode.camera.WorkflowModel
 import cz.legat.prectito.barcode.settings.SettingsActivity
+import cz.legat.prectito.model.google.VolumeInfo
+import cz.legat.prectito.ui.main.ISBNViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-import java.util.ArrayList
+import java.util.*
+import javax.inject.Inject
 
 /** Demonstrates the barcode scanning workflow using camera preview.  */
+@AndroidEntryPoint
 class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
+
+    @Inject lateinit var viewModel: ISBNViewModel
 
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
@@ -66,7 +73,10 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
 
         promptChip = findViewById(R.id.bottom_prompt_chip)
         promptChipAnimator =
-            (AnimatorInflater.loadAnimator(this, R.animator.bottom_prompt_chip_enter) as AnimatorSet).apply {
+            (AnimatorInflater.loadAnimator(
+                this,
+                R.animator.bottom_prompt_chip_enter
+            ) as AnimatorSet).apply {
                 setTarget(promptChip)
             }
 
@@ -191,17 +201,32 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
                 else -> promptChip?.visibility = View.GONE
             }
 
-            val shouldPlayPromptChipEnteringAnimation = wasPromptChipGone && promptChip?.visibility == View.VISIBLE
+            val shouldPlayPromptChipEnteringAnimation =
+                wasPromptChipGone && promptChip?.visibility == View.VISIBLE
             promptChipAnimator?.let {
                 if (shouldPlayPromptChipEnteringAnimation && !it.isRunning) it.start()
             }
         })
 
+        viewModel.searchedBook.observe(this,
+            Observer { volumeInfo ->
+                if (volumeInfo != null) {
+                    val barcodeFieldList = ArrayList<BarcodeField>()
+                    barcodeFieldList.add(BarcodeField("Title", volumeInfo.title ?: ""))
+                    if(volumeInfo.subtitle?.isNotEmpty() == true){
+                        barcodeFieldList.add(BarcodeField("Subtitle", volumeInfo.subtitle ?: ""))
+                    }
+                    barcodeFieldList.add(BarcodeField("Author", volumeInfo.authors[0] ?: ""))
+                    barcodeFieldList.add(BarcodeField("Published date", volumeInfo.publishedDate ?: ""))
+                    barcodeFieldList.add(BarcodeField("Language", volumeInfo.language ?: ""))
+                    barcodeFieldList.add(BarcodeField("Page count", volumeInfo.pageCount ?: ""))
+                    BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList)
+                }
+            })
+
         workflowModel?.detectedBarcode?.observe(this, Observer { barcode ->
             if (barcode != null) {
-                val barcodeFieldList = ArrayList<BarcodeField>()
-                barcodeFieldList.add(BarcodeField("Raw Value", barcode.rawValue ?: ""))
-                BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList)
+                viewModel.getBookByISBN(barcode.rawValue ?: "")
             }
         })
     }

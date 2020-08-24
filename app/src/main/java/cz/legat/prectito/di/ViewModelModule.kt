@@ -3,6 +3,7 @@ package cz.legat.prectito.di
 import cz.legat.prectito.repository.BooksRepository
 import cz.legat.prectito.ui.main.BookDetailViewModel
 import cz.legat.prectito.ui.main.BooksViewModel
+import cz.legat.prectito.ui.main.ISBNViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +21,10 @@ object ViewModelModule {
     @Provides
     fun provideBookDetailViewModel(): BookDetailViewModel {
         return BookDetailViewModel()
+    }
+
+    @Provides
+    fun provideISBNViewModel(booksRepository: BooksRepository): ISBNViewModel {
+        return ISBNViewModel(booksRepository)
     }
 }

@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 const val BOOKS_TYPE_KEY = "BOOKS_TYPE_KEY"
 const val POPULAR_BOOKS = 0
-const val NEW_BOOKS = 0
+const val NEW_BOOKS = 1
 
 @AndroidEntryPoint
 class BooksFragment : Fragment() {

@@ -43,15 +43,21 @@ class HomeFragment : Fragment() {
         pager.adapter = HomeAdapter(this)
         TabLayoutMediator(tabs, pager) { tab, position ->
             tab.text =
-                getString(if (position == POPULAR_BOOKS) R.string.pt_tab_title_popular else R.string.pt_tab_title_new)
+                getString(when(position) {
+                    POPULAR_BOOKS -> R.string.pt_tab_title_popular
+                    NEW_BOOKS -> R.string.pt_tab_title_new
+                    else -> R.string.pt_tab_title_scan})
         }.attach()
     }
 
     class HomeAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = 3
 
         override fun createFragment(position: Int): Fragment {
+            if(position == 2) {
+                return ISBNScannerFragment.newInstance()
+            }
             return BooksFragment.newInstance(position)
         }
     }

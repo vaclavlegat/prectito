@@ -74,6 +74,14 @@ dependencies {
     implementation (Libs.recyclerView)
     implementation (Libs.viewPager2)
 
+    implementation ("com.google.android.gms:play-services-vision:20.1.1")
+    implementation ("com.google.mlkit:barcode-scanning:16.0.2")
+
+
+    implementation ("androidx.preference:preference:1.1.1")
+
+    api ("com.google.guava:guava:27.1-jre")
+
     // test
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)

@@ -27,7 +27,6 @@ import android.graphics.RectF
 import androidx.core.content.ContextCompat
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.camera.GraphicOverlay
-import cz.legat.prectito.barcode.settings.PreferenceUtils
 
 internal abstract class BarcodeGraphicBase(overlay: GraphicOverlay) : GraphicOverlay.Graphic(overlay) {
 
@@ -56,7 +55,16 @@ internal abstract class BarcodeGraphicBase(overlay: GraphicOverlay) : GraphicOve
         pathEffect = CornerPathEffect(boxCornerRadius)
     }
 
-    val boxRect: RectF = PreferenceUtils.getBarcodeReticleBox(overlay)
+    val boxRect: RectF = run {
+        val context = overlay.context
+        val overlayWidth = overlay.width.toFloat()
+        val overlayHeight = overlay.height.toFloat()
+        val boxWidth = overlayWidth * 80 / 100
+        val boxHeight = overlayHeight * 35 / 100
+        val cx = overlayWidth / 2
+        val cy = overlayHeight / 2
+        RectF(cx - boxWidth / 2, cy - boxHeight / 2, cx + boxWidth / 2, cy + boxHeight / 2)
+    }
 
     override fun draw(canvas: Canvas) {
         // Draws the dark background scrim and leaves the box area clear.

@@ -28,7 +28,6 @@ import android.view.WindowManager
 import com.google.android.gms.common.images.Size
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.Utils
-import cz.legat.prectito.barcode.settings.PreferenceUtils
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.util.IdentityHashMap
@@ -220,7 +219,7 @@ class CameraSource(private val graphicOverlay: GraphicOverlay) {
     private fun setPreviewAndPictureSize(camera: Camera, parameters: Parameters) {
 
         // Gives priority to the preview size specified by the user if exists.
-        val sizePair: CameraSizePair = PreferenceUtils.getUserSpecifiedPreviewSize(context) ?: run {
+        val sizePair: CameraSizePair = run {
             // Camera preview size is based on the landscape mode, so we need to also use the aspect
             // ration of display in the same mode for comparison.
             val displayAspectRatioInLandscape: Float =
@@ -235,15 +234,11 @@ class CameraSource(private val graphicOverlay: GraphicOverlay) {
         previewSize = sizePair.preview.also {
             Log.v(TAG, "Camera preview size: $it")
             parameters.setPreviewSize(it.width, it.height)
-            PreferenceUtils.saveStringPreference(context, R.string.pref_key_rear_camera_preview_size, it.toString())
         }
 
         sizePair.picture?.let { pictureSize ->
             Log.v(TAG, "Camera picture size: $pictureSize")
             parameters.setPictureSize(pictureSize.width, pictureSize.height)
-            PreferenceUtils.saveStringPreference(
-                context, R.string.pref_key_rear_camera_picture_size, pictureSize.toString()
-            )
         }
     }
 

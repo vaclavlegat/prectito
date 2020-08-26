@@ -9,6 +9,9 @@ object Versions {
     // di
     const val hiltVersion = "2.28-alpha"
 
+    // room
+    const val roomVersion = "2.2.5"
+
     // images
     const val glideVersion = "4.11.0"
 

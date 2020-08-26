@@ -82,5 +82,7 @@
   <string name="pref_key_delay_loading_barcode_result" translatable="false">barcode_dlbr</string>
   <string name="pref_title_delay_loading_barcode_result">Delay loading barcode result</string>
   <string name="pref_summary_delay_loading_barcode_result">Will show the loading spinner for 2s</string>
+    <string name="pt_book_save">Save</string>
+    <string name="pt_tab_title_my_books">My</string>
 
 </resources>

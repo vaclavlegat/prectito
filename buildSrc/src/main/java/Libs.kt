@@ -10,6 +10,11 @@ object Libs {
     val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
     val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
 
+    // room
+    val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
+    val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+    val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
+
     // images
     val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"

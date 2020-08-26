@@ -18,7 +18,6 @@ package cz.legat.prectito.barcode
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
-import android.content.Intent
 import android.hardware.Camera
 import android.os.Bundle
 import android.util.Log
@@ -37,8 +36,7 @@ import cz.legat.prectito.barcode.camera.CameraSource
 import cz.legat.prectito.barcode.camera.CameraSourcePreview
 import cz.legat.prectito.barcode.camera.GraphicOverlay
 import cz.legat.prectito.barcode.camera.WorkflowModel
-import cz.legat.prectito.barcode.settings.SettingsActivity
-import cz.legat.prectito.model.google.VolumeInfo
+import cz.legat.prectito.model.toSavedBook
 import cz.legat.prectito.ui.main.ISBNViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
@@ -54,7 +52,6 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
-    private var settingsButton: View? = null
     private var flashButton: View? = null
     private var promptChip: Chip? = null
     private var promptChipAnimator: AnimatorSet? = null
@@ -84,9 +81,6 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
         flashButton = findViewById<View>(R.id.flash_button).apply {
             setOnClickListener(this@LiveBarcodeScanningActivity)
         }
-        settingsButton = findViewById<View>(R.id.settings_button).apply {
-            setOnClickListener(this@LiveBarcodeScanningActivity)
-        }
 
         setUpWorkflowModel()
     }
@@ -95,7 +89,6 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
         super.onResume()
 
         workflowModel?.markCameraFrozen()
-        settingsButton?.isEnabled = true
         currentWorkflowState = WorkflowModel.WorkflowState.NOT_STARTED
         cameraSource?.setFrameProcessor(BarcodeProcessor(graphicOverlay!!, workflowModel!!))
         workflowModel?.setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
@@ -131,10 +124,6 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
                         cameraSource!!.updateFlashMode(Camera.Parameters.FLASH_MODE_TORCH)
                     }
                 }
-            }
-            R.id.settings_button -> {
-                settingsButton?.isEnabled = false
-                startActivity(Intent(this, SettingsActivity::class.java))
             }
         }
     }
@@ -211,16 +200,25 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
         viewModel.searchedBook.observe(this,
             Observer { volumeInfo ->
                 if (volumeInfo != null) {
+
+                    val savedBook = volumeInfo.toSavedBook()
+
                     val barcodeFieldList = ArrayList<BarcodeField>()
-                    barcodeFieldList.add(BarcodeField("Title", volumeInfo.title ?: ""))
-                    if(volumeInfo.subtitle?.isNotEmpty() == true){
-                        barcodeFieldList.add(BarcodeField("Subtitle", volumeInfo.subtitle ?: ""))
+                    barcodeFieldList.add(BarcodeField("Title", savedBook.title ?: ""))
+                    if (savedBook.subtitle?.isNotEmpty() == true) {
+                        barcodeFieldList.add(BarcodeField("Subtitle", savedBook.subtitle))
                     }
-                    barcodeFieldList.add(BarcodeField("Author", volumeInfo.authors[0] ?: ""))
-                    barcodeFieldList.add(BarcodeField("Published date", volumeInfo.publishedDate ?: ""))
-                    barcodeFieldList.add(BarcodeField("Language", volumeInfo.language ?: ""))
-                    barcodeFieldList.add(BarcodeField("Page count", volumeInfo.pageCount ?: ""))
-                    BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList)
+                    barcodeFieldList.add(BarcodeField("Author", savedBook.author ?: ""))
+                    barcodeFieldList.add(
+                        BarcodeField(
+                            "Published date",
+                            savedBook.publishedDate ?: ""
+                        )
+                    )
+                    barcodeFieldList.add(BarcodeField("Language", savedBook.language ?: ""))
+                    barcodeFieldList.add(BarcodeField("Page count", savedBook.pageCount ?: ""))
+                    barcodeFieldList.add(BarcodeField("ISBN", savedBook.isbn ?: ""))
+                    BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList, savedBook)
                 }
             })
 

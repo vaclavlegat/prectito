@@ -22,6 +22,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,9 +31,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.camera.WorkflowModel
+import cz.legat.prectito.persistence.SavedBook
+import cz.legat.prectito.ui.main.ISBNViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /** Displays the bottom sheet to present barcode fields contained in the detected barcode.  */
+@AndroidEntryPoint
 class BarcodeResultFragment : BottomSheetDialogFragment() {
+
+    @Inject lateinit var viewModel: ISBNViewModel
+    private var book: SavedBook? = null
 
     override fun onCreateView(
         layoutInflater: LayoutInflater,
@@ -49,10 +59,25 @@ class BarcodeResultFragment : BottomSheetDialogFragment() {
                 ArrayList()
             }
 
+        book = if (arguments?.containsKey("book") == true) {
+            arguments.getParcelable<SavedBook>("book")
+        } else {
+            null
+        }
+
         view.findViewById<RecyclerView>(R.id.barcode_field_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = BarcodeFieldAdapter(barcodeFieldList)
+        }
+
+        view.findViewById<Button>(R.id.pt_book_save_btn).apply {
+            setOnClickListener {
+                book?.let {
+                    viewModel.saveBook(it)
+                    Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         return view
@@ -61,7 +86,8 @@ class BarcodeResultFragment : BottomSheetDialogFragment() {
     override fun onDismiss(dialogInterface: DialogInterface) {
         activity?.let {
             // Back to working state after the bottom sheet is dismissed.
-            ViewModelProviders.of(it).get(WorkflowModel::class.java).setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
+            ViewModelProviders.of(it).get(WorkflowModel::class.java)
+                .setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
         }
         super.onDismiss(dialogInterface)
     }
@@ -71,10 +97,15 @@ class BarcodeResultFragment : BottomSheetDialogFragment() {
         private const val TAG = "BarcodeResultFragment"
         private const val ARG_BARCODE_FIELD_LIST = "arg_barcode_field_list"
 
-        fun show(fragmentManager: FragmentManager, barcodeFieldArrayList: ArrayList<BarcodeField>) {
+        fun show(
+            fragmentManager: FragmentManager,
+            barcodeFieldArrayList: ArrayList<BarcodeField>,
+            savedBook: SavedBook
+        ) {
             val barcodeResultFragment = BarcodeResultFragment()
             barcodeResultFragment.arguments = Bundle().apply {
                 putParcelableArrayList(ARG_BARCODE_FIELD_LIST, barcodeFieldArrayList)
+                putParcelable("book", savedBook)
             }
             barcodeResultFragment.show(fragmentManager, TAG)
         }

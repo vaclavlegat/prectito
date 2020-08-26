@@ -2,15 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/barcode_bottom_sheet_padding_vertical"
-    android:paddingBottom="@dimen/barcode_bottom_sheet_padding_vertical"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/barcode_bottom_sheet_padding_vertical"
+    android:paddingBottom="@dimen/barcode_bottom_sheet_padding_vertical">
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/barcode_field_recycler_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scrollbars="vertical"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/barcode_field_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical" />
+
+    <Button
+        android:id="@+id/pt_book_save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:text="@string/pt_book_save" />
 
 </LinearLayout>

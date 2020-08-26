@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import cz.legat.prectito.model.google.VolumeInfo
+import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,4 +22,9 @@ class ISBNViewModel @Inject constructor(private val booksRepository: BooksReposi
         }
     }
 
+    fun saveBook(savedBook: SavedBook){
+        viewModelScope.launch(Dispatchers.IO) {
+            booksRepository.saveBook(savedBook)
+        }
+    }
 }

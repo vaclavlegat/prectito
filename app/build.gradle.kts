@@ -82,6 +82,14 @@ dependencies {
 
     api ("com.google.guava:guava:27.1-jre")
 
+
+    implementation (Libs.roomRuntime)
+    kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation (Libs.roomKtx)
+
+
     // test
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)

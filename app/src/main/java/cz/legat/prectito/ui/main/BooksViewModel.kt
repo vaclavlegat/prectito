@@ -15,4 +15,8 @@ class BooksViewModel @Inject constructor(private val booksRepository: BooksRepos
     var newBooks = liveData(Dispatchers.IO) {
         emit(booksRepository.getNewBooks().dropLast(1))
     }
+
+    var myBooks = liveData(Dispatchers.IO) {
+        emit(booksRepository.getMyBooks())
+    }
 }

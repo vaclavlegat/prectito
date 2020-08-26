@@ -46,17 +46,20 @@ class HomeFragment : Fragment() {
                 getString(when(position) {
                     POPULAR_BOOKS -> R.string.pt_tab_title_popular
                     NEW_BOOKS -> R.string.pt_tab_title_new
-                    else -> R.string.pt_tab_title_scan})
+                    SCAN_BOOKS -> R.string.pt_tab_title_scan
+                    else -> R.string.pt_tab_title_my_books})
         }.attach()
     }
 
     class HomeAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = 4
 
         override fun createFragment(position: Int): Fragment {
             if(position == 2) {
                 return ISBNScannerFragment.newInstance()
+            } else if (position == 3) {
+                return MyBooksFragment.newInstance()
             }
             return BooksFragment.newInstance(position)
         }

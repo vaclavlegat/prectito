@@ -23,6 +23,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
@@ -69,13 +72,28 @@ class BarcodeResultFragment : BottomSheetDialogFragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = BarcodeFieldAdapter(barcodeFieldList)
-        }
+        }.visibility = if (book?.title != null) View.VISIBLE else View.GONE
+
+        view.findViewById<LinearLayout>(R.id.pt_custom_book_holder_ll).visibility =
+            if (book?.title != null) View.GONE else View.VISIBLE
+        view.findViewById<TextView>(R.id.pt_custom_book_isbn_value_tv).text = book?.isbn
+
 
         view.findViewById<Button>(R.id.pt_book_save_btn).apply {
             setOnClickListener {
                 book?.let {
-                    viewModel.saveBook(it)
+                    if (it.title.isNullOrEmpty()) {
+                        viewModel.saveBook(
+                            it.copy(
+                                title = view.findViewById<EditText>(R.id.pt_custom_book_title_et).text.toString(),
+                                author = view.findViewById<EditText>(R.id.pt_custom_book_author_et).text.toString()
+                            )
+                        )
+                    } else {
+                        viewModel.saveBook(it)
+                    }
                     Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                    dismiss()
                 }
             }
         }

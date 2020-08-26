@@ -3,7 +3,7 @@ package cz.legat.prectito.repository
 import cz.legat.prectito.api.BooksService
 import cz.legat.prectito.api.GoogleBooksService
 import cz.legat.prectito.model.Book
-import cz.legat.prectito.model.google.VolumeInfo
+import cz.legat.prectito.model.toSavedBook
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
 import javax.inject.Inject
@@ -36,14 +36,31 @@ class BooksRepository @Inject constructor(
         return booksService.getBook(id)
     }
 
-    suspend fun getBookByISBN(isbn: String): VolumeInfo? {
+    suspend fun getBookByISBN(isbn: String): SavedBook? {
         return try {
             val response = googleBooksService.getBookByISBN("isbn:$isbn")
             response.body()!!.items[0].volumeInfo.apply {
                 id = response.body()!!.items[0].id
-            }
+            }.toSavedBook()
         } catch (e: Exception) {
-            null
+            SavedBook(uid = isbn, isbn = isbn)
+        }
+    }
+
+    suspend fun getBookByISBNFromDb(isbn: String): SavedBook? {
+        return try {
+            val book = booksService.getBookByISBN(isbn)
+            return SavedBook(
+                uid = book.isbn!!,
+                title = book.title,
+                author = book.author?.name,
+                isbn = isbn,
+                publishedDate = book.published,
+                pageCount = book.numberOfPages,
+                language = book.language
+            )
+        } catch (e: Exception) {
+            SavedBook(uid = isbn, isbn = isbn)
         }
     }
 

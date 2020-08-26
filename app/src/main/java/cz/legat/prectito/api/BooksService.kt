@@ -4,6 +4,7 @@ import cz.legat.prectito.model.Book
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface BooksService {
 
@@ -15,5 +16,8 @@ interface BooksService {
 
     @GET("/books/detail/{id}")
     suspend fun getBook(@Path("id") id: String): Book
+
+    @GET("/books/isbn")
+    suspend fun getBookByISBN(@Query("q") isbn: String): Book
 
 }

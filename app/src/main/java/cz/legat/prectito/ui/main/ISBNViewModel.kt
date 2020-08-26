@@ -13,12 +13,14 @@ import javax.inject.Inject
 
 class ISBNViewModel @Inject constructor(private val booksRepository: BooksRepository) : ViewModel() {
 
-    val searchedBook: MutableLiveData<VolumeInfo> = MutableLiveData()
+    val searchedBook: MutableLiveData<SavedBook> = MutableLiveData()
 
     fun getBookByISBN(isbn: String){
         val query = isbn.replace("-","")
         viewModelScope.launch {
-            searchedBook.value = booksRepository.getBookByISBN(query)
+            val bookGoogle = booksRepository.getBookByISBN(query)
+            val bookDb = booksRepository.getBookByISBNFromDb(query)
+            searchedBook.value = if (!bookGoogle?.title.isNullOrEmpty()) bookGoogle else bookDb
         }
     }
 

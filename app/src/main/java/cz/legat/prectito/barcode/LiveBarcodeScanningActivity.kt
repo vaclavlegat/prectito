@@ -198,11 +198,8 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
         })
 
         viewModel.searchedBook.observe(this,
-            Observer { volumeInfo ->
-                if (volumeInfo != null) {
-
-                    val savedBook = volumeInfo.toSavedBook()
-
+            Observer { savedBook ->
+                if (savedBook.title != null) {
                     val barcodeFieldList = ArrayList<BarcodeField>()
                     barcodeFieldList.add(BarcodeField("Title", savedBook.title ?: ""))
                     if (savedBook.subtitle?.isNotEmpty() == true) {
@@ -217,6 +214,11 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
                     )
                     barcodeFieldList.add(BarcodeField("Language", savedBook.language ?: ""))
                     barcodeFieldList.add(BarcodeField("Page count", savedBook.pageCount ?: ""))
+                    barcodeFieldList.add(BarcodeField("ISBN", savedBook.isbn ?: ""))
+                    BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList, savedBook)
+                } else {
+                    val barcodeFieldList = ArrayList<BarcodeField>()
+                    barcodeFieldList.add(BarcodeField("Title", "Not found"))
                     barcodeFieldList.add(BarcodeField("ISBN", savedBook.isbn ?: ""))
                     BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList, savedBook)
                 }

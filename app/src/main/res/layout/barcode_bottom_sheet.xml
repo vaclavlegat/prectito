@@ -14,6 +14,56 @@
         android:layout_weight="1"
         android:scrollbars="vertical" />
 
+    <LinearLayout
+        android:id="@+id/pt_custom_book_holder_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/pt_custom_book_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/pt_custom_book_title_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/pt_custom_book_author_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Author"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/pt_custom_book_author_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/pt_custom_book_isbn_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ISBN"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pt_custom_book_isbn_value_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/pt_book_save_btn"
         android:layout_width="wrap_content"

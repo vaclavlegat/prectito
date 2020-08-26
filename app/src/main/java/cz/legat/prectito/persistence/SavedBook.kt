@@ -9,13 +9,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class SavedBook(
     @PrimaryKey val uid: String,
-    @ColumnInfo(name = "title") val title: String?,
-    @ColumnInfo(name = "subtitle") val subtitle: String?,
-    @ColumnInfo(name = "author") val author: String?,
-    @ColumnInfo(name = "language") val language: String?,
-    @ColumnInfo(name = "isbn") val isbn: String?,
-    @ColumnInfo(name = "published_date") val publishedDate: String?,
-    @ColumnInfo(name = "page_count") val pageCount: String?
+    @ColumnInfo(name = "title") val title: String? = null,
+    @ColumnInfo(name = "subtitle") val subtitle: String? = null,
+    @ColumnInfo(name = "author") val author: String? = null,
+    @ColumnInfo(name = "language") val language: String? = null,
+    @ColumnInfo(name = "isbn") val isbn: String? = null,
+    @ColumnInfo(name = "published_date") val publishedDate: String? = null,
+    @ColumnInfo(name = "page_count") val pageCount: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

@@ -73,10 +73,10 @@ class BarcodeResultFragment : BottomSheetDialogFragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
             adapter = BarcodeFieldAdapter(barcodeFieldList)
-        }.visibility = if (book?.title != null) View.VISIBLE else View.GONE
+        }.visibility = if (!book?.title.isNullOrEmpty()) View.VISIBLE else View.GONE
 
         view.findViewById<LinearLayout>(R.id.pt_custom_book_holder_ll).visibility =
-            if (book?.title != null) View.GONE else View.VISIBLE
+            if (!book?.title.isNullOrEmpty()) View.GONE else View.VISIBLE
         view.findViewById<TextView>(R.id.pt_custom_book_isbn_value_tv).text = book?.isbn
 
 

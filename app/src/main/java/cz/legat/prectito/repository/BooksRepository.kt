@@ -1,6 +1,5 @@
 package cz.legat.prectito.repository
 
-import androidx.lifecycle.LiveData
 import cz.legat.prectito.api.BooksService
 import cz.legat.prectito.api.GoogleBooksService
 import cz.legat.prectito.model.Book
@@ -15,7 +14,9 @@ class BooksRepository @Inject constructor(
     private val savedBookDao: SavedBookDao
 ) {
 
-    val myBooks: LiveData<List<SavedBook>> = savedBookDao.getAll()
+    suspend fun getMyBooks(): List<SavedBook> {
+        return savedBookDao.getAll()
+    }
 
     suspend fun getPopularBooks(): List<Book> {
         return try {

@@ -78,5 +78,6 @@ class MyBooksFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.loadMyBooks()
     }
 }

@@ -69,6 +69,9 @@ class MyBooksFragment : Fragment() {
 
         viewModel.myBooks.observe(viewLifecycleOwner, Observer { books ->
             progress.visibility = View.GONE
+            for(book in books){
+                println("${book.title} - ${book.author}, ${book.publishedDate?.take(4)} ISBN: ${book.isbn}")
+            }
             booksAdapter.update(books)
         })
     }

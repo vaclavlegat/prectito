@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,6 +31,7 @@ import com.google.android.material.chip.Chip
 import com.google.common.base.Objects
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.barcodedetection.BarcodeField
+import cz.legat.prectito.barcode.barcodedetection.BarcodeManualFragment
 import cz.legat.prectito.barcode.barcodedetection.BarcodeProcessor
 import cz.legat.prectito.barcode.barcodedetection.BarcodeResultFragment
 import cz.legat.prectito.barcode.camera.CameraSource
@@ -47,12 +49,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
 
-    @Inject lateinit var viewModel: ISBNViewModel
+    private val viewModel: ISBNViewModel by viewModels()
 
     private var cameraSource: CameraSource? = null
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
     private var flashButton: View? = null
+    private var manualButton: View? = null
     private var promptChip: Chip? = null
     private var promptChipAnimator: AnimatorSet? = null
     private var workflowModel: WorkflowModel? = null
@@ -79,6 +82,10 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
 
         findViewById<View>(R.id.close_button).setOnClickListener(this)
         flashButton = findViewById<View>(R.id.flash_button).apply {
+            setOnClickListener(this@LiveBarcodeScanningActivity)
+        }
+
+        manualButton = findViewById<View>(R.id.manual_button).apply {
             setOnClickListener(this@LiveBarcodeScanningActivity)
         }
 
@@ -124,6 +131,9 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
                         cameraSource!!.updateFlashMode(Camera.Parameters.FLASH_MODE_TORCH)
                     }
                 }
+            }
+            R.id.manual_button -> {
+                BarcodeManualFragment.show(supportFragmentManager)
             }
         }
     }

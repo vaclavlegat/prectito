@@ -28,6 +28,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +44,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BarcodeResultFragment : BottomSheetDialogFragment() {
 
-    @Inject lateinit var viewModel: ISBNViewModel
+    private val viewModel: ISBNViewModel by viewModels()
     private var book: SavedBook? = null
 
     override fun onCreateView(

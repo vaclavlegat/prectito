@@ -8,7 +8,9 @@ object Libs {
 
     // di
     val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
-    val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
+    val hiltLifecycle = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
+    val hiltCompiler =  "androidx.hilt:hilt-compiler:1.0.0-alpha01"
+    val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
 
     // room
     val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"

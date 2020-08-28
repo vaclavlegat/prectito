@@ -15,6 +15,7 @@ class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : Recycle
 
     interface OnBookClickedListener {
         fun onBook(book: SavedBook)
+        fun onBookRemoved(book: SavedBook)
     }
 
     private var books = mutableListOf<SavedBook>()
@@ -32,6 +33,13 @@ class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : Recycle
         holder.bind(books[position])
     }
 
+    fun removeAt(position: Int) {
+        val book = books[position]
+        books.removeAt(position)
+        notifyItemRemoved(position)
+        onBookClickedListener.onBookRemoved(book)
+    }
+
     fun update(updatedBooks: List<SavedBook>) {
         books.clear()
         books.addAll(updatedBooks)
@@ -42,7 +50,7 @@ class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : Recycle
 
         private val authorTv = view.findViewById<TextView>(R.id.pt_book_author_tv)
         private val titleTv = view.findViewById<TextView>(R.id.pt_book_title_tv)
-        private val subtitleTv = view.findViewById<TextView>(R.id.pt_book_subtitle_tv)
+        private val publishedTV = view.findViewById<TextView>(R.id.pt_book_published_tv)
 
         internal fun bind(book: SavedBook) {
             view.setOnClickListener {
@@ -52,11 +60,9 @@ class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : Recycle
                 authorTv.text = author
                 titleTv.text = title
                 if(!subtitle.isNullOrEmpty()){
-                    subtitleTv.text = subtitle
-                    subtitleTv.visibility = View.VISIBLE
-                } else {
-                    subtitleTv.visibility = View.GONE
+                    titleTv.text = "$title - $subtitle"
                 }
+                publishedTV.text = publishedDate?.take(4)
             }
         }
     }

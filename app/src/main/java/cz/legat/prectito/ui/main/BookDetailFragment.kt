@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BookDetailFragment : Fragment() {
 
-    @Inject lateinit var viewModel: BookDetailViewModel
+    private val viewModel: BookDetailViewModel by viewModels()
 
     lateinit var titleTv: TextView
     lateinit var imageIv: ImageView

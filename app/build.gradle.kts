@@ -34,6 +34,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
 }
 
 dependencies {
@@ -47,7 +51,9 @@ dependencies {
 
     // di
     implementation (Libs.hilt)
+    implementation (Libs.hiltLifecycle)
     kapt (Libs.hiltCompiler)
+    kapt (Libs.hiltAndroidCompiler)
 
     // images
     implementation (Libs.glide)

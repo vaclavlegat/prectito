@@ -17,6 +17,15 @@
       app:srcCompat="@drawable/ic_close_vd_white_24"/>
 
   <ImageView
+      android:id="@+id/manual_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toStartOf="@id/flash_button"
+      android:padding="@dimen/top_action_button_padding"
+      android:contentDescription="manual"
+      app:srcCompat="@drawable/pt_create_icon"/>
+
+  <ImageView
       android:id="@+id/flash_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

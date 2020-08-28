@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,7 +24,7 @@ const val SCAN_BOOKS = 2
 @AndroidEntryPoint
 class BooksFragment : Fragment() {
 
-    @Inject lateinit var viewModel: BooksViewModel
+    private val viewModel: BooksViewModel by viewModels()
 
     lateinit var booksRv: RecyclerView
     lateinit var booksAdapter: BooksAdapter

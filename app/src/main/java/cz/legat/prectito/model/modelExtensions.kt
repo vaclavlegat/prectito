@@ -5,7 +5,6 @@ import cz.legat.prectito.persistence.SavedBook
 
 fun VolumeInfo.toSavedBook(): SavedBook{
 
-    val uid = this.id!!
     val title = this.title
     val subtitle = this.subtitle
     val publishedDate = this.publishedDate
@@ -16,7 +15,6 @@ fun VolumeInfo.toSavedBook(): SavedBook{
     val pageCount = this.pageCount
 
     return SavedBook(
-        uid = uid,
         title = title,
         subtitle = subtitle,
         publishedDate = publishedDate,

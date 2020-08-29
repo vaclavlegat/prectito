@@ -69,9 +69,12 @@ class MyBooksFragment : Fragment() {
 
         viewModel.myBooks.observe(viewLifecycleOwner, Observer { books ->
             progress.visibility = View.GONE
+            var count = 0
             for(book in books){
+                count++
                 println("${book.title} - ${book.author}, ${book.publishedDate?.take(4)} ISBN: ${book.isbn}")
             }
+            println("Books Count $count")
             booksAdapter.update(books)
         })
     }

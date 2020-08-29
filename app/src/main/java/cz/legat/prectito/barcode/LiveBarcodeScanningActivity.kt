@@ -219,11 +219,9 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
                     barcodeFieldList.add(
                         BarcodeField(
                             "Published date",
-                            savedBook.publishedDate ?: ""
+                            savedBook.publishedDate?.take(4) ?: ""
                         )
                     )
-                    barcodeFieldList.add(BarcodeField("Language", savedBook.language ?: ""))
-                    barcodeFieldList.add(BarcodeField("Page count", savedBook.pageCount ?: ""))
                     barcodeFieldList.add(BarcodeField("ISBN", savedBook.isbn ?: ""))
                     BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList, savedBook)
                 } else {

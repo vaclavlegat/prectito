@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class SavedBook(
-    @PrimaryKey val uid: String,
+    @PrimaryKey(autoGenerate = true) val uid: Int? = null,
     @ColumnInfo(name = "title") val title: String? = null,
     @ColumnInfo(name = "subtitle") val subtitle: String? = null,
     @ColumnInfo(name = "author") val author: String? = null,
@@ -18,7 +18,7 @@ data class SavedBook(
     @ColumnInfo(name = "page_count") val pageCount: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
+        parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -30,7 +30,7 @@ data class SavedBook(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(uid)
+        parcel.writeInt(uid?:0)
         parcel.writeString(title)
         parcel.writeString(subtitle)
         parcel.writeString(author)

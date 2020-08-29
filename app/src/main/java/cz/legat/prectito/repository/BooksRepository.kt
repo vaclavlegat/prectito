@@ -43,11 +43,9 @@ class BooksRepository @Inject constructor(
     suspend fun getBookByISBN(isbn: String): SavedBook? {
         return try {
             val response = googleBooksService.getBookByISBN("isbn:$isbn")
-            response.body()!!.items[0].volumeInfo.apply {
-                id = response.body()!!.items[0].id
-            }.toSavedBook()
+            response.body()!!.items[0].volumeInfo.toSavedBook()
         } catch (e: Exception) {
-            SavedBook(uid = isbn, isbn = isbn)
+            SavedBook(isbn = isbn)
         }
     }
 
@@ -55,7 +53,6 @@ class BooksRepository @Inject constructor(
         return try {
             val book = booksService.getBookByISBN(isbn)
             return SavedBook(
-                uid = book.isbn!!,
                 title = book.title,
                 author = book.author?.name,
                 isbn = isbn,
@@ -64,7 +61,7 @@ class BooksRepository @Inject constructor(
                 language = book.language
             )
         } catch (e: Exception) {
-            SavedBook(uid = isbn, isbn = isbn)
+            SavedBook(isbn = isbn)
         }
     }
 

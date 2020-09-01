@@ -18,4 +18,8 @@ class BookDetailViewModel  @ViewModelInject constructor(
     val book = liveData(Dispatchers.IO) {
         emit(booksRepository.getBook(savedStateHandle.get<Book>("book")?.id))
     }
+
+    val comments = liveData(Dispatchers.IO) {
+        emit(booksRepository.getBookComments(savedStateHandle.get<Book>("book")?.id))
+    }
 }

@@ -13,18 +13,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
-
-    private val viewModel: BooksViewModel by viewModels()
 
     lateinit var pager: ViewPager2
     lateinit var tabs: TabLayout
 
     companion object {
-        fun newInstance(book: Book) : DetailFragment {
+        fun newInstance(book: Book): DetailFragment {
             return DetailFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable("book", book)
@@ -49,18 +46,29 @@ class DetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val book = arguments?.getParcelable<Book>("book")
-        pager.adapter = DetailAdapter(this, Book(id = book?.id!!, title = book.title, imgLink = book.imgLink, description = book.description))
+        pager.adapter = DetailAdapter(
+            this,
+            Book(
+                id = book?.id!!,
+                title = book.title,
+                imgLink = book.imgLink,
+                description = book.description
+            )
+        )
         TabLayoutMediator(tabs, pager) { tab, position ->
-            tab.text = "Info"
+            tab.text = if(position == 0) "Info" else "Comments"
         }.attach()
     }
 
     class DetailAdapter(fragment: Fragment, val book: Book) : FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = 1
+        override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
-            return BookDetailFragment.newInstance(book)
+            if (position == 0) {
+                return BookDetailFragment.newInstance(book)
+            }
+            return BookCommentsFragment.newInstance(book)
         }
     }
 }

@@ -2,6 +2,7 @@ package cz.legat.prectito.repository
 
 import cz.legat.prectito.api.BooksService
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.model.Comment
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
 import javax.inject.Inject
@@ -43,6 +44,13 @@ class BooksRepository @Inject constructor(
         return book.copy(
             description = book.description.dropLast(12)
         )
+    }
+
+    suspend fun getBookComments(id: String?): List<Comment> {
+        if (id == null) {
+            return listOf()
+        }
+        return booksService.getBookComments(id)
     }
 
     suspend fun getBookByISBN(isbn: String): SavedBook? {

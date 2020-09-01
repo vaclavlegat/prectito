@@ -1,6 +1,7 @@
 package cz.legat.prectito.api
 
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.model.Comment
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,5 +20,8 @@ interface BooksService {
 
     @GET("/books/isbn")
     suspend fun getBookByISBN(@Query("q") isbn: String): Book
+
+    @GET("/books/detail/{id}/comments")
+    suspend fun getBookComments(@Path("id") id: String): List<Comment>
 
 }

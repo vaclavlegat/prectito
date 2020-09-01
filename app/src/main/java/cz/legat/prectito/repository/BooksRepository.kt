@@ -1,16 +1,13 @@
 package cz.legat.prectito.repository
 
 import cz.legat.prectito.api.BooksService
-import cz.legat.prectito.api.GoogleBooksService
 import cz.legat.prectito.model.Book
-import cz.legat.prectito.model.toSavedBook
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
 import javax.inject.Inject
 
 class BooksRepository @Inject constructor(
     private val booksService: BooksService,
-    private val googleBooksService: GoogleBooksService,
     private val savedBookDao: SavedBookDao
 ) {
 
@@ -41,15 +38,6 @@ class BooksRepository @Inject constructor(
     }
 
     suspend fun getBookByISBN(isbn: String): SavedBook? {
-        return try {
-            val response = googleBooksService.getBookByISBN("isbn:$isbn")
-            response.body()!!.items[0].volumeInfo.toSavedBook()
-        } catch (e: Exception) {
-            SavedBook(isbn = isbn)
-        }
-    }
-
-    suspend fun getBookByISBNFromDb(isbn: String): SavedBook? {
         return try {
             val book = booksService.getBookByISBN(isbn)
             return SavedBook(

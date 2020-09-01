@@ -19,9 +19,8 @@ class ISBNViewModel @ViewModelInject constructor(
     fun getBookByISBN(isbn: String) {
         val query = isbn.replace("-", "")
         viewModelScope.launch {
-            val bookGoogle = booksRepository.getBookByISBN(query)
-            val bookDb = booksRepository.getBookByISBNFromDb(query)
-            searchedBook.value = if (!bookGoogle?.title.isNullOrEmpty()) bookGoogle else bookDb
+            val book = booksRepository.getBookByISBN(query)
+            searchedBook.value = book
         }
     }
 

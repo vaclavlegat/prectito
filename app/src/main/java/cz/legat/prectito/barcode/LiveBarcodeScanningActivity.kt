@@ -38,12 +38,10 @@ import cz.legat.prectito.barcode.camera.CameraSource
 import cz.legat.prectito.barcode.camera.CameraSourcePreview
 import cz.legat.prectito.barcode.camera.GraphicOverlay
 import cz.legat.prectito.barcode.camera.WorkflowModel
-import cz.legat.prectito.model.toSavedBook
 import cz.legat.prectito.ui.main.ISBNViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.util.*
-import javax.inject.Inject
 
 /** Demonstrates the barcode scanning workflow using camera preview.  */
 @AndroidEntryPoint

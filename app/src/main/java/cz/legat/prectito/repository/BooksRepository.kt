@@ -33,8 +33,16 @@ class BooksRepository @Inject constructor(
         }
     }
 
-    suspend fun getBook(id: String): Book {
-        return booksService.getBook(id)
+    suspend fun getBook(id: String?): Book? {
+        if (id == null) {
+            return null
+        }
+
+        val book = booksService.getBook(id)
+
+        return book.copy(
+            description = book.description.dropLast(12)
+        )
     }
 
     suspend fun getBookByISBN(isbn: String): SavedBook? {

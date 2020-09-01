@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.model.bigImgLink
 
 class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
 
@@ -50,7 +51,7 @@ class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerV
             with(book) {
                 authorTv.text = author?.name
                 titleTv.text = title
-                Glide.with(imageIv).load(imgLink).into(imageIv)
+                Glide.with(imageIv).load(bigImgLink()).into(imageIv)
             }
         }
     }

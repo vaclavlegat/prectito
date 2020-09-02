@@ -69,6 +69,14 @@ class BooksRepository @Inject constructor(
         }
     }
 
+    suspend fun searchBook(query: String): List<Book> {
+        return try {
+            booksService.searchBook(query).take(10)
+        } catch (e: Exception) {
+            listOf()
+        }
+    }
+
     suspend fun saveBook(savedBook: SavedBook) {
         savedBookDao.insertAll(savedBook)
     }

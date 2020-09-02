@@ -21,6 +21,9 @@ interface BooksService {
     @GET("/books/isbn")
     suspend fun getBookByISBN(@Query("q") isbn: String): Book
 
+    @GET("/books/search")
+    suspend fun searchBook(@Query("q") query: String): List<Book>
+
     @GET("/books/detail/{id}/comments")
     suspend fun getBookComments(@Path("id") id: String): List<Comment>
 

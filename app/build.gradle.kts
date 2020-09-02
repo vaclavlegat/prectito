@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android.extensions")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 
@@ -87,7 +88,6 @@ dependencies {
     implementation ("androidx.preference:preference:1.1.1")
 
     api ("com.google.guava:guava:27.1-jre")
-
 
     implementation (Libs.roomRuntime)
     kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor

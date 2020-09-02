@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.model.bigImgLink
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,14 +25,15 @@ class BookDetailFragment : Fragment() {
 
     lateinit var titleTv: TextView
     lateinit var authorTv: TextView
+    lateinit var publishedTv: TextView
     lateinit var imageIv: ImageView
     lateinit var descTv: TextView
 
     companion object {
-        fun newInstance(book: Book): BookDetailFragment {
+        fun newInstance(id: String): BookDetailFragment {
             return BookDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable("book", book)
+                    putString("id", id)
                 }
             }
         }
@@ -44,6 +49,7 @@ class BookDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         titleTv = view.findViewById(R.id.pt_book_title_tv)
         authorTv = view.findViewById(R.id.pt_book_author_tv)
+        publishedTv = view.findViewById(R.id.pt_book_published_tv)
         imageIv = view.findViewById(R.id.pt_book_image_iv)
         descTv = view.findViewById(R.id.pt_book_desc_tv)
     }
@@ -53,10 +59,11 @@ class BookDetailFragment : Fragment() {
 
         viewModel.book.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
-                titleTv.text = book.title
-                authorTv.text = book.author?.name
-                descTv.text = book.description
-                Glide.with(requireActivity()).load(book.imgLink).into(imageIv)
+                titleTv.text = it.title
+                authorTv.text = it.author?.name
+                publishedTv.text = it.published
+                descTv.text = it.description
+                Glide.with(requireActivity()).load(it.imgLink).into(imageIv)
             }
         })
     }

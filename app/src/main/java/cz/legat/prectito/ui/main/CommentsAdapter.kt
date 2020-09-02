@@ -32,10 +32,11 @@ class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>(
     }
 
     fun update(newComments: List<Comment>) {
-        val diffCallback = CommentListDiffCallback(comments, newComments)
+        val sorted = newComments.sortedByDescending { it.likes }
+        val diffCallback = CommentListDiffCallback(comments, sorted)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         comments.clear()
-        comments.addAll(newComments)
+        comments.addAll(sorted)
         diffResult.dispatchUpdatesTo(this)
     }
 

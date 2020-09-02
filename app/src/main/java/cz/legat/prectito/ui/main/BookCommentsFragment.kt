@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.Comment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +22,7 @@ class BookCommentsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: CommentsAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +31,7 @@ class BookCommentsFragment : Fragment() {
 
         val rootView = inflater.inflate(R.layout.pt_comments_fragment, container, false)
         recyclerView = rootView.findViewById(R.id.pt_comments_rv)
+        progressBar = rootView.findViewById(R.id.pt_progress)
         return rootView
     }
 
@@ -45,19 +46,21 @@ class BookCommentsFragment : Fragment() {
             adapter = viewAdapter
         }
 
+        progressBar.visibility = View.VISIBLE
         viewModel.comments.observe(viewLifecycleOwner, Observer<List<Comment>> {
+            progressBar.visibility = View.GONE
             viewAdapter.update(it)
         })
     }
 
 
     companion object {
-        fun newInstance(book: Book): BookCommentsFragment {
-            val args = Bundle()
-            args.putParcelable("book", book)
-            val fragment = BookCommentsFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(id: String): BookCommentsFragment {
+            return BookCommentsFragment().apply {
+                arguments = Bundle().apply {
+                    putString("id", id)
+                }
+            }
         }
     }
 }

@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.model.bigImgLink
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,10 +49,9 @@ class BooksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         booksAdapter = BooksAdapter(object:BooksAdapter.OnBookClickedListener{
-            override fun onBook(book: Book) {
-                findNavController().navigate(R.id.action_homeFragment_to_detailFragment, Bundle().apply {
-                    putParcelable("book", book)
-                })
+            override fun onBook(book: Book, imageView: ImageView) {
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(book.id)
+                findNavController().navigate(action)
             }
         })
         booksRv = view.findViewById(R.id.pt_books_rw)

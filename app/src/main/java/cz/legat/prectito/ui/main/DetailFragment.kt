@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
@@ -20,13 +21,11 @@ class DetailFragment : Fragment() {
     lateinit var pager: ViewPager2
     lateinit var tabs: TabLayout
 
+    val args: DetailFragmentArgs by navArgs()
+
     companion object {
-        fun newInstance(book: Book): DetailFragment {
-            return DetailFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("book", book)
-                }
-            }
+        fun newInstance(): DetailFragment {
+            return DetailFragment()
         }
     }
 
@@ -45,30 +44,24 @@ class DetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val book = arguments?.getParcelable<Book>("book")
         pager.adapter = DetailAdapter(
             this,
-            Book(
-                id = book?.id!!,
-                title = book.title,
-                imgLink = book.imgLink,
-                description = book.description
-            )
+            args.id
         )
         TabLayoutMediator(tabs, pager) { tab, position ->
             tab.text = if(position == 0) "Info" else "Comments"
         }.attach()
     }
 
-    class DetailAdapter(fragment: Fragment, val book: Book) : FragmentStateAdapter(fragment) {
+    class DetailAdapter(fragment: Fragment, val id: String) : FragmentStateAdapter(fragment) {
 
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
             if (position == 0) {
-                return BookDetailFragment.newInstance(book)
+                return BookDetailFragment.newInstance(id)
             }
-            return BookCommentsFragment.newInstance(book)
+            return BookCommentsFragment.newInstance(id)
         }
     }
 }

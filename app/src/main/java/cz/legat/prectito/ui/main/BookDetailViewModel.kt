@@ -16,10 +16,10 @@ class BookDetailViewModel  @ViewModelInject constructor(
 ) : ViewModel() {
 
     val book = liveData(Dispatchers.IO) {
-        emit(booksRepository.getBook(savedStateHandle.get<Book>("book")?.id))
+        emit(booksRepository.getBook(savedStateHandle.get<String>("id")))
     }
 
     val comments = liveData(Dispatchers.IO) {
-        emit(booksRepository.getBookComments(savedStateHandle.get<Book>("book")?.id))
+        emit(booksRepository.getBookComments(savedStateHandle.get<String>("id")))
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
@@ -14,7 +15,7 @@ import cz.legat.prectito.model.bigImgLink
 class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
 
     interface OnBookClickedListener {
-        fun onBook(book: Book)
+        fun onBook(book: Book, imageView: ImageView)
     }
 
     private var books = mutableListOf<Book>()
@@ -46,13 +47,14 @@ class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerV
 
         internal fun bind(book: Book) {
             view.setOnClickListener {
-                onBookClickedListener.onBook(book)
+                onBookClickedListener.onBook(book, imageIv)
             }
             with(book) {
                 authorTv.text = author?.name
                 titleTv.text = title
                 Glide.with(imageIv).load(bigImgLink()).into(imageIv)
             }
+            imageIv.transitionName = book.bigImgLink()
         }
     }
 }

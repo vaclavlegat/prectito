@@ -42,7 +42,7 @@ class BooksRepository @Inject constructor(
         val book = booksService.getBook(id)
 
         return book.copy(
-            description = book.description.dropLast(12)
+            description = if(book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains("celý text")) book.description else book.description.dropLast(12)
         )
     }
 
@@ -71,7 +71,7 @@ class BooksRepository @Inject constructor(
 
     suspend fun searchBook(query: String): List<Book> {
         return try {
-            booksService.searchBook(query).take(10)
+            booksService.searchBook(query)
         } catch (e: Exception) {
             listOf()
         }

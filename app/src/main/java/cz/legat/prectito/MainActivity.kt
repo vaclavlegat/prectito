@@ -24,7 +24,6 @@ import androidx.cursoradapter.widget.CursorAdapter
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation.findNavController
 import cz.legat.prectito.ui.main.BooksViewModel
 import cz.legat.prectito.ui.main.HomeFragmentDirections
@@ -85,8 +84,6 @@ class MainActivity : AppCompatActivity() {
                         SearchManager.SUGGEST_COLUMN_TEXT_2
                     )
                 )
-                cursorAdapter.changeCursor(null)
-                cursorAdapter.notifyDataSetChanged()
                 books.forEachIndexed { index, book ->
                     var author = ""
                     var published = ""
@@ -108,7 +105,12 @@ class MainActivity : AppCompatActivity() {
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
+                    query?.let {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToSearchResultsFragment(query)
+                        navController?.navigate(action)
+                    }
+                    return true
                 }
 
                 override fun onQueryTextChange(query: String?): Boolean {
@@ -118,9 +120,7 @@ class MainActivity : AppCompatActivity() {
                     timer = Timer()
                     timer?.schedule(object : TimerTask() {
                         override fun run() {
-                            if (query?.length!! > 2) {
-                                viewModel.searchBook(query)
-                            }
+                            viewModel.searchBook(query)
                         }
                     }, 400) // 600ms delay be
                     return true

@@ -14,6 +14,10 @@
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment">
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_searchResultsFragment"
+            app:destination="@id/searchResultsFragment">
+        </action>
     </fragment>
 
     <fragment
@@ -24,6 +28,20 @@
         <argument
             android:name="id"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchResultsFragment"
+        android:name="cz.legat.prectito.ui.main.SearchResultsFragment"
+        android:label="Detail"
+        tools:layout="@layout/pt_detail_tabs_fragment" >
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchResultsFragment_to_detailFragment"
+            app:destination="@id/detailFragment">
+        </action>
     </fragment>
 
 </navigation>

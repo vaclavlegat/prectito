@@ -16,6 +16,8 @@ class BooksViewModel @ViewModelInject constructor(
     private val booksRepository: BooksRepository
 ) : ViewModel() {
 
+    var lastQuery: String = ""
+
     var popularBooks = liveData(Dispatchers.IO) {
         emit(booksRepository.getPopularBooks().dropLast(1))
     }
@@ -47,6 +49,7 @@ class BooksViewModel @ViewModelInject constructor(
         query?.let {
             viewModelScope.launch(Dispatchers.IO) {
                 val books = booksRepository.searchBook(query)
+                lastQuery = query
                 withContext(Dispatchers.Main) {
                     searchBooks.value = books
                 }

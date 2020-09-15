@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Comment
-import cz.legat.prectito.tintedDrawable
+import cz.legat.prectito.extensions.tintedDrawable
 
 class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
 

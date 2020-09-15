@@ -9,7 +9,9 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.ui.main.books.BooksAdapter
@@ -44,11 +46,9 @@ class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): Page
             with(author) {
                 tvName.text = name
                 tvLife.text = life
-                Glide.with(layout.context)
-                    .load(authorImgLink)
-                    .fitCenter()
-                    .centerCrop()
-                    .into(ivImage)
+                authorImgLink?.let {
+                    ivImage.loadImg(it)
+                }
             }
 
             layout.setOnClickListener {

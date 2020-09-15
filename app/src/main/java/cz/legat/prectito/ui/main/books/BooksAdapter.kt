@@ -7,7 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.bigImgLink
 import cz.legat.prectito.model.middleImgLink
@@ -54,9 +56,7 @@ class BooksAdapter(val onBookClickedListener: OnBookClickedListener) :
             with(book) {
                 authorTv.text = author?.name
                 titleTv.text = title
-                Glide.with(imageIv).load(bigImgLink())
-                    .error(Glide.with(imageIv).load(middleImgLink()))
-                    .error(Glide.with(imageIv).load(imgLink)).into(imageIv)
+                imageIv.loadImg(bigImgLink(), middleImgLink(), imgLink)
             }
         }
     }

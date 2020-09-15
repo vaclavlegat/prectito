@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.loadImg
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,7 +60,7 @@ class BookDetailFragment : Fragment() {
                 authorTv.text = it.author?.name
                 publishedTv.text = it.published
                 descTv.text = it.description
-                Glide.with(requireActivity()).load(it.imgLink).into(imageIv)
+                imageIv.loadImg(it.imgLink)
             }
         })
     }

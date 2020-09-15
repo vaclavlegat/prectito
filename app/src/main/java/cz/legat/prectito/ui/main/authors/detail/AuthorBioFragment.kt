@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.bigImgLink
@@ -60,7 +61,11 @@ class AuthorBioFragment : Fragment() {
                     nameTv.text = it.name
                     lifeTv.text = it.life
                     cvTv.text = it.cv
-                    Glide.with(imageIv).load(it.authorImgLink).into(imageIv)
+                    Glide.with(imageIv)
+                        .load(it.authorImgLink)
+                        .placeholder(R.drawable.pt_img_placeholder)
+                        .transition(DrawableTransitionOptions.withCrossFade(500))
+                        .into(imageIv)
                 }
             })
     }

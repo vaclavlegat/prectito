@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.books
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.model.bigImgLink
+import cz.legat.prectito.model.middleImgLink
 
-class SearchResultsAdapter(val onBookClickedListener: OnBookClickedListener) :
-    RecyclerView.Adapter<SearchResultsAdapter.BookViewHolder>() {
+class BooksAdapter(val onBookClickedListener: OnBookClickedListener) :
+    RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
 
     interface OnBookClickedListener {
         fun onBook(book: Book)
@@ -21,7 +23,7 @@ class SearchResultsAdapter(val onBookClickedListener: OnBookClickedListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pt_item_search_result, parent, false) as View
+            .inflate(R.layout.pt_item_book, parent, false) as View
         return BookViewHolder(view)
     }
 
@@ -50,19 +52,11 @@ class SearchResultsAdapter(val onBookClickedListener: OnBookClickedListener) :
                 onBookClickedListener.onBook(book)
             }
             with(book) {
-                var author = ""
-                var published = ""
-
-                val split = book.description.split(",")
-                if (split.size == 2) {
-                    author = split[1].trim()
-                    published = split[0].trim()
-                } else {
-                    author = split[0]
-                }
-                authorTv.text = "$author - ($published)"
+                authorTv.text = author?.name
                 titleTv.text = title
-                Glide.with(imageIv).load(imgLink).into(imageIv)
+                Glide.with(imageIv).load(bigImgLink())
+                    .error(Glide.with(imageIv).load(middleImgLink()))
+                    .error(Glide.with(imageIv).load(imgLink)).into(imageIv)
             }
         }
     }

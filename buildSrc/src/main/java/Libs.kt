@@ -35,6 +35,9 @@ object Libs {
     val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}"
     val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttpVersion}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
+
+    // paging
+    val paging = "androidx.paging:paging-runtime:${Versions.paging_version}"
     
     // ui
     val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintlayoutVersion}"

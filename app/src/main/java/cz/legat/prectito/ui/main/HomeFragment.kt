@@ -15,8 +15,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.LiveBarcodeScanningActivity
 import cz.legat.prectito.barcode.Utils
+import cz.legat.prectito.ui.main.authors.AuthorsFragment
+import cz.legat.prectito.ui.main.books.AUTHORS
+import cz.legat.prectito.ui.main.books.BooksFragment
+import cz.legat.prectito.ui.main.books.BooksViewModel
+import cz.legat.prectito.ui.main.books.NEW_BOOKS
+import cz.legat.prectito.ui.main.books.POPULAR_BOOKS
+import cz.legat.prectito.ui.main.my.MyBooksFragment
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -53,6 +59,7 @@ class HomeFragment : Fragment() {
                 getString(when(position) {
                     POPULAR_BOOKS -> R.string.pt_tab_title_popular
                     NEW_BOOKS -> R.string.pt_tab_title_new
+                    AUTHORS -> R.string.pt_tab_title_authors
                     else -> R.string.pt_tab_title_my_books})
         }.attach()
 
@@ -70,10 +77,13 @@ class HomeFragment : Fragment() {
 
     class HomeAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = 3
+        override fun getItemCount(): Int = 4
 
         override fun createFragment(position: Int): Fragment {
             if (position == 2) {
+                return AuthorsFragment.newInstance()
+            }
+            if (position == 3) {
                 return MyBooksFragment.newInstance()
             }
             return BooksFragment.newInstance(position)

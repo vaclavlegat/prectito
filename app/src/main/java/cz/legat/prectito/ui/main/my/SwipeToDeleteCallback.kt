@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.my
 
 import android.content.Context
 import android.graphics.Canvas

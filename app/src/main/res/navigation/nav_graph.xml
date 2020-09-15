@@ -18,11 +18,25 @@
             android:id="@+id/action_homeFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment">
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_authorsFragment"
+            app:destination="@id/authorsDetailFragment">
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="cz.legat.prectito.ui.main.DetailFragment"
+        android:name="cz.legat.prectito.ui.main.books.detail.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/pt_detail_tabs_fragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authorsDetailFragment"
+        android:name="cz.legat.prectito.ui.main.authors.detail.AuthorDetailFragment"
         android:label="Detail"
         tools:layout="@layout/pt_detail_tabs_fragment" >
         <argument
@@ -32,7 +46,7 @@
 
     <fragment
         android:id="@+id/searchResultsFragment"
-        android:name="cz.legat.prectito.ui.main.SearchResultsFragment"
+        android:name="cz.legat.prectito.ui.main.search.SearchResultsFragment"
         android:label="Detail"
         tools:layout="@layout/pt_detail_tabs_fragment" >
         <argument

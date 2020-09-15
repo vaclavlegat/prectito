@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.books.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

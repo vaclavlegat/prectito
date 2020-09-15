@@ -1,7 +1,9 @@
 package cz.legat.prectito.api
 
+import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.Comment
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,4 +29,9 @@ interface BooksService {
     @GET("/books/detail/{id}/comments")
     suspend fun getBookComments(@Path("id") id: String): List<Comment>
 
+    @GET("/authors")
+    suspend fun getAuthors(@Query("page") page: Int): Response<List<Author>>
+
+    @GET("/authors/{id}")
+    suspend fun getAuthor(@Path("id") id: String): Response<Author>
 }

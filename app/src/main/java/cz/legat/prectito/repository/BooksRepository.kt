@@ -1,10 +1,12 @@
 package cz.legat.prectito.repository
 
 import cz.legat.prectito.api.BooksService
+import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.Comment
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class BooksRepository @Inject constructor(
@@ -42,7 +44,10 @@ class BooksRepository @Inject constructor(
         val book = booksService.getBook(id)
 
         return book.copy(
-            description = if(book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains("celý text")) book.description else book.description.dropLast(12)
+            description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
+                    "celý text"
+                )
+            ) book.description else book.description.dropLast(12)
         )
     }
 
@@ -83,5 +88,20 @@ class BooksRepository @Inject constructor(
 
     suspend fun removeBook(book: SavedBook) {
         return savedBookDao.delete(book)
+    }
+
+    fun getAuthors(page: Int): List<Author> {
+        return runBlocking {
+            val response = booksService.getAuthors(page)
+            response.body()!!
+        }
+    }
+
+    suspend fun getAuthor(id: String?): Author? {
+        id?.let {
+            val response = booksService.getAuthor(id)
+            return response.body()!!
+        }
+        return null
     }
 }

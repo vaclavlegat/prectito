@@ -86,5 +86,6 @@
     <string name="pt_tab_title_my_books">My</string>
     <string name="pt_search">Search</string>
     <string name="pt_rating_trash">Trash</string>
+    <string name="pt_tab_title_authors">authors</string>
 
 </resources>

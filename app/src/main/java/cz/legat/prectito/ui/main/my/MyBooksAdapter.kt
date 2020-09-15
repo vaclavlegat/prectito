@@ -1,14 +1,11 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.my
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Book
 import cz.legat.prectito.persistence.SavedBook
 
 class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerView.Adapter<MyBooksAdapter.BookViewHolder>() {

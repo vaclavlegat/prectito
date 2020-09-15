@@ -26,6 +26,9 @@ object Versions {
     const val converterMoshiVersion = "2.4.0"
     const val okhttpVersion = "4.7.2"
 
+    // paging
+    const val paging_version = "2.1.0"
+
     // ui
     const val constraintlayoutVersion = "1.1.3"
     const val materialVersion = "1.3.0-alpha01"

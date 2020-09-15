@@ -81,6 +81,8 @@ dependencies {
     implementation (Libs.recyclerView)
     implementation (Libs.viewPager2)
 
+    implementation (Libs.paging)
+
     implementation ("com.google.android.gms:play-services-vision:20.1.1")
     implementation ("com.google.mlkit:barcode-scanning:16.0.2")
 

@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.search
 
 import android.content.Context
 import android.os.Bundle
@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.ui.main.books.BooksFragment
+import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,14 +49,18 @@ class SearchResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        booksAdapter = SearchResultsAdapter(object : SearchResultsAdapter.OnBookClickedListener {
-            override fun onBook(book: Book) {
-                hideKeyboard(requireContext())
-                val action =
-                    SearchResultsFragmentDirections.actionSearchResultsFragmentToDetailFragment(book.id)
-                findNavController().navigate(action)
-            }
-        })
+        booksAdapter =
+            SearchResultsAdapter(object :
+                SearchResultsAdapter.OnBookClickedListener {
+                override fun onBook(book: Book) {
+                    hideKeyboard(requireContext())
+                    val action =
+                        SearchResultsFragmentDirections.actionSearchResultsFragmentToDetailFragment(
+                            book.id
+                        )
+                    findNavController().navigate(action)
+                }
+            })
         booksRv = view.findViewById(R.id.pt_books_rw)
         progress = view.findViewById(R.id.pt_progress)
         searchET = view.findViewById(R.id.pt_search_et)

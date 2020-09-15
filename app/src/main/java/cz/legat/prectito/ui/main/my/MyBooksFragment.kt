@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.my
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.prectito.persistence.SavedBook
+import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyBooksFragment : Fragment() {
@@ -38,7 +38,8 @@ class MyBooksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        booksAdapter = MyBooksAdapter(object : MyBooksAdapter.OnBookClickedListener {
+        booksAdapter = MyBooksAdapter(object :
+            MyBooksAdapter.OnBookClickedListener {
             override fun onBook(book: SavedBook) {
             }
 

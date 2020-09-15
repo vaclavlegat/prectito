@@ -36,9 +36,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.camera.WorkflowModel
 import cz.legat.prectito.persistence.SavedBook
-import cz.legat.prectito.ui.main.ISBNViewModel
+import cz.legat.prectito.ui.main.my.ISBNViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /** Displays the bottom sheet to present barcode fields contained in the detected barcode.  */
 @AndroidEntryPoint

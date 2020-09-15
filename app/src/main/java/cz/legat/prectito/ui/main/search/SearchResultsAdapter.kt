@@ -1,35 +1,27 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.search
 
-import android.graphics.drawable.Drawable
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
-import cz.legat.prectito.model.bigImgLink
-import cz.legat.prectito.model.middleImgLink
 
-class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
+class SearchResultsAdapter(val onBookClickedListener: OnBookClickedListener) :
+    RecyclerView.Adapter<SearchResultsAdapter.BookViewHolder>() {
 
     interface OnBookClickedListener {
-        fun onBook(book: Book, imageView: ImageView)
+        fun onBook(book: Book)
     }
 
     private var books = mutableListOf<Book>()
-    private val handler = Handler()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.pt_item_book, parent, false) as View
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.pt_item_search_result, parent, false) as View
         return BookViewHolder(view)
     }
 
@@ -55,14 +47,23 @@ class BooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerV
 
         internal fun bind(book: Book) {
             view.setOnClickListener {
-                onBookClickedListener.onBook(book, imageIv)
+                onBookClickedListener.onBook(book)
             }
             with(book) {
-                authorTv.text = author?.name
+                var author = ""
+                var published = ""
+
+                val split = book.description.split(",")
+                if (split.size == 2) {
+                    author = split[1].trim()
+                    published = split[0].trim()
+                } else {
+                    author = split[0]
+                }
+                authorTv.text = "$author - ($published)"
                 titleTv.text = title
-                Glide.with(imageIv).load(bigImgLink()).error(Glide.with(imageIv).load(middleImgLink())).into(imageIv)
+                Glide.with(imageIv).load(imgLink).into(imageIv)
             }
-            imageIv.transitionName = book.bigImgLink()
         }
     }
 }

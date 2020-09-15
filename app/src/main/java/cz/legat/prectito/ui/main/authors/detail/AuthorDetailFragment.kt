@@ -1,31 +1,29 @@
-package cz.legat.prectito.ui.main
+package cz.legat.prectito.ui.main.authors.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Book
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class AuthorDetailFragment : Fragment() {
 
     lateinit var pager: ViewPager2
     lateinit var tabs: TabLayout
 
-    val args: DetailFragmentArgs by navArgs()
+    val args: AuthorDetailFragmentArgs by navArgs()
 
     companion object {
-        fun newInstance(): DetailFragment {
-            return DetailFragment()
+        fun newInstance(): AuthorDetailFragment {
+            return AuthorDetailFragment()
         }
     }
 
@@ -44,24 +42,22 @@ class DetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        pager.adapter = DetailAdapter(
-            this,
-            args.id
-        )
+        pager.adapter =
+            DetailAdapter(
+                this,
+                args.id
+            )
         TabLayoutMediator(tabs, pager) { tab, position ->
-            tab.text = if(position == 0) "Info" else "Comments"
+            tab.text = "Info"
         }.attach()
     }
 
     class DetailAdapter(fragment: Fragment, val id: String) : FragmentStateAdapter(fragment) {
 
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = 1
 
         override fun createFragment(position: Int): Fragment {
-            if (position == 0) {
-                return BookDetailFragment.newInstance(id)
-            }
-            return BookCommentsFragment.newInstance(id)
+            return AuthorBioFragment.newInstance(id)
         }
     }
 }

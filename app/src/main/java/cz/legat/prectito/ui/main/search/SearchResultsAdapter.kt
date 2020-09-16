@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.model.Book
 
 class SearchResultsAdapter(val onBookClickedListener: OnBookClickedListener) :
@@ -62,7 +63,7 @@ class SearchResultsAdapter(val onBookClickedListener: OnBookClickedListener) :
                 }
                 authorTv.text = "$author - ($published)"
                 titleTv.text = title
-                Glide.with(imageIv).load(imgLink).into(imageIv)
+                imageIv.loadImg(imgLink)
             }
         }
     }

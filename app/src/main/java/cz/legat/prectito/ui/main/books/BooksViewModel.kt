@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.repository.BooksRepository
@@ -30,6 +31,8 @@ class BooksViewModel @ViewModelInject constructor(
 
     var searchBooks: MutableLiveData<List<Book>> = MutableLiveData()
 
+    var searchAuthors: MutableLiveData<List<Author>> = MutableLiveData()
+
     fun removeBook(book: SavedBook) {
         viewModelScope.launch(Dispatchers.IO) {
             booksRepository.removeBook(book)
@@ -52,6 +55,17 @@ class BooksViewModel @ViewModelInject constructor(
                 lastQuery = query
                 withContext(Dispatchers.Main) {
                     searchBooks.value = books
+                }
+            }
+        }
+    }
+
+    fun searchAuthor(query: String?) {
+        query?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                val authors = booksRepository.searchAuthor(query)
+                withContext(Dispatchers.Main) {
+                    searchAuthors.value = authors
                 }
             }
         }

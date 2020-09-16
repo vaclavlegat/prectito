@@ -1,6 +1,7 @@
 package cz.legat.prectito.repository
 
 import cz.legat.prectito.api.BooksService
+import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.Comment
 import cz.legat.prectito.persistence.SavedBook
@@ -86,5 +87,13 @@ class BooksRepository @Inject constructor(
 
     suspend fun removeBook(book: SavedBook) {
         return savedBookDao.delete(book)
+    }
+
+    suspend fun searchAuthor(query: String): List<Author> {
+        return try {
+            booksService.searchAuthor(query)
+        } catch (e: Exception) {
+            listOf()
+        }
     }
 }

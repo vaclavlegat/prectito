@@ -19,6 +19,10 @@
             app:destination="@id/searchResultsFragment">
         </action>
         <action
+            android:id="@+id/action_homeFragment_to_searchAuthorResultsFragment"
+            app:destination="@id/searchAuthorResultsFragment">
+        </action>
+        <action
             android:id="@+id/action_homeFragment_to_authorsFragment"
             app:destination="@id/authorsDetailFragment">
         </action>
@@ -58,4 +62,17 @@
         </action>
     </fragment>
 
+    <fragment
+        android:id="@+id/searchAuthorResultsFragment"
+        android:name="cz.legat.prectito.ui.main.search.SearchAuthorResultsFragment"
+        android:label="Detail"
+        tools:layout="@layout/pt_detail_tabs_fragment" >
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchAuthorsResultsFragment_to_detailFragment"
+            app:destination="@id/authorsDetailFragment">
+        </action>
+    </fragment>
 </navigation>

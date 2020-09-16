@@ -8,15 +8,17 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation.findNavController
+import cz.legat.prectito.ui.main.HomeFragment
 import cz.legat.prectito.ui.main.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
 
     private lateinit var toolbar: Toolbar
     private var navController: NavController? = null
     private var searchHolder: View? = null
+    private var currentTab = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         searchHolder = toolbar.findViewById(R.id.pt_search_holder_ll)
         searchHolder?.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToSearchResultsFragment("")
-            navController?.navigate(action)
+            val bookSearchAction = HomeFragmentDirections.actionHomeFragmentToSearchResultsFragment("")
+            val authorSearchAction = HomeFragmentDirections.actionHomeFragmentToSearchAuthorResultsFragment("")
+            navController?.navigate(if(currentTab == 2) authorSearchAction else bookSearchAction)
         }
 
         navController?.addOnDestinationChangedListener(NavController.OnDestinationChangedListener { controller, destination, arguments ->
@@ -44,5 +47,9 @@ class MainActivity : AppCompatActivity() {
                 searchHolder?.visibility = View.GONE
             }
         })
+    }
+
+    override fun onTabChanged(position: Int) {
+        currentTab = position
     }
 }

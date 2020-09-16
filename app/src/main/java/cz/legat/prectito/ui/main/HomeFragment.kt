@@ -1,5 +1,6 @@
 package cz.legat.prectito.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,6 +28,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+    interface TabChangeListener {
+        fun onTabChanged(position: Int)
+    }
+
     private val viewModel: BooksViewModel by viewModels()
 
     lateinit var pager: ViewPager2
@@ -35,6 +40,18 @@ class HomeFragment : Fragment() {
 
     companion object {
         fun newInstance() = HomeFragment()
+    }
+
+    private var onTabChangeListener: TabChangeListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onTabChangeListener = context as TabChangeListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onTabChangeListener = null
     }
 
     override fun onCreateView(
@@ -62,6 +79,20 @@ class HomeFragment : Fragment() {
                     AUTHORS -> R.string.pt_tab_title_authors
                     else -> R.string.pt_tab_title_my_books})
         }.attach()
+
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                onTabChangeListener?.onTabChanged(tab.position)
+            }
+        })
 
         scanBtn.setOnClickListener {
             activity?.startActivity(Intent(activity, LiveBarcodeScanningActivity::class.java))

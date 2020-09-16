@@ -34,4 +34,7 @@ interface BooksService {
 
     @GET("/authors/{id}")
     suspend fun getAuthor(@Path("id") id: String): Response<Author>
+
+    @GET("/authors/search")
+    suspend fun searchAuthor(@Query("q") query: String): List<Author>
 }

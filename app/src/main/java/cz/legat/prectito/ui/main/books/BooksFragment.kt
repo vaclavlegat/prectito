@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.ui.main.HomeFragmentDirections
+import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 const val BOOKS_TYPE_KEY = "BOOKS_TYPE_KEY"
@@ -48,11 +49,11 @@ class BooksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         booksAdapter = BooksAdapter(object :
-            BooksAdapter.OnBookClickedListener {
-            override fun onBook(book: Book) {
+            BaseAdapter.OnItemClickedListener<Book> {
+            override fun onItem(item: Book) {
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                        book.id
+                        item.id
                     )
                 findNavController().navigate(action)
             }

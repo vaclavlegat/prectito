@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Book
+import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
 import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,13 +51,12 @@ class SearchResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         booksAdapter =
-            SearchResultsAdapter(object :
-                SearchResultsAdapter.OnBookClickedListener {
-                override fun onBook(book: Book) {
+            SearchResultsAdapter(object : BaseAdapter.OnItemClickedListener<Book> {
+                override fun onItem(item: Book) {
                     hideKeyboard(requireContext())
                     val action =
                         SearchResultsFragmentDirections.actionSearchResultsFragmentToDetailFragment(
-                            book.id
+                            item.id
                         )
                     findNavController().navigate(action)
                 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.prectito.model.Comment
+import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +40,11 @@ class BookCommentsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = CommentsAdapter()
+        viewAdapter = CommentsAdapter(object: BaseAdapter.OnItemClickedListener<Comment>{
+            override fun onItem(item: Comment) {
+
+            }
+        })
 
         recyclerView.apply {
             layoutManager = viewManager

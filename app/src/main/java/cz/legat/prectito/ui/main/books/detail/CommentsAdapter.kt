@@ -1,55 +1,38 @@
 package cz.legat.prectito.ui.main.books.detail
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Comment
 import cz.legat.prectito.extensions.tintedDrawable
+import cz.legat.prectito.model.Comment
+import cz.legat.prectito.ui.main.base.BaseAdapter
 
-class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
+class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<Comment>) :
+    BaseAdapter<Comment>(onItemClickedListener) {
 
-    private var comments = mutableListOf<Comment>()
+    override fun layout(): Int {
+        return R.layout.pt_item_book_comment
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.pt_item_book_comment, parent, false) as View
+    override fun viewHolder(view: View): BaseViewHolder {
         return CommentViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return comments.size
-    }
-
-    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        holder.bind(comments[position])
-    }
-
-    fun update(newComments: List<Comment>) {
-        val sorted = newComments.sortedByDescending { it.likes }
-        val diffCallback = CommentListDiffCallback(comments, sorted)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        comments.clear()
-        comments.addAll(sorted)
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-    inner class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class CommentViewHolder(view: View) : BaseViewHolder(view) {
 
         private val tvUser = view.findViewById<TextView>(R.id.pt_comment_user_tv)
         private val tvComment = view.findViewById<TextView>(R.id.pt_comment_text_tv)
         private val tvDate = view.findViewById<TextView>(R.id.pt_comment_date_tv)
         private val ivAvatar = view.findViewById<ImageView>(R.id.pt_comment_avatar_iv)
-        private val llRatingHolder = view.findViewById<LinearLayout>(R.id.pt_comment_rating_holder_ll)
+        private val llRatingHolder =
+            view.findViewById<LinearLayout>(R.id.pt_comment_rating_holder_ll)
         private val layout = view
 
-        internal fun bind(c: Comment) {
+        override fun bind(c: Comment) {
             with(c) {
                 tvUser.text = user
                 tvComment.text = comment
@@ -78,23 +61,4 @@ class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>(
             }
         }
     }
-
-    inner class CommentListDiffCallback(
-        private val oldList: List<Comment>,
-        private val newList: List<Comment>
-    ) : DiffUtil.Callback() {
-
-        override fun getOldListSize(): Int = oldList.size
-
-        override fun getNewListSize(): Int = newList.size
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].id === newList[newItemPosition].id
-        }
-
-        override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
-            return oldList[oldPosition] == newList[newPosition]
-        }
-    }
-
 }

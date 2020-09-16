@@ -1,59 +1,34 @@
 package cz.legat.prectito.ui.main.books
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.bigImgLink
 import cz.legat.prectito.model.middleImgLink
+import cz.legat.prectito.ui.main.base.BaseAdapter
 
-class BooksAdapter(val onBookClickedListener: OnBookClickedListener) :
-    RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
+class BooksAdapter(private val onItemClickedListener: OnItemClickedListener<Book>) :
+    BaseAdapter<Book>(onItemClickedListener) {
 
-    interface OnBookClickedListener {
-        fun onBook(book: Book)
+    override fun layout(): Int {
+        return R.layout.pt_item_book
     }
 
-    private var books = mutableListOf<Book>()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.pt_item_book, parent, false) as View
+    override fun viewHolder(view: View): BaseViewHolder {
         return BookViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return books.size
-    }
-
-    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        holder.bind(books[position])
-    }
-
-    fun update(updatedBooks: List<Book>) {
-        books.clear()
-        books.addAll(updatedBooks)
-        notifyDataSetChanged()
-    }
-
-    inner class BookViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class BookViewHolder(view: View) : BaseAdapter<Book>.BaseViewHolder(view) {
 
         private val authorTv = view.findViewById<TextView>(R.id.pt_book_author_tv)
         private val titleTv = view.findViewById<TextView>(R.id.pt_book_title_tv)
         private val imageIv = view.findViewById<ImageView>(R.id.pt_book_image_iv)
 
-        internal fun bind(book: Book) {
-            view.setOnClickListener {
-                onBookClickedListener.onBook(book)
-            }
-            with(book) {
+        override fun bind(item: Book) {
+            with(item) {
                 authorTv.text = author?.name
                 titleTv.text = title
                 imageIv.loadImg(bigImgLink(), middleImgLink(), imgLink)

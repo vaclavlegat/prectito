@@ -64,7 +64,7 @@ class AuthorsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getAuthors().observe(viewLifecycleOwner, Observer<PagedList<Author>> {
+        viewModel.authors.observe(viewLifecycleOwner, Observer<PagedList<Author>> {
             viewAdapter.submitList(it)
         })
     }

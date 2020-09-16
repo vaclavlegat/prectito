@@ -2,6 +2,7 @@ package cz.legat.prectito.di
 
 import cz.legat.prectito.api.BooksService
 import cz.legat.prectito.persistence.SavedBookDao
+import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.repository.BooksRepository
 import dagger.Module
 import dagger.Provides
@@ -18,5 +19,12 @@ object RepositoryModule {
         savedBookDao: SavedBookDao
     ): BooksRepository {
         return BooksRepository(booksService, savedBookDao)
+    }
+
+    @Provides
+    fun provideAuthorsRepository(
+        booksService: BooksService
+    ): AuthorsRepository {
+        return AuthorsRepository(booksService)
     }
 }

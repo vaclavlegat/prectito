@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.fadeInText
+import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.bigImgLink
 import cz.legat.prectito.model.middleImgLink
@@ -58,14 +60,10 @@ class AuthorBioFragment : Fragment() {
         viewModel.author.observe(viewLifecycleOwner,
             Observer<Author?> {
                 it?.let {
-                    nameTv.text = it.name
-                    lifeTv.text = it.life
-                    cvTv.text = it.cv
-                    Glide.with(imageIv)
-                        .load(it.authorImgLink)
-                        .placeholder(R.drawable.pt_img_placeholder)
-                        .transition(DrawableTransitionOptions.withCrossFade(500))
-                        .into(imageIv)
+                    nameTv.fadeInText(it.name)
+                    lifeTv.fadeInText(it.life)
+                    cvTv.fadeInText(it.cv)
+                    imageIv.loadImg(it.authorImgLink)
                 }
             })
     }

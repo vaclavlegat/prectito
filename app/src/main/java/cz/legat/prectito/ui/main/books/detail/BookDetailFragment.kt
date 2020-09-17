@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.loadImg
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,10 +57,10 @@ class BookDetailFragment : Fragment() {
 
         viewModel.book.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
-                titleTv.text = it.title
-                authorTv.text = it.author?.name
-                publishedTv.text = it.published
-                descTv.text = it.description
+                titleTv.fadeInText(it.title)
+                authorTv.fadeInText(it.author?.name)
+                publishedTv.fadeInText(it.published)
+                descTv.fadeInText(it.description)
                 imageIv.loadImg(it.imgLink)
             }
         })

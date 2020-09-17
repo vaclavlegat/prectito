@@ -38,5 +38,5 @@ fun ImageView.loadImg(vararg imgLinks: String?) {
 
 fun ImageView.loadSingleImg(imgLink: String?): RequestBuilder<Drawable> {
     return Glide.with(this).load(imgLink).placeholder(R.drawable.pt_img_placeholder)
-        .transition(DrawableTransitionOptions.withCrossFade(500))
+        .transition(DrawableTransitionOptions.withCrossFade(200))
 }

@@ -97,6 +97,7 @@ class HomeFragment : Fragment() {
         scanBtn.setOnClickListener {
             activity?.startActivity(Intent(activity, LiveBarcodeScanningActivity::class.java))
         }
+        scanBtn.visibility = View.GONE
     }
 
     override fun onResume() {

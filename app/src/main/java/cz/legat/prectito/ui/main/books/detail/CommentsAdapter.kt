@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import cz.legat.prectito.R
+import cz.legat.prectito.extensions.fadeInText
+import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.extensions.tintedDrawable
 import cz.legat.prectito.model.Comment
 import cz.legat.prectito.ui.main.base.BaseAdapter
@@ -34,14 +36,10 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
 
         override fun bind(c: Comment) {
             with(c) {
-                tvUser.text = user
-                tvComment.text = comment
-                tvDate.text = date
-                Glide.with(layout.context)
-                    .load(avatarLink)
-                    .centerCrop()
-                    .into(ivAvatar)
-
+                tvUser.fadeInText(c.user)
+                tvComment.fadeInText(c.comment)
+                tvDate.fadeInText(c.date)
+                ivAvatar.loadImg(avatarLink)
                 llRatingHolder.removeAllViews()
 
                 if (rating > 0) {
@@ -53,7 +51,7 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
                     }
                 } else {
                     val trash = TextView(layout.context)
-                    trash.text = layout.context.getString(R.string.pt_rating_trash)
+                    trash.fadeInText(layout.context.getString(R.string.pt_rating_trash))
                     trash.setTextColor(ContextCompat.getColor(layout.context, R.color.white))
                     trash.textSize = 12f
                     llRatingHolder.addView(trash)

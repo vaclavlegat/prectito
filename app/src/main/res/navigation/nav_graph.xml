@@ -46,6 +46,9 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_authorBooksFragment_to_bookDetailFragment"
+            app:destination="@id/detailFragment"/>
     </fragment>
 
     <fragment

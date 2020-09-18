@@ -34,6 +34,10 @@ interface BooksService {
     @GET("/search")
     suspend fun searchAuthor(@Query("q") query: String, @Query("in") where: String = "authors"): Response<String>
 
+    @GET("vydane-knihy/{authorId}")
+    suspend fun getAuthorBooks(@Path("authorId") authorId: String, @Query("odb") sort: String?, @Query("id") page: Int): Response<String>
+
+
     /*@GET("/books/popular")
     suspend fun getPopularBooks(): Response<List<Book>>
 

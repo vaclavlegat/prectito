@@ -1,7 +1,9 @@
 package cz.legat.prectito.repository
 
+import androidx.paging.PagedList
 import cz.legat.prectito.api.BooksService
 import cz.legat.core.model.Author
+import cz.legat.core.model.Book
 import cz.legat.prectito.ui.main.base.BaseRepository
 import cz.legat.prectito.ui.main.base.Result
 import kotlinx.coroutines.runBlocking
@@ -14,6 +16,15 @@ class AuthorsRepository @Inject constructor(private val booksService: BooksServi
         return runBlocking {
             when (val result = apiCall { booksService.getAuthors(page) }) {
                 is Result.Success -> PARSER.parseAuthors(result.data)
+                is Result.Error -> listOf()
+            }
+        }
+    }
+
+    fun getAuthorBooks(page:Int, id:String): List<Book> {
+        return runBlocking {
+            when (val result = apiCall { booksService.getAuthorBooks(authorId = id, page = page, sort = null) }) {
+                is Result.Success -> PARSER.parseAuthorBooks(result.data, page)
                 is Result.Error -> listOf()
             }
         }

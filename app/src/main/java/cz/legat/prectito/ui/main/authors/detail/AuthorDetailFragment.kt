@@ -19,10 +19,10 @@ class AuthorDetailFragment : BaseTabsFragment() {
     }
 
     override fun fragments(): List<Fragment> {
-        return listOf(AuthorBioFragment.newInstance(args.id))
+        return listOf(AuthorBioFragment.newInstance(args.id), AuthorBooksFragment.newInstance(args.id))
     }
 
     override fun tabTitles(): List<String> {
-        return listOf("Info")
+        return listOf("Info", "Books")
     }
 }

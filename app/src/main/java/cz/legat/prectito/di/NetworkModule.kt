@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Named
 
 @Module
@@ -32,8 +33,9 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://books-webapi.herokuapp.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            //.baseUrl("https://books-webapi.herokuapp.com/")
+            .baseUrl("https://www.databazeknih.cz/")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .client(httpClient)
             .build()
     }

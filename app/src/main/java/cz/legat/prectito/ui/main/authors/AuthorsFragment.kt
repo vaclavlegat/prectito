@@ -12,10 +12,8 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Author
+import cz.legat.core.model.Author
 import cz.legat.prectito.ui.main.HomeFragmentDirections
-import cz.legat.prectito.ui.main.books.BOOKS_TYPE_KEY
-import cz.legat.prectito.ui.main.books.BooksFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,7 +43,7 @@ class AuthorsFragment : Fragment() {
         recyclerView = rootView.findViewById(R.id.rv_authors)
         viewManager = GridLayoutManager(activity, GRID_COLUMNS)
         viewAdapter = AuthorsAdapter(object:AuthorsAdapter.OnAuthorClickedListener{
-            override fun onAuthor(author: Author) {
+            override fun onAuthor(author: cz.legat.core.model.Author) {
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToAuthorsFragment(
                         author.authorId!!

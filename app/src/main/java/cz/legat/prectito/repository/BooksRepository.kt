@@ -1,8 +1,10 @@
 package cz.legat.prectito.repository
 
+import android.text.Html
+import cz.legat.booksdp.parser.HtmlParser
 import cz.legat.prectito.api.BooksService
-import cz.legat.prectito.model.Book
-import cz.legat.prectito.model.Comment
+import cz.legat.core.model.Book
+import cz.legat.core.model.Comment
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
 import cz.legat.prectito.ui.main.base.BaseRepository
@@ -20,14 +22,14 @@ class BooksRepository @Inject constructor(
 
     suspend fun getPopularBooks(): List<Book> {
         return when (val result = apiCall { booksService.getPopularBooks() }) {
-            is Result.Success -> result.data
+            is Result.Success -> HtmlParser().parseBooksPopular(result.data)
             is Result.Error -> listOf()
         }
     }
 
     suspend fun getNewBooks(): List<Book> {
         return when (val result = apiCall { booksService.getNewBooks() }) {
-            is Result.Success -> result.data
+            is Result.Success -> PARSER.parseBooksPopular(result.data)
             is Result.Error -> listOf()
         }
     }
@@ -38,7 +40,7 @@ class BooksRepository @Inject constructor(
         }
         return when (val result = apiCall { booksService.getBook(id) }) {
             is Result.Success -> {
-                val book = result.data
+                val book = PARSER.parseBook(id, result.data)
                 book.copy(
                     description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
                             "celý text"
@@ -55,7 +57,7 @@ class BooksRepository @Inject constructor(
             return listOf()
         }
         return when (val result = apiCall { booksService.getBookComments(id) }) {
-            is Result.Success -> result.data
+            is Result.Success -> PARSER.parseBookComments(result.data)
             is Result.Error -> listOf()
         }
     }
@@ -63,7 +65,7 @@ class BooksRepository @Inject constructor(
     suspend fun getBookByISBN(isbn: String): SavedBook? {
         return when (val result = apiCall { booksService.getBookByISBN(isbn) }) {
             is Result.Success -> {
-                val book = result.data
+                val book = PARSER.parseBook(isbn, result.data)
                 SavedBook(
                     title = book.title,
                     author = book.author?.name,
@@ -79,7 +81,7 @@ class BooksRepository @Inject constructor(
 
     suspend fun searchBook(query: String): List<Book> {
         return when (val result = apiCall { booksService.searchBook(query) }) {
-            is Result.Success -> result.data
+            is Result.Success -> PARSER.parseBookSearchResults(result.data)
             is Result.Error -> listOf()
         }
     }

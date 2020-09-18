@@ -19,8 +19,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Author
-import cz.legat.prectito.model.Book
+import cz.legat.core.model.Author
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
 import cz.legat.prectito.ui.main.books.BooksViewModel
@@ -52,8 +51,8 @@ class SearchAuthorResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         authorsAdapter =
-            SearchAuthorResultsAdapter(object : BaseAdapter.OnItemClickedListener<Author> {
-                override fun onItem(item: Author) {
+            SearchAuthorResultsAdapter(object : BaseAdapter.OnItemClickedListener<cz.legat.core.model.Author> {
+                override fun onItem(item: cz.legat.core.model.Author) {
                     hideKeyboard(requireContext())
                     val action =
                         SearchAuthorResultsFragmentDirections.actionSearchAuthorsResultsFragmentToDetailFragment(
@@ -95,7 +94,7 @@ class SearchAuthorResultsFragment : Fragment() {
         progress.visibility = View.VISIBLE
         viewModel.searchAuthor(args.query)
         progress.visibility = View.VISIBLE
-        viewModel.searchAuthors.observe(viewLifecycleOwner, Observer<List<Author>> {
+        viewModel.searchAuthors.observe(viewLifecycleOwner, Observer<List<cz.legat.core.model.Author>> {
             authorsAdapter.update(it)
             progress.visibility = View.GONE
         })

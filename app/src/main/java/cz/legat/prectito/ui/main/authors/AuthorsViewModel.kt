@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import cz.legat.prectito.model.Author
+import cz.legat.core.model.Author
 import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.ui.main.paging.BaseDataSourceFactory
 import cz.legat.prectito.ui.main.paging.BasePageKeyedDataSource

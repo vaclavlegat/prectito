@@ -8,13 +8,9 @@ import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
+import cz.legat.core.model.Author
 import cz.legat.prectito.extensions.loadImg
-import cz.legat.prectito.model.Author
-import cz.legat.prectito.model.Book
-import cz.legat.prectito.ui.main.books.BooksAdapter
 
 class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): PagedListAdapter<Author, AuthorsAdapter.AuthorViewHolder>(DIFF_CALLBACK) {
 

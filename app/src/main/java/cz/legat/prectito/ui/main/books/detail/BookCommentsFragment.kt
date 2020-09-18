@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.prectito.model.Comment
+import cz.legat.core.model.Comment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,8 +40,8 @@ class BookCommentsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = CommentsAdapter(object: BaseAdapter.OnItemClickedListener<Comment>{
-            override fun onItem(item: Comment) {
+        viewAdapter = CommentsAdapter(object: BaseAdapter.OnItemClickedListener<cz.legat.core.model.Comment>{
+            override fun onItem(item: cz.legat.core.model.Comment) {
 
             }
         })
@@ -52,7 +52,7 @@ class BookCommentsFragment : Fragment() {
         }
 
         progressBar.visibility = View.VISIBLE
-        viewModel.comments.observe(viewLifecycleOwner, Observer<List<Comment>> {
+        viewModel.comments.observe(viewLifecycleOwner, Observer<List<cz.legat.core.model.Comment>> {
             progressBar.visibility = View.GONE
             viewAdapter.update(it)
         })

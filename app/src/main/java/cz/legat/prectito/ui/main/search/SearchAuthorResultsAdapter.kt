@@ -4,9 +4,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import cz.legat.prectito.R
+import cz.legat.core.model.Author
 import cz.legat.prectito.extensions.loadImg
-import cz.legat.prectito.model.Author
-import cz.legat.prectito.model.Book
 import cz.legat.prectito.ui.main.base.BaseAdapter
 
 class SearchAuthorResultsAdapter(private val onItemClickedListener: OnItemClickedListener<Author>) :

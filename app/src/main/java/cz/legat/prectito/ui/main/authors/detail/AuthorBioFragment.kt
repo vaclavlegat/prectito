@@ -9,15 +9,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
 import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.loadImg
-import cz.legat.prectito.model.Author
-import cz.legat.prectito.model.bigImgLink
-import cz.legat.prectito.model.middleImgLink
-import cz.legat.prectito.ui.main.authors.AuthorsViewModel
+import cz.legat.core.model.Author
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,7 +53,7 @@ class AuthorBioFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.author.observe(viewLifecycleOwner,
-            Observer<Author?> {
+            Observer<cz.legat.core.model.Author?> {
                 it?.let {
                     nameTv.fadeInText(it.name)
                     lifeTv.fadeInText(it.life)

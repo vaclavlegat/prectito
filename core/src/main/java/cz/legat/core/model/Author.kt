@@ -1,4 +1,4 @@
-package cz.legat.prectito.model
+package cz.legat.core.model
 
 import android.os.Parcel
 import android.os.Parcelable

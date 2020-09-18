@@ -1,8 +1,11 @@
 package cz.legat.prectito.ui.main.base
 
+import cz.legat.booksdp.parser.HtmlParser
 import retrofit2.Response
 
 abstract class BaseRepository {
+
+    val PARSER = HtmlParser()
 
     protected suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): Result<T> {
         val response: Response<T>

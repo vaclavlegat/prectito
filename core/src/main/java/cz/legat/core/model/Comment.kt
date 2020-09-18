@@ -1,4 +1,4 @@
-package cz.legat.prectito.model
+package cz.legat.core.model
 
 data class Comment(
     val id: String,

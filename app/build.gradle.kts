@@ -44,6 +44,9 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    implementation(project(":core"))
+    implementation(project(":booksdb"))
+
     // core
     implementation (Libs.appcompat)
     implementation (Libs.coreKtx)
@@ -88,6 +91,8 @@ dependencies {
 
 
     implementation ("androidx.preference:preference:1.1.1")
+
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
     api ("com.google.guava:guava:27.1-jre")
 

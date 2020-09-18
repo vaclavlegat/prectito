@@ -5,12 +5,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import cz.legat.prectito.R
+import cz.legat.core.model.Comment
 import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.extensions.tintedDrawable
-import cz.legat.prectito.model.Comment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 
 class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<Comment>) :

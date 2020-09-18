@@ -17,6 +17,8 @@ class AuthorDetailViewModel  @ViewModelInject constructor(
 ) : ViewModel() {
 
     val author = liveData(Dispatchers.IO) {
-        emit(authorsRepository.getAuthor(savedStateHandle.get<String>("id")))
+        savedStateHandle.get<String>("id")?.let {
+            emit(authorsRepository.getAuthor(it))
+        }
     }
 }

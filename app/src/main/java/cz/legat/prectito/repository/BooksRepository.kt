@@ -1,37 +1,34 @@
 package cz.legat.prectito.repository
 
 import cz.legat.prectito.api.BooksService
-import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.model.Comment
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
+import cz.legat.prectito.ui.main.base.BaseRepository
+import cz.legat.prectito.ui.main.base.Result
 import javax.inject.Inject
 
 class BooksRepository @Inject constructor(
     private val booksService: BooksService,
     private val savedBookDao: SavedBookDao
-) {
+) : BaseRepository() {
 
     suspend fun getMyBooks(): List<SavedBook> {
         return savedBookDao.getAll()
     }
 
     suspend fun getPopularBooks(): List<Book> {
-        return try {
-            val response = booksService.getPopularBooks()
-            response.body()!!
-        } catch (e: Exception) {
-            getPopularBooks()
+        return when (val result = apiCall { booksService.getPopularBooks() }) {
+            is Result.Success -> result.data
+            is Result.Error -> listOf()
         }
     }
 
     suspend fun getNewBooks(): List<Book> {
-        return try {
-            val response = booksService.getNewBooks()
-            response.body()!!
-        } catch (e: Exception) {
-            getNewBooks()
+        return when (val result = apiCall { booksService.getNewBooks() }) {
+            is Result.Success -> result.data
+            is Result.Error -> listOf()
         }
     }
 
@@ -39,61 +36,59 @@ class BooksRepository @Inject constructor(
         if (id == null) {
             return null
         }
-
-        val book = booksService.getBook(id)
-
-        return book.copy(
-            description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
-                    "celý text"
+        return when (val result = apiCall { booksService.getBook(id) }) {
+            is Result.Success -> {
+                val book = result.data
+                book.copy(
+                    description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
+                            "celý text"
+                        )
+                    ) book.description else book.description.dropLast(12)
                 )
-            ) book.description else book.description.dropLast(12)
-        )
+            }
+            is Result.Error -> null
+        }
     }
 
     suspend fun getBookComments(id: String?): List<Comment> {
         if (id == null) {
             return listOf()
         }
-        return booksService.getBookComments(id)
+        return when (val result = apiCall { booksService.getBookComments(id) }) {
+            is Result.Success -> result.data
+            is Result.Error -> listOf()
+        }
     }
 
     suspend fun getBookByISBN(isbn: String): SavedBook? {
-        return try {
-            val book = booksService.getBookByISBN(isbn)
-            return SavedBook(
-                title = book.title,
-                author = book.author?.name,
-                isbn = isbn,
-                publishedDate = book.published,
-                pageCount = book.numberOfPages,
-                language = book.language
-            )
-        } catch (e: Exception) {
-            SavedBook(isbn = isbn)
+        return when (val result = apiCall { booksService.getBookByISBN(isbn) }) {
+            is Result.Success -> {
+                val book = result.data
+                SavedBook(
+                    title = book.title,
+                    author = book.author?.name,
+                    isbn = isbn,
+                    publishedDate = book.published,
+                    pageCount = book.numberOfPages,
+                    language = book.language
+                )
+            }
+            is Result.Error -> SavedBook(isbn = isbn)
         }
     }
 
     suspend fun searchBook(query: String): List<Book> {
-        return try {
-            booksService.searchBook(query)
-        } catch (e: Exception) {
-            listOf()
+        return when (val result = apiCall { booksService.searchBook(query) }) {
+            is Result.Success -> result.data
+            is Result.Error -> listOf()
         }
     }
 
-    suspend fun saveBook(savedBook: SavedBook) {
+    fun saveBook(savedBook: SavedBook) {
         savedBookDao.insertAll(savedBook)
     }
 
-    suspend fun removeBook(book: SavedBook) {
+    fun removeBook(book: SavedBook) {
         return savedBookDao.delete(book)
-    }
-
-    suspend fun searchAuthor(query: String): List<Author> {
-        return try {
-            booksService.searchAuthor(query)
-        } catch (e: Exception) {
-            listOf()
-        }
     }
 }

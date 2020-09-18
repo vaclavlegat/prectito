@@ -18,16 +18,16 @@ interface BooksService {
     suspend fun getNewBooks(): Response<List<Book>>
 
     @GET("/books/detail/{id}")
-    suspend fun getBook(@Path("id") id: String): Book
+    suspend fun getBook(@Path("id") id: String): Response<Book>
 
     @GET("/books/isbn")
-    suspend fun getBookByISBN(@Query("q") isbn: String): Book
+    suspend fun getBookByISBN(@Query("q") isbn: String): Response<Book>
 
     @GET("/books/search")
-    suspend fun searchBook(@Query("q") query: String): List<Book>
+    suspend fun searchBook(@Query("q") query: String): Response<List<Book>>
 
     @GET("/books/detail/{id}/comments")
-    suspend fun getBookComments(@Path("id") id: String): List<Comment>
+    suspend fun getBookComments(@Path("id") id: String): Response<List<Comment>>
 
     @GET("/authors")
     suspend fun getAuthors(@Query("page") page: Int): Response<List<Author>>
@@ -36,5 +36,5 @@ interface BooksService {
     suspend fun getAuthor(@Path("id") id: String): Response<Author>
 
     @GET("/authors/search")
-    suspend fun searchAuthor(@Query("q") query: String): List<Author>
+    suspend fun searchAuthor(@Query("q") query: String): Response<List<Author>>
 }

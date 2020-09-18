@@ -8,13 +8,15 @@ import androidx.lifecycle.viewModelScope
 import cz.legat.prectito.model.Author
 import cz.legat.prectito.model.Book
 import cz.legat.prectito.persistence.SavedBook
+import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BooksViewModel @ViewModelInject constructor(
-    private val booksRepository: BooksRepository
+    private val booksRepository: BooksRepository,
+    private val authorsRepository: AuthorsRepository
 ) : ViewModel() {
 
     var lastQuery: String = ""
@@ -63,7 +65,7 @@ class BooksViewModel @ViewModelInject constructor(
     fun searchAuthor(query: String?) {
         query?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                val authors = booksRepository.searchAuthor(query)
+                val authors = authorsRepository.searchAuthor(query)
                 withContext(Dispatchers.Main) {
                     searchAuthors.value = authors
                 }

@@ -87,5 +87,8 @@
     <string name="pt_search">Search</string>
     <string name="pt_rating_trash">Trash</string>
     <string name="pt_tab_title_authors">authors</string>
+    <string name="pt_popular_books">Popular books</string>
+  <string name="pt_new_books">New releases</string>
+    <string name="pt_authors">Authors</string>
 
 </resources>

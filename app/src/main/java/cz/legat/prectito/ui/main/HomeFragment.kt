@@ -8,16 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import cz.legat.core.model.Book
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.LiveBarcodeScanningActivity
 import cz.legat.prectito.barcode.Utils
+import cz.legat.prectito.ui.main.authors.AuthorsAdapter
 import cz.legat.prectito.ui.main.authors.AuthorsFragment
+import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.AUTHORS
+import cz.legat.prectito.ui.main.books.BooksAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
 import cz.legat.prectito.ui.main.books.BooksViewModel
 import cz.legat.prectito.ui.main.books.NEW_BOOKS
@@ -33,10 +41,12 @@ class HomeFragment : Fragment() {
     }
 
     private val viewModel: BooksViewModel by viewModels()
-
-    lateinit var pager: ViewPager2
-    lateinit var tabs: TabLayout
-    lateinit var scanBtn: FloatingActionButton
+    lateinit var popularBooksRV: RecyclerView
+    private var popularBooksAdapter: BooksAdapter? = null
+    lateinit var newBooksRV: RecyclerView
+    private var newBooksAdapter: BooksAdapter? = null
+    lateinit var authorsRV: RecyclerView
+    private var authorsAdapter: AuthorsAdapter? = null
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -63,62 +73,73 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        pager = view.findViewById(R.id.pt_home_pager)
-        tabs = view.findViewById(R.id.pt_home_tabs)
-        scanBtn = view.findViewById(R.id.pt_barcode_scan_btn)
+        popularBooksRV = view.findViewById(R.id.pt_popular_books_rv)
+        newBooksRV = view.findViewById(R.id.pt_new_books_rv)
+        authorsRV = view.findViewById(R.id.pt_authors_rv)
+
+        popularBooksAdapter = BooksAdapter(object :BaseAdapter.OnItemClickedListener<Book>{
+            override fun onItem(item: Book) {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                        item.id
+                    )
+                Navigation.findNavController(view).navigate(action)
+            }
+        })
+
+        popularBooksRV.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = popularBooksAdapter
+        }
+
+        newBooksAdapter = BooksAdapter(object :BaseAdapter.OnItemClickedListener<Book>{
+            override fun onItem(item: Book) {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                        item.id
+                    )
+                Navigation.findNavController(view).navigate(action)
+            }
+        })
+
+        newBooksRV.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = newBooksAdapter
+        }
+
+        authorsAdapter = AuthorsAdapter(object:AuthorsAdapter.OnAuthorClickedListener{
+            override fun onAuthor(author: cz.legat.core.model.Author) {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToAuthorsFragment(
+                        author.authorId!!
+                    )
+                Navigation.findNavController(view).navigate(action)
+            }
+        })
+
+
+        authorsRV.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = authorsAdapter
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        pager.adapter = HomeAdapter(this)
-        TabLayoutMediator(tabs, pager) { tab, position ->
-            tab.text =
-                getString(when(position) {
-                    POPULAR_BOOKS -> R.string.pt_tab_title_popular
-                    NEW_BOOKS -> R.string.pt_tab_title_new
-                    AUTHORS -> R.string.pt_tab_title_authors
-                    else -> R.string.pt_tab_title_my_books})
-        }.attach()
 
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                onTabChangeListener?.onTabChanged(tab.position)
-            }
+        viewModel.popularBooks.observe(viewLifecycleOwner, Observer {
+            popularBooksAdapter?.update(it)
         })
 
-        scanBtn.setOnClickListener {
-            activity?.startActivity(Intent(activity, LiveBarcodeScanningActivity::class.java))
-        }
-        scanBtn.visibility = View.GONE
-    }
+        viewModel.newBooks.observe(viewLifecycleOwner, Observer {
+            newBooksAdapter?.update(it)
+        })
 
-    override fun onResume() {
-        super.onResume()
-        if (!Utils.allPermissionsGranted(requireContext())) {
-            Utils.requestRuntimePermissions(requireActivity())
-        }
-    }
-
-    class HomeAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-
-        override fun getItemCount(): Int = 4
-
-        override fun createFragment(position: Int): Fragment {
-            if (position == 2) {
-                return AuthorsFragment.newInstance()
-            }
-            if (position == 3) {
-                return MyBooksFragment.newInstance()
-            }
-            return BooksFragment.newInstance(position)
-        }
+        viewModel.authors.observe(viewLifecycleOwner, Observer {
+            authorsAdapter?.submitList(it)
+        })
     }
 }

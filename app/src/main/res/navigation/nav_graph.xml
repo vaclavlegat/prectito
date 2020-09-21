@@ -11,8 +11,8 @@
         android:label="Home"
         tools:layout="@layout/pt_home_fragment" >
         <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment">
+            android:id="@+id/action_homeFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment">
         </action>
         <action
             android:id="@+id/action_homeFragment_to_searchResultsFragment"
@@ -29,9 +29,23 @@
     </fragment>
 
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="cz.legat.prectito.ui.main.books.detail.DetailFragment"
+        android:id="@+id/bookDetailFragment"
+        android:name="cz.legat.prectito.ui.main.books.detail.BookDetailFragment"
         android:label="Detail"
+        tools:layout="@layout/pt_detail_tabs_fragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_bookDetailFragment_to_bookCommentsFragment"
+            app:destination="@id/bookCommentsFragment">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookCommentsFragment"
+        android:name="cz.legat.prectito.ui.main.books.detail.BookCommentsFragment"
+        android:label="Comments"
         tools:layout="@layout/pt_detail_tabs_fragment" >
         <argument
             android:name="id"
@@ -48,7 +62,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_authorBooksFragment_to_bookDetailFragment"
-            app:destination="@id/detailFragment"/>
+            app:destination="@id/bookDetailFragment"/>
     </fragment>
 
     <fragment
@@ -60,8 +74,8 @@
             android:name="query"
             app:argType="string" />
         <action
-            android:id="@+id/action_searchResultsFragment_to_detailFragment"
-            app:destination="@id/detailFragment">
+            android:id="@+id/action_searchResultsFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment">
         </action>
     </fragment>
 
@@ -74,7 +88,7 @@
             android:name="query"
             app:argType="string" />
         <action
-            android:id="@+id/action_searchAuthorsResultsFragment_to_detailFragment"
+            android:id="@+id/action_searchAuthorsResultsFragment_to_authorDetailFragment"
             app:destination="@id/authorsDetailFragment">
         </action>
     </fragment>

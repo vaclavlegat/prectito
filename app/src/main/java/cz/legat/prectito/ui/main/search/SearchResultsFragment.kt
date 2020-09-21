@@ -55,7 +55,7 @@ class SearchResultsFragment : Fragment() {
                 override fun onItem(item: cz.legat.core.model.Book) {
                     hideKeyboard(requireContext())
                     val action =
-                        SearchResultsFragmentDirections.actionSearchResultsFragmentToDetailFragment(
+                        SearchResultsFragmentDirections.actionSearchResultsFragmentToBookDetailFragment(
                             item.id
                         )
                     findNavController().navigate(action)

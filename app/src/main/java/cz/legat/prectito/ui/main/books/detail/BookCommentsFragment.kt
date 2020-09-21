@@ -40,8 +40,8 @@ class BookCommentsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = CommentsAdapter(object: BaseAdapter.OnItemClickedListener<cz.legat.core.model.Comment>{
-            override fun onItem(item: cz.legat.core.model.Comment) {
+        viewAdapter = CommentsAdapter(object: BaseAdapter.OnItemClickedListener<Comment>{
+            override fun onItem(item: Comment) {
 
             }
         })
@@ -52,7 +52,7 @@ class BookCommentsFragment : Fragment() {
         }
 
         progressBar.visibility = View.VISIBLE
-        viewModel.comments.observe(viewLifecycleOwner, Observer<List<cz.legat.core.model.Comment>> {
+        viewModel.allComments.observe(viewLifecycleOwner, Observer<List<Comment>> {
             progressBar.visibility = View.GONE
             viewAdapter.update(it)
         })

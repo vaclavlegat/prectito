@@ -55,7 +55,7 @@ class SearchAuthorResultsFragment : Fragment() {
                 override fun onItem(item: cz.legat.core.model.Author) {
                     hideKeyboard(requireContext())
                     val action =
-                        SearchAuthorResultsFragmentDirections.actionSearchAuthorsResultsFragmentToDetailFragment(
+                        SearchAuthorResultsFragmentDirections.actionSearchAuthorsResultsFragmentToAuthorDetailFragment(
                             item.authorId!!
                         )
                     findNavController().navigate(action)

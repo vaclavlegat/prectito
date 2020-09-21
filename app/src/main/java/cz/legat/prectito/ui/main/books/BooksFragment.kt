@@ -48,10 +48,10 @@ class BooksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         booksAdapter = BooksAdapter(object :
-            BaseAdapter.OnItemClickedListener<cz.legat.core.model.Book> {
-            override fun onItem(item: cz.legat.core.model.Book) {
+            BaseAdapter.OnItemClickedListener<Book> {
+            override fun onItem(item: Book) {
                 val action =
-                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                    HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
                         item.id
                     )
                 findNavController().navigate(action)

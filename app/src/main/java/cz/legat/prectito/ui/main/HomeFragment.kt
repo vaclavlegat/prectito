@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
         popularBooksAdapter = BooksAdapter(object :BaseAdapter.OnItemClickedListener<Book>{
             override fun onItem(item: Book) {
                 val action =
-                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                    HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
                         item.id
                     )
                 Navigation.findNavController(view).navigate(action)
@@ -96,7 +96,7 @@ class HomeFragment : Fragment() {
         newBooksAdapter = BooksAdapter(object :BaseAdapter.OnItemClickedListener<Book>{
             override fun onItem(item: Book) {
                 val action =
-                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                    HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
                         item.id
                     )
                 Navigation.findNavController(view).navigate(action)

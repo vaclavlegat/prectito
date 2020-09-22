@@ -9,6 +9,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import cz.legat.prectito.R
 
@@ -37,6 +38,6 @@ fun ImageView.loadImg(vararg imgLinks: String?) {
 }
 
 fun ImageView.loadSingleImg(imgLink: String?): RequestBuilder<Drawable> {
-    return Glide.with(this).load(imgLink).placeholder(R.drawable.pt_img_placeholder)
+    return Glide.with(this).load(imgLink).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.pt_img_placeholder)
         .transition(DrawableTransitionOptions.withCrossFade(200))
 }

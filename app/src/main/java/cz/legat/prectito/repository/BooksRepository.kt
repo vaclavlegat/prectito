@@ -15,22 +15,43 @@ class BooksRepository @Inject constructor(
     private val savedBookDao: SavedBookDao
 ) : BaseRepository() {
 
+    private val popularCache = mutableListOf<Book>()
+    private val newCache = mutableListOf<Book>()
     private val commentsCache = hashMapOf<String, List<Comment>>()
+    private val searchedBooksCache = hashMapOf<String, List<Book>>()
+    private val booksCache = hashMapOf<String, Book>()
 
     suspend fun getMyBooks(): List<SavedBook> {
         return savedBookDao.getAll()
     }
 
     suspend fun getPopularBooks(): List<Book> {
+        if (popularCache.isNotEmpty()) {
+            return popularCache
+        }
+
         return when (val result = apiCall { booksService.getPopularBooks() }) {
-            is Result.Success -> HtmlParser().parseBooksPopular(result.data)
+            is Result.Success -> {
+                val popular = HtmlParser().parseBooksPopular(result.data)
+                popularCache.clear()
+                popularCache.addAll(popular)
+                popular
+            }
             is Result.Error -> listOf()
         }
     }
 
     suspend fun getNewBooks(): List<Book> {
+        if (newCache.isNotEmpty()) {
+            return newCache
+        }
         return when (val result = apiCall { booksService.getNewBooks() }) {
-            is Result.Success -> PARSER.parseBooksPopular(result.data)
+            is Result.Success -> {
+                val new = PARSER.parseBooksPopular(result.data)
+                newCache.clear()
+                newCache.addAll(new)
+                new
+            }
             is Result.Error -> listOf()
         }
     }
@@ -39,6 +60,10 @@ class BooksRepository @Inject constructor(
         if (id == null) {
             return null
         }
+        if (booksCache.containsKey(id)) {
+            return booksCache[id]
+        }
+
         return when (val result = apiCall { booksService.getBook(id) }) {
             is Result.Success -> {
                 val book = PARSER.parseBook(id, result.data)
@@ -48,6 +73,8 @@ class BooksRepository @Inject constructor(
                         )
                     ) book.description else book.description.dropLast(12)
                 )
+                booksCache[id] = book
+                book
             }
             is Result.Error -> null
         }
@@ -90,8 +117,15 @@ class BooksRepository @Inject constructor(
     }
 
     suspend fun searchBook(query: String): List<Book> {
+        if (searchedBooksCache.containsKey(query)) {
+            return searchedBooksCache[query] ?: listOf()
+        }
         return when (val result = apiCall { booksService.searchBook(query) }) {
-            is Result.Success -> PARSER.parseBookSearchResults(result.data)
+            is Result.Success -> {
+                val searchBooks = PARSER.parseBookSearchResults(result.data)
+                searchedBooksCache[query] = searchBooks
+                searchBooks
+            }
             is Result.Error -> listOf()
         }
     }

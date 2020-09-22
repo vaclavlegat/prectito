@@ -44,7 +44,6 @@
             android:layout_marginEnd="16dp"
             android:textColor="@color/pt_color_text"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/pt_book_published_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pt_book_image_iv"
             app:layout_constraintTop_toBottomOf="@+id/pt_book_title_tv" />
@@ -52,16 +51,35 @@
         <TextView
             android:id="@+id/pt_book_published_tv"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/pt_color_text"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/pt_book_desc_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pt_book_image_iv"
             app:layout_constraintTop_toBottomOf="@+id/pt_book_author_tv" />
+
+        <TextView
+            android:id="@+id/pt_book_rating_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/pt_rating_bg"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:visibility="gone"
+            android:textColor="@color/pt_color_text"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/pt_book_image_iv"
+            app:layout_constraintTop_toBottomOf="@+id/pt_book_published_tv"
+            tools:text="87 %" />
 
         <TextView
             android:id="@+id/pt_book_desc_tv"
@@ -81,10 +99,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:text="@string/pt_comments"
             android:textAllCaps="true"
+            android:visibility="gone"
             android:textColor="@color/pt_color_text"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -103,11 +122,15 @@
 
         <Button
             android:id="@+id/pt_more_comments_btn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:text="@string/pt_more_comments"
-            app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pt_comments_rv" />
 

@@ -1,10 +1,9 @@
 package cz.legat.prectito.repository
 
-import android.text.Html
 import cz.legat.booksdp.parser.HtmlParser
-import cz.legat.prectito.api.BooksService
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
+import cz.legat.prectito.api.BooksService
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
 import cz.legat.prectito.ui.main.base.BaseRepository
@@ -15,6 +14,8 @@ class BooksRepository @Inject constructor(
     private val booksService: BooksService,
     private val savedBookDao: SavedBookDao
 ) : BaseRepository() {
+
+    private val commentsCache = hashMapOf<String, List<Comment>>()
 
     suspend fun getMyBooks(): List<SavedBook> {
         return savedBookDao.getAll()
@@ -56,8 +57,17 @@ class BooksRepository @Inject constructor(
         if (id == null) {
             return listOf()
         }
+
+        if (commentsCache.containsKey(id)) {
+            return commentsCache[id] ?: listOf()
+        }
+
         return when (val result = apiCall { booksService.getBookComments(id) }) {
-            is Result.Success -> PARSER.parseBookComments(result.data)
+            is Result.Success -> {
+                val comments = PARSER.parseBookComments(result.data)
+                commentsCache[id] = comments
+                comments
+            }
             is Result.Error -> listOf()
         }
     }

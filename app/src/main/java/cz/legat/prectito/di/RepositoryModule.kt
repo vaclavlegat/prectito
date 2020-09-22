@@ -8,12 +8,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 object RepositoryModule {
 
     @Provides
+    @Singleton
     fun provideBooksRepository(
         booksService: BooksService,
         savedBookDao: SavedBookDao
@@ -22,6 +24,7 @@ object RepositoryModule {
     }
 
     @Provides
+    @Singleton
     fun provideAuthorsRepository(
         booksService: BooksService
     ): AuthorsRepository {

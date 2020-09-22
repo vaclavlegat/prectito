@@ -28,4 +28,11 @@
   <color name="barcode_field_box_stroke">#757575</color>
   <color name="product_description">#5F6368</color>
   <color name="pt_search_bar_active">#333333</color>
+
+  <color name="pt_rating_30">#646466</color>
+  <color name="pt_rating_50">#7772a3</color>
+  <color name="pt_rating_70">#5649de</color>
+  <color name="pt_rating_80">#c94053</color>
+  <color name="pt_rating_100">#c71c10</color>
+
 </resources>

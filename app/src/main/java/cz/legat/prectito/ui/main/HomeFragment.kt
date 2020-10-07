@@ -21,6 +21,9 @@ import cz.legat.core.model.Book
 import cz.legat.prectito.R
 import cz.legat.prectito.barcode.LiveBarcodeScanningActivity
 import cz.legat.prectito.barcode.Utils
+import cz.legat.prectito.databinding.PtHomeFragmentBinding
+import cz.legat.prectito.extensions.initLinear
+import cz.legat.prectito.extensions.initLinearPaged
 import cz.legat.prectito.ui.main.authors.AuthorsAdapter
 import cz.legat.prectito.ui.main.authors.AuthorsFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
@@ -34,23 +37,16 @@ import cz.legat.prectito.ui.main.my.MyBooksFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
 
     interface TabChangeListener {
         fun onTabChanged(position: Int)
     }
 
     private val viewModel: BooksViewModel by viewModels()
-    lateinit var popularBooksRV: RecyclerView
     private var popularBooksAdapter: BooksAdapter? = null
-    lateinit var newBooksRV: RecyclerView
     private var newBooksAdapter: BooksAdapter? = null
-    lateinit var authorsRV: RecyclerView
     private var authorsAdapter: AuthorsAdapter? = null
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
 
     private var onTabChangeListener: TabChangeListener? = null
 
@@ -68,15 +64,12 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.pt_home_fragment, container, false)
+        _binding = PtHomeFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        popularBooksRV = view.findViewById(R.id.pt_popular_books_rv)
-        newBooksRV = view.findViewById(R.id.pt_new_books_rv)
-        authorsRV = view.findViewById(R.id.pt_authors_rv)
-
         popularBooksAdapter = BooksAdapter(object :BaseAdapter.OnItemClickedListener<Book>{
             override fun onItem(item: Book) {
                 val action =
@@ -87,11 +80,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        popularBooksRV.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = popularBooksAdapter
-        }
+        binding.ptPopularBooksRv.initLinear(popularBooksAdapter)
 
         newBooksAdapter = BooksAdapter(object :BaseAdapter.OnItemClickedListener<Book>{
             override fun onItem(item: Book) {
@@ -103,11 +92,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        newBooksRV.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = newBooksAdapter
-        }
+        binding.ptNewBooksRv.initLinear(newBooksAdapter)
 
         authorsAdapter = AuthorsAdapter(object:AuthorsAdapter.OnAuthorClickedListener{
             override fun onAuthor(author: cz.legat.core.model.Author) {
@@ -120,11 +105,7 @@ class HomeFragment : Fragment() {
         })
 
 
-        authorsRV.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = authorsAdapter
-        }
+        binding.ptAuthorsRv.initLinearPaged(authorsAdapter)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

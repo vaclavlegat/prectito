@@ -19,7 +19,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.core.model.Book
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
 import cz.legat.prectito.ui.main.books.BooksViewModel
@@ -51,7 +50,8 @@ class SearchResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         booksAdapter =
-            SearchResultsAdapter(object : BaseAdapter.OnItemClickedListener<cz.legat.core.model.Book> {
+            SearchResultsAdapter(object :
+                BaseAdapter.OnItemClickedListener<cz.legat.core.model.Book> {
                 override fun onItem(item: cz.legat.core.model.Book) {
                     hideKeyboard(requireContext())
                     val action =
@@ -79,7 +79,6 @@ class SearchResultsFragment : Fragment() {
 
             override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 handler.removeCallbacksAndMessages(null)
-
                 handler.postDelayed(Runnable {
                     query?.let {
                         viewModel.searchBook(it.toString())

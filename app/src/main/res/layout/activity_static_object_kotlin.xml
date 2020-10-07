@@ -80,12 +80,6 @@
 
   </FrameLayout>
 
-  <com.google.mlkit.md.productsearch.BottomSheetScrimView
-      android:id="@+id/bottom_sheet_scrim_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:visibility="gone"/>
-
   <include
       android:id="@+id/bottom_sheet"
       layout="@layout/product_bottom_sheet"

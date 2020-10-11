@@ -12,12 +12,6 @@ class AuthorDetailFragment : BaseTabsFragment() {
 
     private val args: AuthorDetailFragmentArgs by navArgs()
 
-    companion object {
-        fun newInstance(): AuthorDetailFragment {
-            return AuthorDetailFragment()
-        }
-    }
-
     override fun fragments(): List<Fragment> {
         return listOf(AuthorBioFragment.newInstance(args.id), AuthorBooksFragment.newInstance(args.id))
     }

@@ -12,28 +12,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.model.Comment
+import cz.legat.prectito.databinding.PtCommentsFragmentBinding
+import cz.legat.prectito.extensions.gone
+import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookCommentsFragment : Fragment() {
+class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>() {
 
     private val viewModel: BookDetailViewModel by viewModels()
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: CommentsAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val rootView = inflater.inflate(R.layout.pt_comments_fragment, container, false)
-        recyclerView = rootView.findViewById(R.id.pt_comments_rv)
-        progressBar = rootView.findViewById(R.id.pt_progress)
-        return rootView
+       _binding = PtCommentsFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -46,14 +45,14 @@ class BookCommentsFragment : Fragment() {
             }
         })
 
-        recyclerView.apply {
+        binding.ptCommentsRv.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
-        progressBar.visibility = View.VISIBLE
+        binding.ptProgress.visible()
         viewModel.allComments.observe(viewLifecycleOwner, Observer<List<Comment>> {
-            progressBar.visibility = View.GONE
+            binding.ptProgress.gone()
             viewAdapter.update(it)
         })
     }

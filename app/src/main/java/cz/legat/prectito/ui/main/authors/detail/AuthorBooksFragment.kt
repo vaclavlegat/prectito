@@ -14,22 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Book
 import cz.legat.prectito.R
+import cz.legat.prectito.databinding.PtMainFragmentBinding
+import cz.legat.prectito.extensions.gone
+import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-const val BOOKS_TYPE_KEY = "BOOKS_TYPE_KEY"
-const val POPULAR_BOOKS = 0
-const val NEW_BOOKS = 1
-const val AUTHORS = 2
-
 @AndroidEntryPoint
-class AuthorBooksFragment : Fragment() {
+class AuthorBooksFragment : BindingFragment<PtMainFragmentBinding>() {
 
     private val viewModel: AuthorDetailViewModel by viewModels()
-
-    lateinit var booksRv: RecyclerView
     lateinit var booksAdapter: AuthorBooksAdapter
-    lateinit var progress: ProgressBar
 
     companion object {
         fun newInstance(id: String) = AuthorBooksFragment().apply {
@@ -58,9 +54,8 @@ class AuthorBooksFragment : Fragment() {
                 findNavController().navigate(action)
             }
         })
-        booksRv = view.findViewById(R.id.pt_books_rw)
-        progress = view.findViewById(R.id.pt_progress)
-        booksRv.apply {
+
+        binding.ptBooksRw.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = booksAdapter
             setHasFixedSize(true)
@@ -69,9 +64,9 @@ class AuthorBooksFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        progress.visibility = View.VISIBLE
+        binding.ptProgress.visible()
         viewModel.books.observe(viewLifecycleOwner, Observer<PagedList<Book>> { books ->
-            progress.visibility = View.GONE
+            binding.ptProgress.gone()
             booksAdapter.submitList(books)
         })
     }

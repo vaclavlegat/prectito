@@ -19,52 +19,33 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Comment
 import cz.legat.prectito.R
+import cz.legat.prectito.databinding.PtBookDetailFragmentBinding
 import cz.legat.prectito.extensions.fadeInText
+import cz.legat.prectito.extensions.goneIf
 import cz.legat.prectito.extensions.loadImg
+import cz.legat.prectito.extensions.visibleIf
+import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookDetailFragment : Fragment() {
+class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>() {
 
     private val args: BookDetailFragmentArgs by navArgs()
     private val viewModel: BookDetailViewModel by viewModels()
 
-    lateinit var titleTV: TextView
-    lateinit var authorTV: TextView
-    lateinit var publishedTV: TextView
-    lateinit var imageIV: ImageView
-    lateinit var descTV: TextView
-    lateinit var ratingTV: TextView
-    lateinit var commentsRV: RecyclerView
-    lateinit var moreCommentsBtn: Button
-    lateinit var commentsTitleTV: TextView
     private var commentsAdapter: CommentsAdapter? = null
-
-    companion object {
-        fun newInstance(): BookDetailFragment {
-            return BookDetailFragment()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.pt_book_detail_fragment, container, false)
+        _binding = PtBookDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        titleTV = view.findViewById(R.id.pt_book_title_tv)
-        authorTV = view.findViewById(R.id.pt_book_author_tv)
-        publishedTV = view.findViewById(R.id.pt_book_published_tv)
-        imageIV = view.findViewById(R.id.pt_book_image_iv)
-        descTV = view.findViewById(R.id.pt_book_desc_tv)
-        ratingTV = view.findViewById(R.id.pt_book_rating_tv)
-        commentsRV = view.findViewById(R.id.pt_comments_rv)
-        commentsTitleTV = view.findViewById(R.id.pt_comments_title_tv)
-        moreCommentsBtn = view.findViewById(R.id.pt_more_comments_btn)
-        moreCommentsBtn.setOnClickListener {
+        binding.ptMoreCommentsBtn.setOnClickListener {
             val action =
                 BookDetailFragmentDirections.actionBookDetailFragmentToBookCommentsFragment(args.id)
             findNavController().navigate(action)
@@ -75,12 +56,11 @@ class BookDetailFragment : Fragment() {
             }
         })
 
-        commentsRV.apply {
+        binding.ptCommentsRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = commentsAdapter
+            isNestedScrollingEnabled = false
         }
-
-        commentsRV.isNestedScrollingEnabled = false
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -88,21 +68,21 @@ class BookDetailFragment : Fragment() {
 
         viewModel.book.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
-                titleTV.fadeInText(it.title)
-                authorTV.fadeInText(it.author?.name)
-                publishedTV.fadeInText(it.published)
-                descTV.fadeInText(it.description)
+                binding.ptBookTitleTv.fadeInText(it.title)
+                binding.ptBookAuthorTv.fadeInText(it.author?.name)
+                binding.ptBookPublishedTv.fadeInText(it.published)
+                binding.ptBookDescTv.fadeInText(it.description)
 
-                ratingTV.fadeInText("0 %")
+                binding.ptBookRatingTv.fadeInText("0 %")
                 ValueAnimator.ofInt(it.rating?.toInt() ?: 0).apply {
                     addUpdateListener { animation ->
-                        ratingTV.text = "${animation.animatedValue as Int} %"
+                        binding.ptBookRatingTv.text = "${animation.animatedValue as Int} %"
                     }
                     duration = 1000
                     start()
                 }
 
-                val ratingBG = ratingTV.background
+                val ratingBG = binding.ptBookRatingTv.background
                 if (ratingBG is GradientDrawable) {
                     ratingBG.setColor(
                         ContextCompat.getColor(
@@ -111,27 +91,18 @@ class BookDetailFragment : Fragment() {
                         )
                     )
                 }
-                ratingTV.visibility = if (book.ratingsCount.isNullOrEmpty()) View.GONE else View.VISIBLE
-                imageIV.loadImg(it.imgLink)
+                binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
+                binding.ptBookImageIv.loadImg(it.imgLink)
             }
         })
 
         viewModel.comments.observe(viewLifecycleOwner, Observer<List<Comment>> {
-            if(it.isEmpty()){
-                commentsTitleTV.visibility = View.GONE
-            } else {
-                commentsTitleTV.visibility = View.VISIBLE
-            }
-
+            binding.ptCommentsTitleTv.goneIf(it.isEmpty())
             commentsAdapter?.update(it)
         })
 
         viewModel.showMoreCommentsVisible.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                moreCommentsBtn.visibility = View.VISIBLE
-            } else {
-                moreCommentsBtn.visibility = View.GONE
-            }
+            binding.ptMoreCommentsBtn.visibleIf(it)
         })
     }
 

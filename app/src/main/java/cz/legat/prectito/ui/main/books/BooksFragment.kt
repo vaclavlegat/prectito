@@ -13,23 +13,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.model.Book
+import cz.legat.prectito.databinding.PtMainFragmentBinding
+import cz.legat.prectito.extensions.gone
+import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.HomeFragmentDirections
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 const val BOOKS_TYPE_KEY = "BOOKS_TYPE_KEY"
-const val POPULAR_BOOKS = 0
-const val NEW_BOOKS = 1
-const val AUTHORS = 2
 
 @AndroidEntryPoint
-class BooksFragment : Fragment() {
+class BooksFragment : BindingFragment<PtMainFragmentBinding>() {
 
     private val viewModel: BooksViewModel by viewModels()
-
-    lateinit var booksRv: RecyclerView
     lateinit var booksAdapter: BooksAdapter
-    lateinit var progress: ProgressBar
 
     companion object {
         fun newInstance(booksType: Int) = BooksFragment()
@@ -42,7 +40,8 @@ class BooksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.pt_main_fragment, container, false)
+        _binding = PtMainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,9 +56,8 @@ class BooksFragment : Fragment() {
                 findNavController().navigate(action)
             }
         })
-        booksRv = view.findViewById(R.id.pt_books_rw)
-        progress = view.findViewById(R.id.pt_progress)
-        booksRv.apply {
+
+        binding.ptBooksRw.apply {
             layoutManager = GridLayoutManager(context, 3)
             adapter = booksAdapter
             setHasFixedSize(true)
@@ -68,16 +66,16 @@ class BooksFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        progress.visibility = View.VISIBLE
+        binding.ptProgress.visible()
         arguments?.takeIf { it.containsKey(BOOKS_TYPE_KEY) }?.let {
             if (it[BOOKS_TYPE_KEY] as Int == 0) {
                 viewModel.popularBooks.observe(viewLifecycleOwner, Observer { books ->
-                    progress.visibility = View.GONE
+                    binding.ptProgress.gone()
                     booksAdapter.update(books)
                 })
             } else {
                 viewModel.newBooks.observe(viewLifecycleOwner, Observer { books ->
-                    progress.visibility = View.GONE
+                    binding.ptProgress.gone()
                     booksAdapter.update(books)
                 })
             }

@@ -13,17 +13,14 @@ import cz.legat.prectito.R
 import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.core.model.Author
+import cz.legat.prectito.databinding.PtAuthorDetailFragmentBinding
+import cz.legat.prectito.ui.main.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthorBioFragment : Fragment() {
+class AuthorBioFragment : BindingFragment<PtAuthorDetailFragmentBinding>() {
 
     private val viewModel: AuthorDetailViewModel by viewModels()
-
-    lateinit var nameTv: TextView
-    lateinit var imageIv: ImageView
-    lateinit var lifeTv: TextView
-    lateinit var cvTv: TextView
 
     companion object {
         fun newInstance(id: String): AuthorBioFragment {
@@ -39,14 +36,8 @@ class AuthorBioFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.pt_author_detail_fragment, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        nameTv = view.findViewById(R.id.pt_author_name_tv)
-        lifeTv = view.findViewById(R.id.pt_author_life_tv)
-        imageIv = view.findViewById(R.id.pt_author_image_iv)
-        cvTv = view.findViewById(R.id.pt_author_cv_tv)
+        _binding = PtAuthorDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -55,10 +46,10 @@ class AuthorBioFragment : Fragment() {
         viewModel.author.observe(viewLifecycleOwner,
             Observer<cz.legat.core.model.Author?> {
                 it?.let {
-                    nameTv.fadeInText(it.name)
-                    lifeTv.fadeInText(it.life)
-                    cvTv.fadeInText(it.cv)
-                    imageIv.loadImg(it.authorImgLink)
+                    binding.ptAuthorNameTv.fadeInText(it.name)
+                    binding.ptAuthorLifeTv.fadeInText(it.life)
+                    binding.ptAuthorCvTv.fadeInText(it.cv)
+                    binding.ptAuthorImageIv.loadImg(it.authorImgLink)
                 }
             })
     }

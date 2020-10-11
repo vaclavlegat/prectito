@@ -13,34 +13,32 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.model.Author
+import cz.legat.prectito.databinding.PtFragmentAuthorsBinding
+import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthorsFragment : Fragment() {
+class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>() {
 
     companion object {
         private const val GRID_COLUMNS = 3
-        fun newInstance() = AuthorsFragment()
     }
 
     private val viewModel: AuthorsViewModel by viewModels()
-    private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: AuthorsAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = PtFragmentAuthorsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        val rootView = inflater.inflate(R.layout.pt_fragment_authors, container, false)
-        recyclerView = rootView.findViewById(R.id.rv_authors)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewManager = GridLayoutManager(activity, GRID_COLUMNS)
         viewAdapter = AuthorsAdapter(object:AuthorsAdapter.OnAuthorClickedListener{
             override fun onAuthor(author: cz.legat.core.model.Author) {
@@ -48,16 +46,15 @@ class AuthorsFragment : Fragment() {
                     HomeFragmentDirections.actionHomeFragmentToAuthorsFragment(
                         author.authorId!!
                     )
-                findNavController(rootView).navigate(action)
+                findNavController(view).navigate(action)
             }
         })
 
-        recyclerView.apply {
+        binding.rvAuthors.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
-        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -20,21 +20,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.model.Author
+import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
+import cz.legat.prectito.extensions.gone
+import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
 import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchAuthorResultsFragment : Fragment() {
+class SearchAuthorResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() {
 
     private val viewModel: BooksViewModel by viewModels()
     val args: SearchResultsFragmentArgs by navArgs()
 
-    lateinit var booksRv: RecyclerView
     lateinit var authorsAdapter: SearchAuthorResultsAdapter
-    lateinit var progress: ProgressBar
-    lateinit var searchET: EditText
     private var handler = Handler()
 
     companion object {
@@ -45,7 +46,8 @@ class SearchAuthorResultsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.pt_search_results_fragment, container, false)
+        _binding = PtSearchResultsFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,16 +63,14 @@ class SearchAuthorResultsFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             })
-        booksRv = view.findViewById(R.id.pt_books_rw)
-        progress = view.findViewById(R.id.pt_progress)
-        searchET = view.findViewById(R.id.pt_search_et)
-        booksRv.apply {
+
+        binding.ptBooksRw.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = authorsAdapter
             setHasFixedSize(true)
         }
 
-        searchET.addTextChangedListener(object : TextWatcher {
+        binding.ptSearchEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
@@ -91,19 +91,18 @@ class SearchAuthorResultsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        progress.visibility = View.VISIBLE
+        binding.ptProgress.visible()
         viewModel.searchAuthor(args.query)
-        progress.visibility = View.VISIBLE
         viewModel.searchAuthors.observe(viewLifecycleOwner, Observer<List<cz.legat.core.model.Author>> {
             authorsAdapter.update(it)
-            progress.visibility = View.GONE
+            binding.ptProgress.gone()
         })
     }
 
     override fun onResume() {
         super.onResume()
-        if (searchET.text.isNullOrEmpty()) {
-            searchET.requestFocus()
+        if (binding.ptSearchEt.text.isNullOrEmpty()) {
+            binding.ptSearchEt.requestFocus()
             showKeyboard(requireContext())
         }
     }

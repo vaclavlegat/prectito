@@ -10,29 +10,23 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.legat.prectito.R
+import cz.legat.prectito.databinding.PtDetailTabsFragmentBinding
+import cz.legat.prectito.ui.main.BindingFragment
 
-abstract class BaseTabsFragment : Fragment() {
-
-    lateinit var pager: ViewPager2
-    lateinit var tabs: TabLayout
+abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.pt_detail_tabs_fragment, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        pager = view.findViewById(R.id.pt_detail_pager)
-        tabs = view.findViewById(R.id.pt_detail_tabs)
+        _binding = PtDetailTabsFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        pager.adapter = DetailAdapter(this)
-        TabLayoutMediator(tabs, pager) { tab, position ->
+        binding.ptDetailPager.adapter = DetailAdapter(this)
+        TabLayoutMediator(binding.ptDetailTabs, binding.ptDetailPager) { tab, position ->
             tab.text = tabTitles()[position]
         }.attach()
     }

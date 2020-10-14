@@ -6,14 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation.findNavController
+import cz.legat.prectito.extensions.gone
+import cz.legat.prectito.extensions.invisible
+import cz.legat.prectito.extensions.visible
 import cz.legat.prectito.ui.main.HomeFragment
 import cz.legat.prectito.ui.main.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
+class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener {
 
     private lateinit var toolbar: Toolbar
     private var navController: NavController? = null
@@ -35,12 +37,19 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
         }
 
         navController?.addOnDestinationChangedListener { _, _, _ ->
-            if(navController?.currentDestination?.id == navController?.graph?.findNode(R.id.homeFragment)?.id) {
-                toolbar.visibility = View.VISIBLE
-                searchHolder?.visibility = View.VISIBLE
-            } else {
-                toolbar.visibility = View.GONE
-                searchHolder?.visibility = View.GONE
+            when (navController?.currentDestination?.id) {
+                navController?.graph?.findNode(R.id.homeFragment)?.id -> {
+                    toolbar.visible()
+                    searchHolder?.visible()
+                }
+                navController?.graph?.findNode(R.id.searchResultsFragment)?.id -> {
+                    toolbar.gone()
+                    searchHolder?.gone()
+                }
+                else -> {
+                    toolbar.invisible()
+                    searchHolder?.invisible()
+                }
             }
         }
     }

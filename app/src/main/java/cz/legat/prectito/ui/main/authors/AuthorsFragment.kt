@@ -42,11 +42,7 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>() {
         viewManager = GridLayoutManager(activity, GRID_COLUMNS)
         viewAdapter = AuthorsAdapter(object:AuthorsAdapter.OnAuthorClickedListener{
             override fun onAuthor(author: cz.legat.core.model.Author) {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToAuthorsFragment(
-                        author.authorId!!
-                    )
-                findNavController(view).navigate(action)
+
             }
         })
 

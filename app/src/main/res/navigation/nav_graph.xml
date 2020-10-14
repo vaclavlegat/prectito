@@ -14,7 +14,13 @@
             android:id="@+id/splashToHome"
             app:destination="@id/homeFragment"
             app:popUpTo="@+id/splashFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+
+
     </fragment>
 
     <fragment
@@ -24,13 +30,14 @@
         tools:layout="@layout/pt_home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"/>
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_homeFragment_to_searchResultsFragment"
             app:destination="@id/searchResultsFragment"/>
-        <action
-            android:id="@+id/action_homeFragment_to_authorsFragment"
-            app:destination="@id/authorsDetailFragment"/>
     </fragment>
 
     <fragment
@@ -43,7 +50,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_bookDetailFragment_to_bookCommentsFragment"
-            app:destination="@id/bookCommentsFragment"/>
+            app:destination="@id/bookCommentsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -66,7 +77,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_authorBooksFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment" />
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -79,9 +94,17 @@
             app:argType="string" />
         <action
             android:id="@+id/action_searchResultsFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"/>
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_searchAuthorsResultsFragment_to_authorDetailFragment"
-            app:destination="@id/authorsDetailFragment"/>
+            app:destination="@id/authorsDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

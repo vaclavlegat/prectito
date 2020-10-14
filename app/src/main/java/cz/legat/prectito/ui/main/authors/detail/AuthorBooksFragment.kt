@@ -39,7 +39,8 @@ class AuthorBooksFragment : BindingFragment<PtMainFragmentBinding>() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.pt_main_fragment, container, false)
+        _binding = PtMainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

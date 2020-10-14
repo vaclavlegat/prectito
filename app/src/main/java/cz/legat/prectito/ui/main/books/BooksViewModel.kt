@@ -9,15 +9,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import cz.legat.core.model.Author
-import cz.legat.core.model.Book
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.repository.BooksRepository
 import cz.legat.prectito.ui.main.paging.BaseDataSourceFactory
 import cz.legat.prectito.ui.main.paging.BasePageKeyedDataSource
+import cz.legat.core.model.SearchResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class BooksViewModel @ViewModelInject constructor(
     private val booksRepository: BooksRepository,
@@ -36,7 +37,7 @@ class BooksViewModel @ViewModelInject constructor(
 
     var myBooks: MutableLiveData<List<SavedBook>> = MutableLiveData()
 
-    var searchBooks: MutableLiveData<List<cz.legat.core.model.Book>> = MutableLiveData()
+    var searchBooks: MutableLiveData<List<SearchResult>> = MutableLiveData()
 
     var searchAuthors: MutableLiveData<List<cz.legat.core.model.Author>> = MutableLiveData()
 
@@ -59,9 +60,18 @@ class BooksViewModel @ViewModelInject constructor(
         query?.let {
             viewModelScope.launch(Dispatchers.IO) {
                 val books = booksRepository.searchBook(query)
+                val authors = authorsRepository.searchAuthor(query)
+                val all = mutableListOf<SearchResult>()
+                all.addAll(books)
+                all.addAll(authors)
+
+                val filtered = all.filter {
+                    it.getResultTitle().toLowerCase(Locale.getDefault()).contains(query.toLowerCase(Locale.getDefault()))
+                }
+
                 lastQuery = query
                 withContext(Dispatchers.Main) {
-                    searchBooks.value = books
+                    searchBooks.value = filtered
                 }
             }
         }

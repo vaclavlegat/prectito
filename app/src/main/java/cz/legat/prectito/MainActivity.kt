@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
         searchHolder = toolbar.findViewById(R.id.pt_search_holder_ll)
         searchHolder?.setOnClickListener {
             val bookSearchAction = HomeFragmentDirections.actionHomeFragmentToSearchResultsFragment("")
-            val authorSearchAction = HomeFragmentDirections.actionHomeFragmentToSearchAuthorResultsFragment("")
-            navController?.navigate(if(currentTab == 2) authorSearchAction else bookSearchAction)
+            navController?.navigate(bookSearchAction)
         }
 
         navController?.addOnDestinationChangedListener { _, _, _ ->

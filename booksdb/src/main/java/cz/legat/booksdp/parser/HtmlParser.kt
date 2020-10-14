@@ -27,7 +27,7 @@ open class HtmlParser {
                 Book(
                     id = id,
                     title = title,
-                    author = Author(name = authors[index].text()),
+                    author = Author(name = authors[index].text(), authorId = "", authorImgLink = ""),
                     description = shortDescs[index].text(),
                     imgLink = imgSrc
                 )
@@ -67,7 +67,7 @@ open class HtmlParser {
         val author = document.select("span[itemprop=author]")
         val id = document.select("span[itemprop=author] > a").attr("href").removePrefix("autori/")
 
-        return Author(id, author.text())
+        return Author(id, author.text(),"","")
     }
 
     //<p id="bdetdesc" class="justify new2 odtop_big" itemprop="description">
@@ -235,7 +235,7 @@ open class HtmlParser {
         return Book(
             id = id,
             title = title,
-            author = Author(name = shortDesc),
+            author = Author(name = shortDesc,authorId = "", authorImgLink = ""),
             description = shortDesc,
             imgLink = imgLink
         )

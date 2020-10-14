@@ -24,16 +24,13 @@
         tools:layout="@layout/pt_home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"></action>
+            app:destination="@id/bookDetailFragment"/>
         <action
             android:id="@+id/action_homeFragment_to_searchResultsFragment"
-            app:destination="@id/searchResultsFragment"></action>
-        <action
-            android:id="@+id/action_homeFragment_to_searchAuthorResultsFragment"
-            app:destination="@id/searchAuthorResultsFragment"></action>
+            app:destination="@id/searchResultsFragment"/>
         <action
             android:id="@+id/action_homeFragment_to_authorsFragment"
-            app:destination="@id/authorsDetailFragment"></action>
+            app:destination="@id/authorsDetailFragment"/>
     </fragment>
 
     <fragment
@@ -46,7 +43,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_bookDetailFragment_to_bookCommentsFragment"
-            app:destination="@id/bookCommentsFragment"></action>
+            app:destination="@id/bookCommentsFragment"/>
     </fragment>
 
     <fragment
@@ -82,19 +79,9 @@
             app:argType="string" />
         <action
             android:id="@+id/action_searchResultsFragment_to_bookDetailFragment"
-            app:destination="@id/bookDetailFragment"></action>
-    </fragment>
-
-    <fragment
-        android:id="@+id/searchAuthorResultsFragment"
-        android:name="cz.legat.prectito.ui.main.search.SearchAuthorResultsFragment"
-        android:label="Detail"
-        tools:layout="@layout/pt_detail_tabs_fragment">
-        <argument
-            android:name="query"
-            app:argType="string" />
+            app:destination="@id/bookDetailFragment"/>
         <action
             android:id="@+id/action_searchAuthorsResultsFragment_to_authorDetailFragment"
-            app:destination="@id/authorsDetailFragment"></action>
+            app:destination="@id/authorsDetailFragment"/>
     </fragment>
 </navigation>

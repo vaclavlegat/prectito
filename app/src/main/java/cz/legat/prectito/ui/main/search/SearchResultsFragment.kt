@@ -9,16 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import cz.legat.prectito.R
+import cz.legat.core.model.SearchResult
 import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
@@ -53,13 +49,20 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() 
         super.onViewCreated(view, savedInstanceState)
         booksAdapter =
             SearchResultsAdapter(object :
-                BaseAdapter.OnItemClickedListener<cz.legat.core.model.Book> {
-                override fun onItem(item: cz.legat.core.model.Book) {
+                BaseAdapter.OnItemClickedListener<SearchResult> {
+                override fun onItem(item: SearchResult) {
                     hideKeyboard(requireContext())
                     val action =
-                        SearchResultsFragmentDirections.actionSearchResultsFragmentToBookDetailFragment(
-                            item.id
-                        )
+                        if (item.isBook()){
+                            SearchResultsFragmentDirections.actionSearchResultsFragmentToBookDetailFragment(
+                                item.getResultId()
+                            )
+                        } else {
+                            SearchResultsFragmentDirections.actionSearchAuthorsResultsFragmentToAuthorDetailFragment(
+                                item.getResultId()
+                            )
+                        }
+
                     findNavController().navigate(action)
                 }
             })
@@ -92,7 +95,7 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() 
         super.onActivityCreated(savedInstanceState)
         binding.ptProgress.visible()
         viewModel.searchBook(args.query)
-        viewModel.searchBooks.observe(viewLifecycleOwner, Observer<List<cz.legat.core.model.Book>> {
+        viewModel.searchBooks.observe(viewLifecycleOwner, Observer<List<SearchResult>> {
             booksAdapter.update(it)
             binding.ptProgress.gone()
         })

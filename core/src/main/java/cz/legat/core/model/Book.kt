@@ -17,4 +17,34 @@ data class Book(
     @Json(name = "publisher") val publisher: String? = null,
     @Json(name = "rating") val rating: String? = null,
     @Json(name = "ratingsCount") val ratingsCount: String? = null
-)
+): SearchResult{
+    override fun getResultTitle(): String {
+        return title
+    }
+
+    override fun getResultSubtitle(): String {
+        var author = ""
+        var published = ""
+
+        val split = description.split(",")
+        if (split.size == 2) {
+            author = split[1].trim()
+            published = split[0].trim()
+        } else {
+            author = split[0]
+        }
+        return "$author - ($published)"
+    }
+
+    override fun getResultImgLink(): String {
+        return imgLink
+    }
+
+    override fun getResultId(): String {
+        return id
+    }
+
+    override fun isBook(): Boolean {
+        return true
+    }
+}

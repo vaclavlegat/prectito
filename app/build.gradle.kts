@@ -5,6 +5,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-android")
 }
 
 
@@ -60,6 +61,10 @@ dependencies {
     // di
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.2")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
 

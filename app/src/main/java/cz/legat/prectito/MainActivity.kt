@@ -24,12 +24,9 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pt_main_activity)
         toolbar = findViewById(R.id.toolbar)
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
         setSupportActionBar(toolbar)
         navController = findNavController(this, R.id.nav_host_fragment)
-        navController?.addOnDestinationChangedListener { controller, destination, arguments ->
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
-            invalidateOptionsMenu()
-        }
 
         searchHolder = toolbar.findViewById(R.id.pt_search_holder_ll)
         searchHolder?.setOnClickListener {
@@ -38,15 +35,15 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
             navController?.navigate(if(currentTab == 2) authorSearchAction else bookSearchAction)
         }
 
-        navController?.addOnDestinationChangedListener(NavController.OnDestinationChangedListener { controller, destination, arguments ->
-            if(navController?.currentDestination?.id == navController?.graph?.startDestination) {
+        navController?.addOnDestinationChangedListener { _, _, _ ->
+            if(navController?.currentDestination?.id == navController?.graph?.findNode(R.id.homeFragment)?.id) {
                 toolbar.visibility = View.VISIBLE
                 searchHolder?.visibility = View.VISIBLE
             } else {
                 toolbar.visibility = View.GONE
                 searchHolder?.visibility = View.GONE
             }
-        })
+        }
     }
 
     override fun onTabChanged(position: Int) {

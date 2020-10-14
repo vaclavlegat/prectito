@@ -28,7 +28,6 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
     private val viewModel: BooksViewModel by viewModels()
     private var popularBooksAdapter: BooksAdapter? = null
     private var newBooksAdapter: BooksAdapter? = null
-    private var authorsAdapter: AuthorsAdapter? = null
 
     private var onTabChangeListener: TabChangeListener? = null
 
@@ -75,19 +74,6 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
         })
 
         binding.ptNewBooksRv.initLinear(newBooksAdapter)
-
-        authorsAdapter = AuthorsAdapter(object : AuthorsAdapter.OnAuthorClickedListener {
-            override fun onAuthor(author: cz.legat.core.model.Author) {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToAuthorsFragment(
-                        author.authorId!!
-                    )
-                Navigation.findNavController(view).navigate(action)
-            }
-        })
-
-
-        binding.ptAuthorsRv.initLinearPaged(authorsAdapter)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -99,10 +85,6 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
 
         viewModel.newBooks.observe(viewLifecycleOwner, Observer {
             newBooksAdapter?.update(it)
-        })
-
-        viewModel.authors.observe(viewLifecycleOwner, Observer {
-            authorsAdapter?.submitList(it)
         })
     }
 }

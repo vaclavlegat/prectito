@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pt_main_activity)
         toolbar = findViewById(R.id.toolbar)
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.pt_color_background))
         setSupportActionBar(toolbar)
         navController = findNavController(this, R.id.nav_host_fragment)
 

@@ -1,20 +1,14 @@
 package cz.legat.prectito.ui.main.books
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import cz.legat.core.model.Author
+import cz.legat.core.model.SearchResult
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.repository.BooksRepository
-import cz.legat.prectito.ui.main.paging.BaseDataSourceFactory
-import cz.legat.prectito.ui.main.paging.BasePageKeyedDataSource
-import cz.legat.core.model.SearchResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -39,8 +33,6 @@ class BooksViewModel @ViewModelInject constructor(
 
     var searchBooks: MutableLiveData<List<SearchResult>> = MutableLiveData()
 
-    var searchAuthors: MutableLiveData<List<cz.legat.core.model.Author>> = MutableLiveData()
-
     fun removeBook(book: SavedBook) {
         viewModelScope.launch(Dispatchers.IO) {
             booksRepository.removeBook(book)
@@ -57,7 +49,10 @@ class BooksViewModel @ViewModelInject constructor(
     }
 
     fun searchBook(query: String?) {
-        query?.let {
+        if (query.isNullOrEmpty()) {
+            return
+        }
+        query.let {
             viewModelScope.launch(Dispatchers.IO) {
                 val books = booksRepository.searchBook(query)
                 val authors = authorsRepository.searchAuthor(query)
@@ -75,30 +70,5 @@ class BooksViewModel @ViewModelInject constructor(
                 }
             }
         }
-    }
-
-    fun searchAuthor(query: String?) {
-        query?.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                val authors = authorsRepository.searchAuthor(query)
-                withContext(Dispatchers.Main) {
-                    searchAuthors.value = authors
-                }
-            }
-        }
-    }
-
-    private val config = PagedList.Config.Builder()
-        .setInitialLoadSizeHint(40)
-        .setPageSize(40)
-        .setEnablePlaceholders(false)
-        .build()
-    val authors: LiveData<PagedList<Author>> = initializedPagedListBuilder(config).build()
-
-    private fun initializedPagedListBuilder(config: PagedList.Config):
-            LivePagedListBuilder<Int, Author> {
-        val dataSourceFactory =
-            BaseDataSourceFactory(BasePageKeyedDataSource<Author>(authorsRepository::getAuthors))
-        return LivePagedListBuilder(dataSourceFactory, config)
     }
 }

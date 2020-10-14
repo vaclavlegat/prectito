@@ -18,6 +18,7 @@ import cz.legat.core.model.SearchResult
 import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.extensions.visibleIf
 import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
@@ -93,20 +94,18 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.ptProgress.visible()
-        viewModel.searchBook(args.query)
+        binding.ptProgress.visibleIf(!binding.ptSearchEt.text.isNullOrEmpty())
+        viewModel.searchBook(binding.ptSearchEt.text.toString())
         viewModel.searchBooks.observe(viewLifecycleOwner, Observer<List<SearchResult>> {
             booksAdapter.update(it)
             binding.ptProgress.gone()
         })
+        binding.ptSearchEt.requestFocus()
+        showKeyboard(requireContext())
     }
 
     override fun onResume() {
         super.onResume()
-        if (binding.ptSearchEt.text.isNullOrEmpty()) {
-            binding.ptSearchEt.requestFocus()
-            showKeyboard(requireContext())
-        }
     }
 
     private fun showKeyboard(context: Context) {

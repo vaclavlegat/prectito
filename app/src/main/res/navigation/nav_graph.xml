@@ -3,25 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="cz.legat.prectito.ui.main.ui.main.SplashFragment"
-        android:label="Splash"
-        tools:layout="@layout/pt_splash_fragment">
-        <action
-            android:id="@+id/splashToHome"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@+id/splashFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-
-
-    </fragment>
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -36,8 +18,12 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
         <action
-            android:id="@+id/action_homeFragment_to_searchResultsFragment"
-            app:destination="@id/searchResultsFragment"/>
+            android:id="@+id/action_homeFragment_to_authorsFragment"
+            app:destination="@id/authorsDetailFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment
@@ -89,9 +75,6 @@
         android:name="cz.legat.prectito.ui.main.search.SearchResultsFragment"
         android:label="Detail"
         tools:layout="@layout/pt_detail_tabs_fragment">
-        <argument
-            android:name="query"
-            app:argType="string" />
         <action
             android:id="@+id/action_searchResultsFragment_to_bookDetailFragment"
             app:destination="@id/bookDetailFragment"

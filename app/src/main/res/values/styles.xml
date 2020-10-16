@@ -5,20 +5,7 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
-
-    <item name="android:windowActivityTransitions">true</item>
+    <item name="android:windowBackground">@color/pt_color_background</item>
   </style>
 
-  <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView.ActionBar">
-    <item name="layout">@layout/pt_toolbar_search_view</item>
-    <item name="commitIcon">@drawable/pt_icon_search</item>
-    <item name="colorControlNormal">#333333</item>
-    <item name="colorControlHighlight">@color/white</item>
-    <item name="suggestionRowLayout">@layout/pt_suggestions_row</item>
-    <item name="android:maxWidth">9999dp</item>
-  </style>
-
-  <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    <item name="searchViewStyle">@style/SearchViewTheme</item>
-  </style>
 </resources>

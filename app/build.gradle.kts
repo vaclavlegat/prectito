@@ -105,6 +105,8 @@ dependencies {
 
     api ("com.google.guava:guava:27.1-jre")
 
+    implementation ("com.google.android.material:material:1.3.0-alpha03")
+
     implementation (Libs.roomRuntime)
     kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
 

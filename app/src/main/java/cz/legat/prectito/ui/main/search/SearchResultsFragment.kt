@@ -12,12 +12,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.core.model.SearchResult
 import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
 import cz.legat.prectito.extensions.gone
-import cz.legat.prectito.extensions.visible
 import cz.legat.prectito.extensions.visibleIf
 import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
@@ -29,10 +27,24 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() {
 
     private val viewModel: BooksViewModel by viewModels()
-    val args: SearchResultsFragmentArgs by navArgs()
 
     lateinit var booksAdapter: SearchResultsAdapter
     private var handler = Handler()
+    private var callback: OnResultCallback? = null
+
+    interface OnResultCallback {
+        fun onResult(id: String, isBook: Boolean)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as SearchResultsActivity
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback = null
+    }
 
     companion object {
         fun newInstance() = BooksFragment()
@@ -53,18 +65,7 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() 
                 BaseAdapter.OnItemClickedListener<SearchResult> {
                 override fun onItem(item: SearchResult) {
                     hideKeyboard(requireContext())
-                    val action =
-                        if (item.isBook()){
-                            SearchResultsFragmentDirections.actionSearchResultsFragmentToBookDetailFragment(
-                                item.getResultId()
-                            )
-                        } else {
-                            SearchResultsFragmentDirections.actionSearchAuthorsResultsFragmentToAuthorDetailFragment(
-                                item.getResultId()
-                            )
-                        }
-
-                    findNavController().navigate(action)
+                    callback?.onResult(item.getResultId(), item.isBook())
                 }
             })
 

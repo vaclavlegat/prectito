@@ -7,6 +7,7 @@ import cz.legat.prectito.MainActivity
 import cz.legat.prectito.SEARCH_RESULT_ID_KEY
 import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtActivitySearchResultsBinding
+import cz.legat.prectito.ui.main.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,12 +22,7 @@ class SearchResultsActivity : AppCompatActivity(), SearchResultsFragment.OnResul
     }
 
     override fun onResult(id: String, isBook: Boolean) {
-        // setResult(Activity.RESULT_OK, Intent().apply {
-        //     putExtras(bundleOf("SEARCH_RESULT_ID_KEY" to id, "SEARCH_RESULT_TYPE_KEY" to isBook))
-        // })
-        // finish()
-
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra(SEARCH_RESULT_ID_KEY, id)
         intent.putExtra(SEARCH_RESULT_TYPE_KEY, isBook)
         startActivity(intent)

@@ -1,23 +1,21 @@
 package cz.legat.prectito.ui.main.books
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import cz.legat.prectito.R
 import cz.legat.core.model.Book
+import cz.legat.prectito.SEARCH_RESULT_ID_KEY
+import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtMainFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
 import cz.legat.prectito.ui.main.BindingFragment
-import cz.legat.prectito.ui.main.HomeFragmentDirections
+import cz.legat.prectito.ui.main.DetailActivity
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,8 +30,8 @@ class BooksFragment : BindingFragment<PtMainFragmentBinding>() {
     companion object {
         fun newInstance(booksType: Int) = BooksFragment()
             .apply {
-            arguments = Bundle().apply { putInt(BOOKS_TYPE_KEY, booksType) }
-        }
+                arguments = Bundle().apply { putInt(BOOKS_TYPE_KEY, booksType) }
+            }
     }
 
     override fun onCreateView(
@@ -49,11 +47,10 @@ class BooksFragment : BindingFragment<PtMainFragmentBinding>() {
         booksAdapter = BooksAdapter(object :
             BaseAdapter.OnItemClickedListener<Book> {
             override fun onItem(item: Book) {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
-                        item.id
-                    )
-                findNavController().navigate(action)
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra(SEARCH_RESULT_ID_KEY, id)
+                intent.putExtra(SEARCH_RESULT_TYPE_KEY, true)
+                startActivity(intent)
             }
         })
 

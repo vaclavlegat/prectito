@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import cz.legat.core.model.Book
 import cz.legat.prectito.MainActivity
 import cz.legat.prectito.RESULT_ID
+import cz.legat.prectito.SEARCH_RESULT_ID_KEY
+import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtHomeFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.initLinear
@@ -59,17 +61,13 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ptSearchFab.setOnClickListener {
-            startActivityForResult(Intent(requireContext(), SearchResultsActivity::class.java), RESULT_ID)
-        }
 
         popularBooksAdapter = BooksAdapter(object : BaseAdapter.OnItemClickedListener<Book> {
             override fun onItem(item: Book) {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
-                        item.id
-                    )
-                Navigation.findNavController(view).navigate(action)
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra(SEARCH_RESULT_ID_KEY, item.id)
+                intent.putExtra(SEARCH_RESULT_TYPE_KEY, true)
+                startActivity(intent)
             }
         })
 
@@ -77,32 +75,14 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
 
         newBooksAdapter = BooksAdapter(object : BaseAdapter.OnItemClickedListener<Book> {
             override fun onItem(item: Book) {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
-                        item.id
-                    )
-                Navigation.findNavController(view).navigate(action)
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra(SEARCH_RESULT_ID_KEY, item.id)
+                intent.putExtra(SEARCH_RESULT_TYPE_KEY, true)
+                startActivity(intent)
             }
         })
 
         binding.ptNewBooksRv.initLinear(newBooksAdapter)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_ID && resultCode == Activity.RESULT_OK) {
-            val id = data?.extras?.getString("SEARCH_RESULT_ID_KEY")?:""
-            val isBook = data?.extras?.getBoolean("SEARCH_RESULT_TYPE_KEY")
-            findNavController().navigate(if (isBook == true) {
-                HomeFragmentDirections.actionHomeFragmentToBookDetailFragment(
-                    id
-                )
-            } else {
-                HomeFragmentDirections.actionHomeFragmentToAuthorsFragment(
-                    id
-                )
-            })
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

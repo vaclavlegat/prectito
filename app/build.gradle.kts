@@ -65,6 +65,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.0.2")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
 

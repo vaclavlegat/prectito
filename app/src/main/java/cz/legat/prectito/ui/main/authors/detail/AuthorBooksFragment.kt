@@ -1,5 +1,6 @@
 package cz.legat.prectito.ui.main.authors.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Book
 import cz.legat.prectito.R
+import cz.legat.prectito.SEARCH_RESULT_ID_KEY
+import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtMainFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
 import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.prectito.ui.main.DetailActivity
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,11 +52,10 @@ class AuthorBooksFragment : BindingFragment<PtMainFragmentBinding>() {
         booksAdapter = AuthorBooksAdapter(object :
             AuthorBooksAdapter.OnBookClickedListener {
             override fun onBook(book: Book) {
-                val action =
-                    AuthorDetailFragmentDirections.actionAuthorBooksFragmentToBookDetailFragment(
-                        book.id
-                    )
-                findNavController().navigate(action)
+                val intent = Intent(requireContext(), DetailActivity::class.java)
+                intent.putExtra(SEARCH_RESULT_ID_KEY, book.id)
+                intent.putExtra(SEARCH_RESULT_TYPE_KEY, true)
+                startActivity(intent)
             }
         })
 

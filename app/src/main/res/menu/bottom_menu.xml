@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/pt_home_icon"
+            app:showAsAction="always"
+            android:enabled="true"
+            android:title="Home"/>
+
+        <item
+            android:id="@+id/authors"
+            android:icon="@drawable/pt_authors_icon"
+            app:showAsAction="always"
+            android:enabled="true"
+            android:title="Authors"/>
+
+        <item
+            android:id="@+id/empty"
+            app:showAsAction="never"
+            android:enabled="false"
+            android:title=""/>
+
+        <item
+            android:id="@+id/fragmentAutho"
+            android:icon="@drawable/pt_close_icon"
+            app:showAsAction="always"
+            android:enabled="true"
+            android:title="Other"/>
+
+        <item
+            android:id="@+id/fragmentAuth"
+            android:icon="@drawable/pt_settings_icon"
+            android:enabled="true"
+            app:showAsAction="always"
+            android:title="Settings"/>
+</menu>

@@ -24,7 +24,7 @@ import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() {
+class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
     private val viewModel: BooksViewModel by viewModels()
 
@@ -48,14 +48,6 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>() 
 
     companion object {
         fun newInstance() = BooksFragment()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = PtSearchResultsFragmentBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

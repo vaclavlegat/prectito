@@ -1,9 +1,6 @@
 package cz.legat.prectito.ui.main.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -11,16 +8,9 @@ import cz.legat.prectito.databinding.PtDetailTabsFragmentBinding
 import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.ui.main.BindingFragment
 
-abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>() {
+abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>(PtDetailTabsFragmentBinding::inflate) {
 
     protected var id: String? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = PtDetailTabsFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

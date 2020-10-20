@@ -110,6 +110,10 @@ dependencies {
 
     implementation ("com.google.android.material:material:1.3.0-alpha03")
 
+    implementation ("com.squareup.moshi:moshi-adapters:1.10.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.10.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.10.0")
+
     implementation (Libs.roomRuntime)
     kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
 

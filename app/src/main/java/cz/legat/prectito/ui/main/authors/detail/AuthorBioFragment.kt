@@ -18,7 +18,7 @@ import cz.legat.prectito.ui.main.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthorBioFragment : BindingFragment<PtAuthorDetailFragmentBinding>() {
+class AuthorBioFragment : BindingFragment<PtAuthorDetailFragmentBinding>(PtAuthorDetailFragmentBinding::inflate) {
 
     private val viewModel: AuthorDetailViewModel by viewModels()
 
@@ -30,14 +30,6 @@ class AuthorBioFragment : BindingFragment<PtAuthorDetailFragmentBinding>() {
                 }
             }
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = PtAuthorDetailFragmentBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -10,7 +10,6 @@
         android:name="cz.legat.prectito.ui.main.ui.main.SplashFragment"
         android:label="Splash"
         tools:layout="@layout/pt_splash_fragment">
-
     </fragment>
 
 </navigation>

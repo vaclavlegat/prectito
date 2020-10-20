@@ -20,20 +20,12 @@ import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>() {
+class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>(PtCommentsFragmentBinding::inflate) {
 
     private val viewModel: BookDetailViewModel by viewModels()
 
     private lateinit var viewAdapter: CommentsAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-       _binding = PtCommentsFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

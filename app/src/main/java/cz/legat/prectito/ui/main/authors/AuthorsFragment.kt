@@ -16,7 +16,7 @@ import cz.legat.prectito.ui.main.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>() {
+class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuthorsBinding::inflate) {
 
     companion object {
         private const val GRID_COLUMNS = 3
@@ -25,14 +25,6 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>() {
     private val viewModel: AuthorsViewModel by viewModels()
     private lateinit var viewAdapter: AuthorsAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = PtFragmentAuthorsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

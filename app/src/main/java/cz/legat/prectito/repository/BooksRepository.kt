@@ -4,15 +4,21 @@ import cz.legat.booksdp.parser.HtmlParser
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
 import cz.legat.prectito.api.BooksService
+import cz.legat.prectito.persistence.HomeBooks
+import cz.legat.prectito.persistence.HomeBooksDao
+import cz.legat.prectito.persistence.NEW
+import cz.legat.prectito.persistence.POPULAR
 import cz.legat.prectito.persistence.SavedBook
 import cz.legat.prectito.persistence.SavedBookDao
 import cz.legat.prectito.ui.main.base.BaseRepository
 import cz.legat.prectito.ui.main.base.Result
+import java.util.*
 import javax.inject.Inject
 
 class BooksRepository @Inject constructor(
     private val booksService: BooksService,
-    private val savedBookDao: SavedBookDao
+    private val savedBookDao: SavedBookDao,
+    private val homeBooksDao: HomeBooksDao
 ) : BaseRepository() {
 
     private val popularCache = mutableListOf<Book>()
@@ -30,11 +36,20 @@ class BooksRepository @Inject constructor(
             return popularCache
         }
 
+        val dbBooks = homeBooksDao.getByType(POPULAR)
+        if (dbBooks != null && Date().before(Date(dbBooks.timestamp.time + 60 * 60 * 1000))) {
+            return dbBooks.books
+        } else if (dbBooks != null) {
+            homeBooksDao.delete(dbBooks)
+        }
+
         return when (val result = apiCall { booksService.getPopularBooks() }) {
             is Result.Success -> {
                 val popular = HtmlParser().parseBooksPopular(result.data)
                 popularCache.clear()
                 popularCache.addAll(popular)
+                val homeBooks = HomeBooks(timestamp = Date(), type = POPULAR, books = popular)
+                homeBooksDao.insert(homeBooks)
                 popular
             }
             is Result.Error -> listOf()
@@ -45,11 +60,21 @@ class BooksRepository @Inject constructor(
         if (newCache.isNotEmpty()) {
             return newCache
         }
+
+        val dbBooks = homeBooksDao.getByType(NEW)
+        if (dbBooks != null && Date().before(Date(dbBooks.timestamp.time + 60 * 60 * 1000))) {
+            return dbBooks.books
+        } else if (dbBooks != null) {
+            homeBooksDao.delete(dbBooks)
+        }
+
         return when (val result = apiCall { booksService.getNewBooks() }) {
             is Result.Success -> {
                 val new = PARSER.parseBooksPopular(result.data)
                 newCache.clear()
                 newCache.addAll(new)
+                val homeBooks = HomeBooks(timestamp = Date(), type = NEW, books = new)
+                homeBooksDao.insert(homeBooks)
                 new
             }
             is Result.Error -> listOf()

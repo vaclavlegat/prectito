@@ -1,6 +1,7 @@
 package cz.legat.prectito.di
 
 import cz.legat.prectito.api.BooksService
+import cz.legat.prectito.persistence.HomeBooksDao
 import cz.legat.prectito.persistence.SavedBookDao
 import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.repository.BooksRepository
@@ -18,9 +19,10 @@ object RepositoryModule {
     @Singleton
     fun provideBooksRepository(
         booksService: BooksService,
-        savedBookDao: SavedBookDao
+        savedBookDao: SavedBookDao,
+        homeBooksDao: HomeBooksDao
     ): BooksRepository {
-        return BooksRepository(booksService, savedBookDao)
+        return BooksRepository(booksService, savedBookDao, homeBooksDao)
     }
 
     @Provides

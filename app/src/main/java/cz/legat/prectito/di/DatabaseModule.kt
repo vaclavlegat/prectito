@@ -3,6 +3,7 @@ package cz.legat.prectito.di
 import android.content.Context
 import androidx.room.Room
 import cz.legat.prectito.persistence.AppDatabase
+import cz.legat.prectito.persistence.HomeBooksDao
 import cz.legat.prectito.persistence.SavedBookDao
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,10 @@ object DatabaseModule {
     @Provides
     fun provideSavedBookDao(db: AppDatabase): SavedBookDao {
         return db.savedBookDao()
+    }
+
+    @Provides
+    fun provideHomeBooksDao(db: AppDatabase): HomeBooksDao {
+        return db.homeBooksDao()
     }
 }

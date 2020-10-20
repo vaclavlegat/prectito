@@ -11,8 +11,6 @@ import cz.legat.prectito.ui.main.HomeFragment
 import cz.legat.prectito.ui.main.search.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-const val SEARCH_RESULT_ID_KEY = "id"
-const val SEARCH_RESULT_TYPE_KEY = "SEARCH_RESULT_TYPE_KEY"
 const val RESULT_ID = 0
 
 @AndroidEntryPoint
@@ -41,6 +39,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener {
             val fragmentId = when (item.itemId) {
                 R.id.home -> R.id.homeFragment
                 R.id.authors -> R.id.authorsFragment
+                R.id.other -> R.id.otherFragment
+                R.id.settings -> R.id.settingsFragment
                 else -> R.id.homeFragment
             }
 

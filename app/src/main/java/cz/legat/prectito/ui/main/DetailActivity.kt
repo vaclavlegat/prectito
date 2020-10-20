@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import cz.legat.prectito.R
-import cz.legat.prectito.SEARCH_RESULT_ID_KEY
-import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtActivityDetailBinding
-import dagger.hilt.EntryPoint
+import cz.legat.prectito.navigation.ID_KEY
+import cz.legat.prectito.navigation.IS_BOOK_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +22,9 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navController = Navigation.findNavController(this, R.id.detail_nav_host_fragment)
-        val id = intent.extras?.getString(SEARCH_RESULT_ID_KEY)
+        val id = intent.extras?.getString(ID_KEY)
         id?.let {
-            if (intent.extras?.getBoolean(SEARCH_RESULT_TYPE_KEY) == true) {
+            if (intent.extras?.getBoolean(IS_BOOK_KEY) == true) {
                 navController.navigate(R.id.bookDetailFragment, bundleOf("id" to id))
             } else {
                 navController.navigate(R.id.authorsDetailFragment, bundleOf("id" to id))

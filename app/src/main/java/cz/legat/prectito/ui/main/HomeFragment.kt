@@ -12,15 +12,15 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import cz.legat.core.model.Book
+import cz.legat.core.model.bigImgLink
 import cz.legat.prectito.MainActivity
 import cz.legat.prectito.RESULT_ID
-import cz.legat.prectito.SEARCH_RESULT_ID_KEY
-import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtHomeFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.initLinear
 import cz.legat.prectito.extensions.initLinearPaged
 import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.navigation.goToBookDetailIntent
 import cz.legat.prectito.ui.main.authors.AuthorsAdapter
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksAdapter
@@ -64,10 +64,7 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
 
         popularBooksAdapter = BooksAdapter(object : BaseAdapter.OnItemClickedListener<Book> {
             override fun onItem(item: Book) {
-                val intent = Intent(requireContext(), DetailActivity::class.java)
-                intent.putExtra(SEARCH_RESULT_ID_KEY, item.id)
-                intent.putExtra(SEARCH_RESULT_TYPE_KEY, true)
-                startActivity(intent)
+                startActivity(requireContext().goToBookDetailIntent(item.id))
             }
         })
 
@@ -75,10 +72,7 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>() {
 
         newBooksAdapter = BooksAdapter(object : BaseAdapter.OnItemClickedListener<Book> {
             override fun onItem(item: Book) {
-                val intent = Intent(requireContext(), DetailActivity::class.java)
-                intent.putExtra(SEARCH_RESULT_ID_KEY, item.id)
-                intent.putExtra(SEARCH_RESULT_TYPE_KEY, true)
-                startActivity(intent)
+                startActivity(requireContext().goToBookDetailIntent(item.id))
             }
         })
 

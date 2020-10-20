@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import cz.legat.prectito.R
-import cz.legat.prectito.SEARCH_RESULT_ID_KEY
 import cz.legat.prectito.databinding.PtDetailTabsFragmentBinding
+import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.ui.main.BindingFragment
 
 abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>() {
@@ -27,7 +24,7 @@ abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        id = arguments?.getString(SEARCH_RESULT_ID_KEY) ?: throw IllegalArgumentException()
+        id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
         binding.ptDetailPager.adapter = DetailAdapter(this)
         TabLayoutMediator(binding.ptDetailTabs, binding.ptDetailPager) { tab, position ->
             tab.text = tabTitles()[position]

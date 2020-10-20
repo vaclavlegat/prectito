@@ -1,6 +1,5 @@
 package cz.legat.prectito.ui.main.authors
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,9 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Author
-import cz.legat.prectito.SEARCH_RESULT_ID_KEY
-import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtFragmentAuthorsBinding
+import cz.legat.prectito.navigation.goToAuthorDetailIntent
 import cz.legat.prectito.ui.main.BindingFragment
-import cz.legat.prectito.ui.main.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,10 +39,7 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>() {
         viewManager = GridLayoutManager(activity, GRID_COLUMNS)
         viewAdapter = AuthorsAdapter(object : AuthorsAdapter.OnAuthorClickedListener {
             override fun onAuthor(author: Author) {
-                val intent = Intent(requireContext(), DetailActivity::class.java)
-                intent.putExtra(SEARCH_RESULT_ID_KEY, author.authorId)
-                intent.putExtra(SEARCH_RESULT_TYPE_KEY, false)
-                startActivity(intent)
+                startActivity(requireContext().goToAuthorDetailIntent(author.authorId))
             }
         })
 

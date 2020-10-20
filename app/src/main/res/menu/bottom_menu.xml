@@ -22,14 +22,14 @@
             android:title=""/>
 
         <item
-            android:id="@+id/fragmentAutho"
+            android:id="@+id/other"
             android:icon="@drawable/pt_close_icon"
             app:showAsAction="always"
             android:enabled="true"
             android:title="Other"/>
 
         <item
-            android:id="@+id/fragmentAuth"
+            android:id="@+id/settings"
             android:icon="@drawable/pt_settings_icon"
             android:enabled="true"
             app:showAsAction="always"

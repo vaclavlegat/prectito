@@ -6,30 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Comment
 import cz.legat.prectito.R
-import cz.legat.prectito.SEARCH_RESULT_ID_KEY
 import cz.legat.prectito.databinding.PtBookDetailFragmentBinding
 import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.goneIf
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.extensions.visibleIf
+import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalArgumentException
 
 @AndroidEntryPoint
 class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>() {
@@ -47,7 +42,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val id = arguments?.getString(SEARCH_RESULT_ID_KEY) ?: throw IllegalArgumentException()
+        val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
         binding.ptMoreCommentsBtn.setOnClickListener {
             findNavController().navigate(R.id.bookCommentsFragment, bundleOf("id" to id))
         }

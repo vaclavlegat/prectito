@@ -1,13 +1,9 @@
 package cz.legat.prectito.ui.main.search
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import cz.legat.prectito.MainActivity
-import cz.legat.prectito.SEARCH_RESULT_ID_KEY
-import cz.legat.prectito.SEARCH_RESULT_TYPE_KEY
 import cz.legat.prectito.databinding.PtActivitySearchResultsBinding
-import cz.legat.prectito.ui.main.DetailActivity
+import cz.legat.prectito.navigation.goToDetailIntent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,10 +18,7 @@ class SearchResultsActivity : AppCompatActivity(), SearchResultsFragment.OnResul
     }
 
     override fun onResult(id: String, isBook: Boolean) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(SEARCH_RESULT_ID_KEY, id)
-        intent.putExtra(SEARCH_RESULT_TYPE_KEY, isBook)
-        startActivity(intent)
+        startActivity(goToDetailIntent(id, isBook))
     }
 
     override fun onDestroy() {

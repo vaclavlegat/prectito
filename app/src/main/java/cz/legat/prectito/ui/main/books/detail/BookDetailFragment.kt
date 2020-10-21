@@ -3,11 +3,7 @@ package cz.legat.prectito.ui.main.books.detail
 import android.animation.ValueAnimator
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -22,6 +18,7 @@ import cz.legat.prectito.extensions.goneIf
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.extensions.visibleIf
 import cz.legat.prectito.navigation.ID_KEY
+import cz.legat.prectito.navigation.goToAuthorDetailIntent
 import cz.legat.prectito.ui.main.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,6 +57,12 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.ptBookAuthorTv.fadeInText(it.author?.name)
                 binding.ptBookPublishedTv.fadeInText(it.published)
                 binding.ptBookDescTv.fadeInText(it.description)
+
+                binding.ptBookAuthorTv.setOnClickListener {
+                    book.author?.authorId?.let { authorId ->
+                        startActivity(requireContext().goToAuthorDetailIntent(authorId))
+                    }
+                }
 
                 binding.ptBookRatingTv.fadeInText("0 %")
                 ValueAnimator.ofInt(it.rating?.toInt() ?: 0).apply {

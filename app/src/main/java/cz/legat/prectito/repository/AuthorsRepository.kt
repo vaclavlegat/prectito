@@ -37,7 +37,7 @@ class AuthorsRepository @Inject constructor(private val booksService: BooksServi
         }
         return runBlocking {
             when (val result =
-                apiCall { booksService.getAuthorBooks(authorId = id, page = page, sort = null) }) {
+                apiCall { booksService.getAuthorBooks(authorId = id, page = page, sort = "rn") }) {
                 is Result.Success -> {
                     val books = PARSER.parseAuthorBooks(result.data, page)
                     if (authorsBooksCache[id] == null) {

@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import cz.legat.core.model.Book
+import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.databinding.PtHomeFragmentBinding
 import cz.legat.prectito.extensions.initLinear
 import cz.legat.prectito.navigation.goToBookDetailIntent

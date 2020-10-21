@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main
+package cz.legat.core.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-
 
 abstract class BindingFragment<B : ViewBinding>(val inflaterFun: (LayoutInflater, ViewGroup?, Boolean) -> B) : Fragment() {
 

@@ -17,7 +17,7 @@ import cz.legat.core.model.SearchResult
 import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visibleIf
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment
 import cz.legat.prectito.ui.main.books.BooksViewModel

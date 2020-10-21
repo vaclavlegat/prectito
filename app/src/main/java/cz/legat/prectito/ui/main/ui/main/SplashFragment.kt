@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import cz.legat.prectito.MainActivity
 import cz.legat.prectito.databinding.PtSplashFragmentBinding
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

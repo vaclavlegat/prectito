@@ -19,7 +19,7 @@ import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.extensions.visibleIf
 import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.navigation.goToAuthorDetailIntent
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +33,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
         binding.ptMoreCommentsBtn.setOnClickListener {
-            findNavController().navigate(R.id.bookCommentsFragment, bundleOf("id" to id))
+            findNavController().navigate(R.id.bookCommentsFragment, bundleOf(ID_KEY to id))
         }
 
         commentsAdapter = CommentsAdapter(object : BaseAdapter.OnItemClickedListener<Comment> {

@@ -11,8 +11,10 @@ import cz.legat.core.model.Book
 import cz.legat.prectito.databinding.PtMainFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
+import cz.legat.prectito.extensions.withId
+import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.navigation.goToBookDetailIntent
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,11 +24,7 @@ class AuthorBooksFragment : BindingFragment<PtMainFragmentBinding>(PtMainFragmen
     lateinit var booksAdapter: AuthorBooksAdapter
 
     companion object {
-        fun newInstance(id: String) = AuthorBooksFragment().apply {
-            arguments = Bundle().apply {
-                putString("id", id)
-            }
-        }
+        fun newInstance(id: String) = AuthorBooksFragment().withId(id)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

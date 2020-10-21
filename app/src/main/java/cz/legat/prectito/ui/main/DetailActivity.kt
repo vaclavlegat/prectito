@@ -27,9 +27,9 @@ class DetailActivity : AppCompatActivity() {
         val id = intent.extras?.getString(ID_KEY)
         id?.let {
             if (intent.extras?.getBoolean(IS_BOOK_KEY) == true) {
-                navController.navigate(R.id.bookDetailFragment, bundleOf("id" to id))
+                navController.navigate(R.id.bookDetailFragment, bundleOf(ID_KEY to id))
             } else {
-                navController.navigate(R.id.authorsDetailFragment, bundleOf("id" to id))
+                navController.navigate(R.id.authorsDetailFragment, bundleOf(ID_KEY to id))
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.lifecycle.liveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import cz.legat.core.model.Book
+import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.repository.AuthorsRepository
 import cz.legat.prectito.ui.main.paging.BaseDataSourceFactory
 import cz.legat.prectito.ui.main.paging.BasePageKeyedDataSourceWithParam
@@ -19,7 +20,7 @@ class AuthorDetailViewModel  @ViewModelInject constructor(
 ) : ViewModel() {
 
     val author = liveData(Dispatchers.IO) {
-        savedStateHandle.get<String>("id")?.let {
+        savedStateHandle.get<String>(ID_KEY)?.let {
             emit(authorsRepository.getAuthor(it))
         }
     }
@@ -29,7 +30,7 @@ class AuthorDetailViewModel  @ViewModelInject constructor(
         .setPageSize(40)
         .setEnablePlaceholders(false)
         .build()
-    val books = initializedPagedListBuilder(savedStateHandle.get<String>("id")!!, config).build()
+    val books = initializedPagedListBuilder(savedStateHandle.get<String>(ID_KEY)!!, config).build()
 
 
     private fun initializedPagedListBuilder(authorId: String, config: PagedList.Config):

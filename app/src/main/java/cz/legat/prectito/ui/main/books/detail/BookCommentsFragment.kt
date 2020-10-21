@@ -15,7 +15,9 @@ import cz.legat.core.model.Comment
 import cz.legat.prectito.databinding.PtCommentsFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.prectito.extensions.withId
+import cz.legat.prectito.navigation.ID_KEY
+import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,12 +53,6 @@ class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>(PtCommen
 
 
     companion object {
-        fun newInstance(id: String): BookCommentsFragment {
-            return BookCommentsFragment().apply {
-                arguments = Bundle().apply {
-                    putString("id", id)
-                }
-            }
-        }
+        fun newInstance(id: String) = BookCommentsFragment().withId(id)
     }
 }

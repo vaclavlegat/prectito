@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Author
 import cz.legat.prectito.databinding.PtFragmentAuthorsBinding
 import cz.legat.prectito.navigation.goToAuthorDetailIntent
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -10,7 +10,7 @@ import cz.legat.prectito.databinding.PtMainFragmentBinding
 import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
 import cz.legat.prectito.navigation.goToBookDetailIntent
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.ui.main.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 

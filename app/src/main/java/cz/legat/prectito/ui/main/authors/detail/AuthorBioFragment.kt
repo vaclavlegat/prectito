@@ -14,7 +14,9 @@ import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.core.model.Author
 import cz.legat.prectito.databinding.PtAuthorDetailFragmentBinding
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.prectito.extensions.withId
+import cz.legat.prectito.navigation.ID_KEY
+import cz.legat.core.ui.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,13 +25,7 @@ class AuthorBioFragment : BindingFragment<PtAuthorDetailFragmentBinding>(PtAutho
     private val viewModel: AuthorDetailViewModel by viewModels()
 
     companion object {
-        fun newInstance(id: String): AuthorBioFragment {
-            return AuthorBioFragment().apply {
-                arguments = Bundle().apply {
-                    putString("id", id)
-                }
-            }
-        }
+        fun newInstance(id: String) = AuthorBioFragment().withId(id)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

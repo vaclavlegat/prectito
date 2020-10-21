@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import cz.legat.prectito.databinding.PtDetailTabsFragmentBinding
 import cz.legat.prectito.navigation.ID_KEY
-import cz.legat.prectito.ui.main.BindingFragment
+import cz.legat.core.ui.BindingFragment
 
 abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>(PtDetailTabsFragmentBinding::inflate) {
 

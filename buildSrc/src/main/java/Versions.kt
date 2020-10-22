@@ -39,4 +39,14 @@ object Versions {
     const val junitVersion = "4.13"
     const val junitextVersion = "1.1.1"
     const val espressoVersion = "3.2.0"
+
+    const val jsoupVersion = "1.12.1"
+
+    const val moshiVersion = "1.10.0"
+
+    const val playServicesVisionVersion = "20.1.1"
+    const val barcodeScanningVersion =  "16.0.2"
+    const val preferenceVersion = "1.1.1"
+    const val converterScalarsVersion = "2.9.0"
+    const val guavaVersion = "27.1-jre"
 }

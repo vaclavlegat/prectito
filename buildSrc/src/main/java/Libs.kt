@@ -1,5 +1,5 @@
 object Libs {
-    
+
     // core
     val kotlinStdlibJdk = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlinStdlibJdkVersion}"
     val appcompat = "androidx.appcompat:appcompat:${Versions.appcompatVersion}"
@@ -9,7 +9,7 @@ object Libs {
     // di
     val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
     val hiltLifecycle = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
-    val hiltCompiler =  "androidx.hilt:hilt-compiler:1.0.0-alpha01"
+    val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0-alpha01"
     val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
 
     // room
@@ -20,7 +20,7 @@ object Libs {
     // images
     val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
-    
+
     // lifecycle
     val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
     val lifecycleViewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleVersion}"
@@ -38,7 +38,7 @@ object Libs {
 
     // paging
     val paging = "androidx.paging:paging-runtime:${Versions.paging_version}"
-    
+
     // ui
     val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintlayoutVersion}"
     val material = "com.google.android.material:material:${Versions.materialVersion}"
@@ -49,5 +49,19 @@ object Libs {
     val junit = "junit:junit:${Versions.junitVersion}"
     val junitext = "androidx.test.ext:junit:${Versions.junitextVersion}"
     val espresso = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
-  
+
+    val jsoup = "org.jsoup:jsoup:${Versions.jsoupVersion}"
+
+    val playServicesVision = "com.google.android.gms:play-services-vision:${Versions.playServicesVisionVersion}"
+    val barcodeScanning = "com.google.mlkit:barcode-scanning:${Versions.barcodeScanningVersion}"
+
+    val preference = "androidx.preference:preference:${Versions.preferenceVersion}"
+
+    val converterScalars = "com.squareup.retrofit2:converter-scalars:${Versions.converterScalarsVersion}"
+
+    val guava = "com.google.guava:guava:${Versions.guavaVersion}"
+
+    val moshiAdapters = "com.squareup.moshi:moshi-adapters:${Versions.moshiVersion}"
+    val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshiVersion}"
+    val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshiVersion}"
 }

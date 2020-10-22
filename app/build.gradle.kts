@@ -49,8 +49,8 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation(project(":core"))
-    implementation(project(":booksdb"))
+    implementation(project(Modules.core))
+    implementation(project(Modules.bookdb))
 
     // core
     implementation (Libs.appcompat)
@@ -61,13 +61,6 @@ dependencies {
     // di
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.2")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
 
@@ -98,28 +91,25 @@ dependencies {
 
     implementation (Libs.paging)
 
-    implementation ("com.google.android.gms:play-services-vision:20.1.1")
-    implementation ("com.google.mlkit:barcode-scanning:16.0.2")
+    implementation (Libs.playServicesVision)
+    implementation (Libs.barcodeScanning)
 
 
-    implementation ("androidx.preference:preference:1.1.1")
+    implementation (Libs.preference)
 
-    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation(Libs.converterScalars)
 
-    api ("com.google.guava:guava:27.1-jre")
+    api (Libs.guava)
 
-    implementation ("com.google.android.material:material:1.3.0-alpha03")
-
-    implementation ("com.squareup.moshi:moshi-adapters:1.10.0")
-    implementation ("com.squareup.moshi:moshi-kotlin:1.10.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.10.0")
+    implementation (Libs.moshiAdapters)
+    implementation (Libs.moshiKotlin)
+    kapt(Libs.moshiKotlinCodegen)
 
     implementation (Libs.roomRuntime)
     kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation (Libs.roomKtx)
-
 
     // test
     testImplementation (Libs.junit)

@@ -5,16 +5,12 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
-import cz.legat.core.model.Book
+import cz.legat.core.paging.preparePagingLiveData
 import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.repository.AuthorsRepository
-import cz.legat.prectito.ui.main.paging.BaseDataSourceFactory
-import cz.legat.prectito.ui.main.paging.BasePageKeyedDataSourceWithParam
 import kotlinx.coroutines.Dispatchers
 
-class AuthorDetailViewModel  @ViewModelInject constructor(
+class AuthorDetailViewModel @ViewModelInject constructor(
     private val authorsRepository: AuthorsRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -25,18 +21,5 @@ class AuthorDetailViewModel  @ViewModelInject constructor(
         }
     }
 
-    val config = PagedList.Config.Builder()
-        .setInitialLoadSizeHint(40)
-        .setPageSize(40)
-        .setEnablePlaceholders(false)
-        .build()
-    val books = initializedPagedListBuilder(savedStateHandle.get<String>(ID_KEY)!!, config).build()
-
-
-    private fun initializedPagedListBuilder(authorId: String, config: PagedList.Config):
-            LivePagedListBuilder<Int, Book> {
-        val dataSourceFactory = BaseDataSourceFactory(BasePageKeyedDataSourceWithParam<Book>(authorId, authorsRepository::getAuthorBooks))
-        return LivePagedListBuilder(dataSourceFactory, config)
-    }
-
+    val books = preparePagingLiveData(savedStateHandle.get<String>(ID_KEY)!!, authorsRepository::getAuthorBooks)
 }

@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.paging
+package cz.legat.core.paging
 
 import androidx.paging.PageKeyedDataSource
 

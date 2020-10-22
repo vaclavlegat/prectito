@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.paging
+package cz.legat.core.paging
 
 import androidx.paging.PageKeyedDataSource
 
@@ -17,7 +17,7 @@ class BasePageKeyedDataSource<T>(val call: (page: Int) -> List<T>) : PageKeyedDa
         val nextPage = currentPage + 1
 
         val data = call.invoke(currentPage)
-        data?.let {
+        data.let {
             callback.onResult(data, null, nextPage)
         }
     }
@@ -31,7 +31,7 @@ class BasePageKeyedDataSource<T>(val call: (page: Int) -> List<T>) : PageKeyedDa
         val nextPage = currentPage + 1
 
         val data = call.invoke(currentPage)
-        data?.let {
+        data.let {
             callback.onResult(data, nextPage)
         }
     }

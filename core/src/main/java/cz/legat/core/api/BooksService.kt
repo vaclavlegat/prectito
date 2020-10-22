@@ -1,4 +1,4 @@
-package cz.legat.prectito.api
+package cz.legat.core.api
 
 import retrofit2.Response
 import retrofit2.http.GET

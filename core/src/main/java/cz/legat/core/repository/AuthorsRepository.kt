@@ -1,10 +1,9 @@
-package cz.legat.prectito.repository
+package cz.legat.core.repository
 
 import cz.legat.core.model.Author
 import cz.legat.core.model.Book
-import cz.legat.prectito.api.BooksService
-import cz.legat.prectito.ui.main.base.BaseRepository
-import cz.legat.prectito.ui.main.base.Result
+import cz.legat.core.api.BooksService
+import cz.legat.core.base.BaseRepository
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -21,12 +20,12 @@ class AuthorsRepository @Inject constructor(private val booksService: BooksServi
         }
         return runBlocking {
             when (val result = apiCall { booksService.getAuthors(page) }) {
-                is Result.Success -> {
+                is cz.legat.core.base.Result.Success -> {
                     val authors = PARSER.parseAuthors(result.data)
                     authorsCache[page] = authors
                     authors
                 }
-                is Result.Error -> listOf()
+                is cz.legat.core.base.Result.Error -> listOf()
             }
         }
     }
@@ -38,7 +37,7 @@ class AuthorsRepository @Inject constructor(private val booksService: BooksServi
         return runBlocking {
             when (val result =
                 apiCall { booksService.getAuthorBooks(authorId = id, page = page, sort = "rn") }) {
-                is Result.Success -> {
+                is cz.legat.core.base.Result.Success -> {
                     val books = PARSER.parseAuthorBooks(result.data, page)
                     if (authorsBooksCache[id] == null) {
                         authorsBooksCache[id] = hashMapOf()
@@ -46,7 +45,7 @@ class AuthorsRepository @Inject constructor(private val booksService: BooksServi
                     authorsBooksCache[id]?.put(page, books)
                     books
                 }
-                is Result.Error -> listOf()
+                is cz.legat.core.base.Result.Error -> listOf()
             }
         }
     }
@@ -56,19 +55,19 @@ class AuthorsRepository @Inject constructor(private val booksService: BooksServi
             return authorCache[id]
         }
         return when (val result = apiCall { booksService.getAuthor(id) }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val author = PARSER.parseAuthorDetail(id, result.data)
                 authorCache[id] = author
                 author
             }
-            is Result.Error -> null
+            is cz.legat.core.base.Result.Error -> null
         }
     }
 
     suspend fun searchAuthor(query: String): List<Author> {
         return when (val result = apiCall { booksService.searchAuthor(query) }) {
-            is Result.Success -> PARSER.parseAuthors(result.data)
-            is Result.Error -> listOf()
+            is cz.legat.core.base.Result.Success -> PARSER.parseAuthors(result.data)
+            is cz.legat.core.base.Result.Error -> listOf()
         }
     }
 }

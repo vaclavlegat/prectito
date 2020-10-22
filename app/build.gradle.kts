@@ -3,8 +3,8 @@ plugins {
     kotlin("android")
     id("org.jetbrains.kotlin.android.extensions")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+    id("dagger.hilt.android.plugin")
     id("kotlin-android")
 }
 
@@ -52,17 +52,19 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.bookdb))
 
+    implementation (Libs.hilt)
+    implementation (Libs.hiltLifecycle)
+    kapt (Libs.hiltCompiler)
+    kapt (Libs.hiltAndroidCompiler)
+
+    implementation (Libs.roomRuntime)
+    kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
+
     // core
     implementation (Libs.appcompat)
     implementation (Libs.coreKtx)
     implementation (Libs.kotlinStdlibJdk)
     implementation (Libs.legacySupportV4)
-
-    // di
-    implementation (Libs.hilt)
-    implementation (Libs.hiltLifecycle)
-    kapt (Libs.hiltCompiler)
-    kapt (Libs.hiltAndroidCompiler)
 
     // images
     implementation (Libs.glide)
@@ -104,12 +106,6 @@ dependencies {
     implementation (Libs.moshiAdapters)
     implementation (Libs.moshiKotlin)
     kapt(Libs.moshiKotlinCodegen)
-
-    implementation (Libs.roomRuntime)
-    kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
-
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation (Libs.roomKtx)
 
     // test
     testImplementation (Libs.junit)

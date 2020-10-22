@@ -211,7 +211,7 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
                     val barcodeFieldList = ArrayList<BarcodeField>()
                     barcodeFieldList.add(BarcodeField("Title", savedBook.title ?: ""))
                     if (savedBook.subtitle?.isNotEmpty() == true) {
-                        barcodeFieldList.add(BarcodeField("Subtitle", savedBook.subtitle))
+                        barcodeFieldList.add(BarcodeField("Subtitle", savedBook.subtitle!!))
                     }
                     barcodeFieldList.add(BarcodeField("Author", savedBook.author ?: ""))
                     barcodeFieldList.add(

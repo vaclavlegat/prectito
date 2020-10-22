@@ -1,10 +1,10 @@
-package cz.legat.prectito.di
+package cz.legat.core.di
 
 import android.content.Context
 import androidx.room.Room
-import cz.legat.prectito.persistence.AppDatabase
-import cz.legat.prectito.persistence.HomeBooksDao
-import cz.legat.prectito.persistence.SavedBookDao
+import cz.legat.core.persistence.AppDatabase
+import cz.legat.core.persistence.HomeBooksDao
+import cz.legat.core.persistence.SavedBookDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

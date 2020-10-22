@@ -1,17 +1,16 @@
-package cz.legat.prectito.repository
+package cz.legat.core.repository
 
-import cz.legat.booksdp.parser.HtmlParser
+import cz.legat.core.HtmlParser
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
-import cz.legat.prectito.api.BooksService
-import cz.legat.prectito.persistence.HomeBooks
-import cz.legat.prectito.persistence.HomeBooksDao
-import cz.legat.prectito.persistence.NEW
-import cz.legat.prectito.persistence.POPULAR
-import cz.legat.prectito.persistence.SavedBook
-import cz.legat.prectito.persistence.SavedBookDao
-import cz.legat.prectito.ui.main.base.BaseRepository
-import cz.legat.prectito.ui.main.base.Result
+import cz.legat.core.api.BooksService
+import cz.legat.core.base.BaseRepository
+import cz.legat.core.persistence.HomeBooks
+import cz.legat.core.persistence.HomeBooksDao
+import cz.legat.core.persistence.NEW
+import cz.legat.core.persistence.POPULAR
+import cz.legat.core.persistence.SavedBook
+import cz.legat.core.persistence.SavedBookDao
 import java.util.*
 import javax.inject.Inject
 
@@ -44,7 +43,7 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getPopularBooks() }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val popular = HtmlParser().parseBooksPopular(result.data)
                 popularCache.clear()
                 popularCache.addAll(popular)
@@ -52,7 +51,7 @@ class BooksRepository @Inject constructor(
                 homeBooksDao.insert(homeBooks)
                 popular
             }
-            is Result.Error -> listOf()
+            is cz.legat.core.base.Result.Error -> listOf()
         }
     }
 
@@ -69,7 +68,7 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getNewBooks() }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val new = PARSER.parseBooksPopular(result.data)
                 newCache.clear()
                 newCache.addAll(new)
@@ -77,7 +76,7 @@ class BooksRepository @Inject constructor(
                 homeBooksDao.insert(homeBooks)
                 new
             }
-            is Result.Error -> listOf()
+            is cz.legat.core.base.Result.Error -> listOf()
         }
     }
 
@@ -90,7 +89,7 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getBook(id) }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val book = PARSER.parseBook(id, result.data)
                 book.copy(
                     description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
@@ -101,7 +100,7 @@ class BooksRepository @Inject constructor(
                 booksCache[id] = book
                 book
             }
-            is Result.Error -> null
+            is cz.legat.core.base.Result.Error -> null
         }
     }
 
@@ -115,18 +114,18 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getBookComments(id) }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val comments = PARSER.parseBookComments(result.data)
                 commentsCache[id] = comments
                 comments
             }
-            is Result.Error -> listOf()
+            is cz.legat.core.base.Result.Error -> listOf()
         }
     }
 
     suspend fun getBookByISBN(isbn: String): SavedBook? {
         return when (val result = apiCall { booksService.getBookByISBN(isbn) }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val book = PARSER.parseBook(isbn, result.data)
                 SavedBook(
                     title = book.title,
@@ -137,7 +136,7 @@ class BooksRepository @Inject constructor(
                     language = book.language
                 )
             }
-            is Result.Error -> SavedBook(isbn = isbn)
+            is cz.legat.core.base.Result.Error -> SavedBook(isbn = isbn)
         }
     }
 
@@ -146,12 +145,12 @@ class BooksRepository @Inject constructor(
             return searchedBooksCache[query] ?: listOf()
         }
         return when (val result = apiCall { booksService.searchBook(query) }) {
-            is Result.Success -> {
+            is cz.legat.core.base.Result.Success -> {
                 val searchBooks = PARSER.parseBookSearchResults(result.data)
                 searchedBooksCache[query] = searchBooks
                 searchBooks
             }
-            is Result.Error -> listOf()
+            is cz.legat.core.base.Result.Error -> listOf()
         }
     }
 

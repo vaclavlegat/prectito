@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.prectito.persistence.SavedBook
+import cz.legat.core.persistence.SavedBook
 
 class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : RecyclerView.Adapter<MyBooksAdapter.BookViewHolder>() {
 

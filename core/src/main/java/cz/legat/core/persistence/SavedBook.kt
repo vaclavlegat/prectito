@@ -1,4 +1,4 @@
-package cz.legat.prectito.persistence
+package cz.legat.core.persistence
 
 import android.os.Parcel
 import android.os.Parcelable

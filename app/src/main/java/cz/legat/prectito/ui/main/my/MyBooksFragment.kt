@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
-import cz.legat.prectito.persistence.SavedBook
+import cz.legat.core.persistence.SavedBook
 import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

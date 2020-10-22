@@ -11,7 +11,7 @@ import cz.legat.prectito.extensions.gone
 import cz.legat.prectito.extensions.visible
 import cz.legat.prectito.navigation.goToBookDetailIntent
 import cz.legat.core.ui.BindingFragment
-import cz.legat.prectito.ui.main.base.BaseAdapter
+import cz.legat.core.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 const val BOOKS_TYPE_KEY = "BOOKS_TYPE_KEY"

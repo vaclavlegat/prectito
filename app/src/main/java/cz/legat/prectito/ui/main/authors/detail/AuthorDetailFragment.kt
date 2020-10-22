@@ -1,7 +1,7 @@
 package cz.legat.prectito.ui.main.authors.detail
 
 import androidx.fragment.app.Fragment
-import cz.legat.prectito.ui.main.base.BaseTabsFragment
+import cz.legat.prectito.BaseTabsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

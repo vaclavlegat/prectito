@@ -20,7 +20,7 @@ import cz.legat.prectito.extensions.visibleIf
 import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.navigation.goToAuthorDetailIntent
 import cz.legat.core.ui.BindingFragment
-import cz.legat.prectito.ui.main.base.BaseAdapter
+import cz.legat.core.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

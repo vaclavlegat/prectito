@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.base
+package cz.legat.core.base
 
 import android.view.LayoutInflater
 import android.view.View

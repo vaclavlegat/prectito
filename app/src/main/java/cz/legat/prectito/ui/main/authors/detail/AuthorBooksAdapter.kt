@@ -8,14 +8,11 @@ import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import cz.legat.core.model.Author
 import cz.legat.prectito.R
 import cz.legat.core.model.Book
 import cz.legat.core.model.bigImgLink
 import cz.legat.core.model.middleImgLink
 import cz.legat.prectito.extensions.loadImg
-import cz.legat.prectito.ui.main.authors.AuthorsAdapter
-import cz.legat.prectito.ui.main.base.BaseAdapter
 
 class AuthorBooksAdapter(private val onItemClickedListener: OnBookClickedListener) : PagedListAdapter<Book, AuthorBooksAdapter.BookViewHolder>(DIFF_CALLBACK) {
 

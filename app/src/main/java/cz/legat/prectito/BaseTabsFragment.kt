@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.base
+package cz.legat.prectito
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

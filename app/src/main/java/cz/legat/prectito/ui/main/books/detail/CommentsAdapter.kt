@@ -10,7 +10,7 @@ import cz.legat.core.model.Comment
 import cz.legat.prectito.extensions.fadeInText
 import cz.legat.prectito.extensions.loadImg
 import cz.legat.prectito.extensions.tintedDrawable
-import cz.legat.prectito.ui.main.base.BaseAdapter
+import cz.legat.core.base.BaseAdapter
 
 class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<Comment>) :
     BaseAdapter<Comment>(onItemClickedListener) {

@@ -1,4 +1,4 @@
-package cz.legat.booksdp.parser
+package cz.legat.core
 
 import cz.legat.core.model.Author
 import cz.legat.core.model.Book

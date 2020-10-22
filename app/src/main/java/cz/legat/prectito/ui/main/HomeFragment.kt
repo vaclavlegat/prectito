@@ -10,7 +10,7 @@ import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.databinding.PtHomeFragmentBinding
 import cz.legat.prectito.extensions.initLinear
 import cz.legat.prectito.navigation.goToBookDetailIntent
-import cz.legat.prectito.ui.main.base.BaseAdapter
+import cz.legat.core.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksAdapter
 import cz.legat.prectito.ui.main.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint

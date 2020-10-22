@@ -3,7 +3,7 @@ package cz.legat.prectito.ui.main.ui.main
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import cz.legat.prectito.repository.BooksRepository
+import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 

@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import cz.legat.core.model.SearchResult
-import cz.legat.prectito.persistence.SavedBook
-import cz.legat.prectito.repository.AuthorsRepository
-import cz.legat.prectito.repository.BooksRepository
+import cz.legat.core.persistence.SavedBook
+import cz.legat.core.repository.AuthorsRepository
+import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -1,6 +1,6 @@
-package cz.legat.prectito.ui.main.base
+package cz.legat.core.base
 
-import cz.legat.booksdp.parser.HtmlParser
+import cz.legat.core.HtmlParser
 import retrofit2.Response
 
 abstract class BaseRepository {

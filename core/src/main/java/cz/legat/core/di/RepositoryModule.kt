@@ -1,10 +1,10 @@
-package cz.legat.prectito.di
+package cz.legat.core.di
 
-import cz.legat.prectito.api.BooksService
-import cz.legat.prectito.persistence.HomeBooksDao
-import cz.legat.prectito.persistence.SavedBookDao
-import cz.legat.prectito.repository.AuthorsRepository
-import cz.legat.prectito.repository.BooksRepository
+import cz.legat.core.api.BooksService
+import cz.legat.core.persistence.HomeBooksDao
+import cz.legat.core.persistence.SavedBookDao
+import cz.legat.core.repository.AuthorsRepository
+import cz.legat.core.repository.BooksRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

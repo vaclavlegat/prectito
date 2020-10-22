@@ -1,4 +1,4 @@
-package cz.legat.prectito.persistence
+package cz.legat.core.persistence
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

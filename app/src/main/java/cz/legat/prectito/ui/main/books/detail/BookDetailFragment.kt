@@ -16,6 +16,7 @@ import cz.legat.core.extensions.ID_KEY
 import cz.legat.core.extensions.fadeInText
 import cz.legat.core.extensions.goneIf
 import cz.legat.core.extensions.loadImg
+import cz.legat.core.extensions.loadSingleBlurredImg
 import cz.legat.core.extensions.visibleIf
 import cz.legat.core.model.Comment
 import cz.legat.core.ui.BindingFragment
@@ -74,7 +75,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                         }
                     } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
                         if (state !== CollapsingToolbarLayoutState.COLLAPSED) {
-                            binding.collapsing?.title = it.title //Set title not to display
+                            binding.collapsing?.fadeInText(it.title) //Set title not to display
                             //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.black)
                             state = CollapsingToolbarLayoutState.COLLAPSED //Modified status marked as folded
                         }
@@ -116,6 +117,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 }
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
                 binding.ptBookImageIv.loadImg(it.imgLink)
+                binding.ptBookImageBgIv?.loadSingleBlurredImg(it.imgLink)
             }
         })
 

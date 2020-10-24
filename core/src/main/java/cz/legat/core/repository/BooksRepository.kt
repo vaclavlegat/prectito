@@ -91,14 +91,14 @@ class BooksRepository @Inject constructor(
         return when (val result = apiCall { booksService.getBook(id) }) {
             is cz.legat.core.base.Result.Success -> {
                 val book = PARSER.parseBook(id, result.data)
-                book.copy(
+                val updatedBook = book.copy(
                     description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
                             "celý text"
                         )
                     ) book.description else book.description.dropLast(12)
                 )
-                booksCache[id] = book
-                book
+                booksCache[id] = updatedBook
+                updatedBook
             }
             is cz.legat.core.base.Result.Error -> null
         }

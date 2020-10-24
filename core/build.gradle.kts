@@ -43,6 +43,7 @@ dependencies {
     implementation(Libs.converterScalars)
     implementation(Libs.converterMoshi)
     implementation (Libs.appcompat)
+    implementation (Libs.material)
     implementation (Libs.coreKtx)
     implementation (Libs.kotlinStdlibJdk)
     implementation (Libs.hilt)
@@ -57,6 +58,8 @@ dependencies {
     implementation (Libs.roomKtx)
     implementation (Libs.moshiAdapters)
     implementation (Libs.moshiKotlin)
+
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)
     androidTestImplementation (Libs.espresso)

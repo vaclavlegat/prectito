@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import cz.legat.core.R
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 fun ImageView.tintedDrawable(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) {
     val vectorDrawable = VectorDrawableCompat.create(
@@ -40,4 +42,8 @@ fun ImageView.loadImg(vararg imgLinks: String?) {
 fun ImageView.loadSingleImg(imgLink: String?): RequestBuilder<Drawable> {
     return Glide.with(this).load(imgLink).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.pt_img_placeholder)
         .transition(DrawableTransitionOptions.withCrossFade(200))
+}
+
+fun ImageView.loadSingleBlurredImg(imgLink: String?) {
+    Glide.with(this).load(imgLink).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(this)
 }

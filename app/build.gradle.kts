@@ -66,10 +66,6 @@ dependencies {
     implementation (Libs.kotlinStdlibJdk)
     implementation (Libs.legacySupportV4)
 
-    // images
-    implementation (Libs.glide)
-    annotationProcessor (Libs.glideCompiler)
-
     // lifecycle
     implementation (Libs.lifecycleExtensions)
     implementation (Libs.lifecycleLivedataKtx)

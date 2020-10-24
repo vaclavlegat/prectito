@@ -1,8 +1,10 @@
-package cz.legat.prectito.extensions
+package cz.legat.core.extensions
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import cz.legat.prectito.navigation.ID_KEY
+
+const val ID_KEY = "id"
+const val IS_BOOK_KEY = "SEARCH_RESULT_TYPE_KEY"
 
 fun Fragment.withId(id: String): Fragment {
     apply {

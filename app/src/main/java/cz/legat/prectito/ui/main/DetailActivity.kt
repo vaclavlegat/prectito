@@ -1,15 +1,15 @@
 package cz.legat.prectito.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import cz.legat.core.extensions.ID_KEY
+import cz.legat.core.extensions.IS_BOOK_KEY
 import cz.legat.prectito.R
 import cz.legat.prectito.databinding.PtActivityDetailBinding
-import cz.legat.prectito.navigation.ID_KEY
-import cz.legat.prectito.navigation.IS_BOOK_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

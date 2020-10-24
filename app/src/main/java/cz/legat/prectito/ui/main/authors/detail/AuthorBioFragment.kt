@@ -1,21 +1,12 @@
 package cz.legat.prectito.ui.main.authors.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import cz.legat.prectito.R
-import cz.legat.prectito.extensions.fadeInText
-import cz.legat.prectito.extensions.loadImg
-import cz.legat.core.model.Author
+import cz.legat.core.extensions.fadeInText
+import cz.legat.core.extensions.loadImg
 import cz.legat.prectito.databinding.PtAuthorDetailFragmentBinding
-import cz.legat.prectito.extensions.withId
-import cz.legat.prectito.navigation.ID_KEY
+import cz.legat.core.extensions.withId
 import cz.legat.core.ui.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 

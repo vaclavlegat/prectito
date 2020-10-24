@@ -1,4 +1,4 @@
-package cz.legat.prectito.extensions
+package cz.legat.core.extensions
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import cz.legat.prectito.R
+import cz.legat.core.R
 
 fun ImageView.tintedDrawable(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) {
     val vectorDrawable = VectorDrawableCompat.create(

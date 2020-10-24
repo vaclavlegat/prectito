@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.model.Author
-import cz.legat.prectito.extensions.loadImg
+import cz.legat.core.extensions.loadImg
 
 class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): PagedListAdapter<Author, AuthorsAdapter.AuthorViewHolder>(DIFF_CALLBACK) {
 
@@ -42,7 +42,7 @@ class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): Page
             with(author) {
                 tvName.text = name
                 tvLife.text = life
-                authorImgLink?.let {
+                authorImgLink.let {
                     ivImage.loadImg(it)
                 }
             }

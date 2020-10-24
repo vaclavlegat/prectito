@@ -7,7 +7,7 @@ import cz.legat.prectito.R
 import cz.legat.core.model.Book
 import cz.legat.core.model.bigImgLink
 import cz.legat.core.model.middleImgLink
-import cz.legat.prectito.extensions.loadImg
+import cz.legat.core.extensions.loadImg
 import cz.legat.core.base.BaseAdapter
 
 class BooksAdapter(private val onItemClickedListener: OnItemClickedListener<Book>) :

@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import cz.legat.prectito.R
 import cz.legat.core.model.SearchResult
-import cz.legat.prectito.extensions.loadImg
+import cz.legat.core.extensions.loadImg
 import cz.legat.core.base.BaseAdapter
 
 class SearchResultsAdapter(private val onItemClickedListener: OnItemClickedListener<SearchResult>) :

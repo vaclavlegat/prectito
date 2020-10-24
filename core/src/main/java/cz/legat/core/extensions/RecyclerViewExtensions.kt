@@ -1,8 +1,8 @@
-package cz.legat.prectito.extensions
+package cz.legat.core.extensions
 
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cz.legat.prectito.ui.main.authors.AuthorsAdapter
 import cz.legat.core.base.BaseAdapter
 
 fun <E> RecyclerView.initLinear(dataAdapter: BaseAdapter<E>?) {
@@ -11,7 +11,7 @@ fun <E> RecyclerView.initLinear(dataAdapter: BaseAdapter<E>?) {
     adapter = dataAdapter
 }
 
-fun RecyclerView.initLinearPaged(dataAdapter: AuthorsAdapter?) {
+fun <T, E: RecyclerView.ViewHolder> RecyclerView.initLinearPaged(dataAdapter: PagedListAdapter<T, E>) {
     setHasFixedSize(true)
     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     adapter = dataAdapter

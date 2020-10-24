@@ -12,7 +12,7 @@ import cz.legat.prectito.R
 import cz.legat.core.model.Book
 import cz.legat.core.model.bigImgLink
 import cz.legat.core.model.middleImgLink
-import cz.legat.prectito.extensions.loadImg
+import cz.legat.core.extensions.loadImg
 
 class AuthorBooksAdapter(private val onItemClickedListener: OnBookClickedListener) : PagedListAdapter<Book, AuthorBooksAdapter.BookViewHolder>(DIFF_CALLBACK) {
 

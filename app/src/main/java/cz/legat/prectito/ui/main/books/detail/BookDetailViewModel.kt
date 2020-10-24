@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import cz.legat.prectito.navigation.ID_KEY
+import cz.legat.core.extensions.ID_KEY
 import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

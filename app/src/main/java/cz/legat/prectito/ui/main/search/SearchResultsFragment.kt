@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.core.model.SearchResult
 import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
-import cz.legat.prectito.extensions.gone
-import cz.legat.prectito.extensions.visibleIf
+import cz.legat.core.extensions.gone
+import cz.legat.core.extensions.visibleIf
 import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
 import cz.legat.prectito.ui.main.books.BooksFragment

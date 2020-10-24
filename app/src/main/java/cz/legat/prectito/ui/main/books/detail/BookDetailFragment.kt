@@ -10,18 +10,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import cz.legat.core.base.BaseAdapter
+import cz.legat.core.extensions.ID_KEY
+import cz.legat.core.extensions.fadeInText
+import cz.legat.core.extensions.goneIf
+import cz.legat.core.extensions.loadImg
+import cz.legat.core.extensions.visibleIf
 import cz.legat.core.model.Comment
+import cz.legat.core.ui.BindingFragment
 import cz.legat.prectito.R
 import cz.legat.prectito.databinding.PtBookDetailFragmentBinding
-import cz.legat.prectito.extensions.fadeInText
-import cz.legat.prectito.extensions.goneIf
-import cz.legat.prectito.extensions.loadImg
-import cz.legat.prectito.extensions.visibleIf
-import cz.legat.prectito.navigation.ID_KEY
 import cz.legat.prectito.navigation.goToAuthorDetailIntent
-import cz.legat.core.ui.BindingFragment
-import cz.legat.core.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint
+
+private enum class CollapsingToolbarLayoutState {
+    EXPANDED, COLLAPSED, INTERNEDIATE
+}
 
 @AndroidEntryPoint
 class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDetailFragmentBinding::inflate) {
@@ -29,6 +34,8 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
     private val viewModel: BookDetailViewModel by viewModels()
 
     private var commentsAdapter: CommentsAdapter? = null
+
+    private var state: CollapsingToolbarLayoutState = CollapsingToolbarLayoutState.EXPANDED
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
@@ -57,6 +64,31 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.ptBookAuthorTv.fadeInText(it.author?.name)
                 binding.ptBookPublishedTv.fadeInText(it.published)
                 binding.ptBookDescTv.fadeInText(it.description)
+
+                binding.appbarLayout?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                    if (verticalOffset == 0) {
+                        if (state !== CollapsingToolbarLayoutState.EXPANDED) {
+                            state = CollapsingToolbarLayoutState.EXPANDED //Modify the status token to expand
+                            binding.collapsing?.title = "" //Set title to EXPANDED
+                            //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+                        }
+                    } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                        if (state !== CollapsingToolbarLayoutState.COLLAPSED) {
+                            binding.collapsing?.title = it.title //Set title not to display
+                            //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.black)
+                            state = CollapsingToolbarLayoutState.COLLAPSED //Modified status marked as folded
+                        }
+                    } else {
+                        if (state !== CollapsingToolbarLayoutState.INTERNEDIATE) {
+                            if (state === CollapsingToolbarLayoutState.COLLAPSED) {
+                                //Hide Play Button When Changed from Folding to Intermediate State
+                            }
+                            //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+                            binding.collapsing?.title = "" //Set title to INTERNEDIATE
+                            state = CollapsingToolbarLayoutState.INTERNEDIATE //Modify the status tag to the middle
+                        }
+                    }
+                })
 
                 binding.ptBookAuthorTv.setOnClickListener {
                     book.author?.authorId?.let { authorId ->

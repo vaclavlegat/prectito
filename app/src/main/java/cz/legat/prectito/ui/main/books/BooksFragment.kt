@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import cz.legat.core.model.Book
 import cz.legat.prectito.databinding.PtMainFragmentBinding
-import cz.legat.prectito.extensions.gone
-import cz.legat.prectito.extensions.visible
+import cz.legat.core.extensions.gone
+import cz.legat.core.extensions.visible
 import cz.legat.prectito.navigation.goToBookDetailIntent
 import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter

@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener {
     private lateinit var navController: NavController
     private var currentTab = 0
     lateinit var binding: PtMainActivityBinding
-    private var id: String? = null
-    private val topLevelDestinations = setOf(R.id.homeFragment, R.id.authorsFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

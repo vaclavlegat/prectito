@@ -2,10 +2,9 @@ package cz.legat.prectito.navigation
 
 import android.content.Context
 import android.content.Intent
+import cz.legat.core.extensions.ID_KEY
+import cz.legat.core.extensions.IS_BOOK_KEY
 import cz.legat.prectito.ui.main.DetailActivity
-
-const val ID_KEY = "id"
-const val IS_BOOK_KEY = "SEARCH_RESULT_TYPE_KEY"
 
 fun Context.goToDetailIntent(id: String, isBook: Boolean): Intent {
     val intent = Intent(this, DetailActivity::class.java)

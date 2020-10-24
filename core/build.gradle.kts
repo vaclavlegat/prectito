@@ -49,6 +49,8 @@ dependencies {
     implementation (Libs.hiltLifecycle)
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
+    implementation (Libs.glide)
+    annotationProcessor (Libs.glideCompiler)
     implementation (Libs.roomRuntime)
     kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
     // optional - Kotlin Extensions and Coroutines support for Room

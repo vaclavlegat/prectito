@@ -1,4 +1,4 @@
-package cz.legat.prectito.extensions
+package cz.legat.core.extensions
 
 import android.view.View
 

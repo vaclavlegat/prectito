@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Comment
 import cz.legat.prectito.databinding.PtCommentsFragmentBinding
-import cz.legat.prectito.extensions.gone
-import cz.legat.prectito.extensions.visible
-import cz.legat.prectito.extensions.withId
+import cz.legat.core.extensions.gone
+import cz.legat.core.extensions.visible
+import cz.legat.core.extensions.withId
 import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
 import dagger.hilt.android.AndroidEntryPoint

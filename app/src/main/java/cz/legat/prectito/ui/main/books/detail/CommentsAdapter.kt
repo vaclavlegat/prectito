@@ -7,9 +7,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import cz.legat.prectito.R
 import cz.legat.core.model.Comment
-import cz.legat.prectito.extensions.fadeInText
-import cz.legat.prectito.extensions.loadImg
-import cz.legat.prectito.extensions.tintedDrawable
+import cz.legat.core.extensions.fadeInText
+import cz.legat.core.extensions.loadImg
+import cz.legat.core.extensions.tintedDrawable
 import cz.legat.core.base.BaseAdapter
 
 class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<Comment>) :

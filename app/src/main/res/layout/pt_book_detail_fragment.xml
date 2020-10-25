@@ -2,14 +2,16 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/colorPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="280dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme">
 
@@ -23,16 +25,42 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <ImageView
-                android:id="@+id/pt_book_image_bg_iv"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/pt_book_image_bg_start_iv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
+            <ImageView
+                android:id="@+id/pt_book_image_bg_middle_iv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
+
+            <ImageView
+                android:id="@+id/pt_book_image_bg_end_iv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
+
+            </LinearLayout>
+
             <FrameLayout
-                android:background="@drawable/pt_image_title_background"
+                android:background="@drawable/pt_appbar_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -45,6 +73,23 @@
                 android:layout_gravity="center_horizontal"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
+
+            <TextView
+                android:id="@+id/pt_book_rating_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/pt_rating_bg"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="64dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/pt_color_text"
+                android:textSize="20sp"
+                android:visibility="gone"
+                android:layout_gravity="end|top"
+                tools:text="87 %" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -102,32 +147,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:textColor="@color/pt_color_text"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pt_book_author_tv" />
-
-            <TextView
-                android:id="@+id/pt_book_rating_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/pt_rating_bg"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                android:textColor="@color/pt_color_text"
-                android:textSize="20sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintTop_toBottomOf="@+id/pt_book_published_tv"
-                tools:text="87 %" />
 
             <TextView
                 android:id="@+id/pt_book_desc_tv"
@@ -140,7 +164,7 @@
                 android:textColor="@color/pt_color_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pt_book_rating_tv" />
+                app:layout_constraintTop_toBottomOf="@id/pt_book_published_tv" />
 
             <TextView
                 android:id="@+id/pt_comments_title_tv"

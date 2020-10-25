@@ -45,5 +45,5 @@ fun ImageView.loadSingleImg(imgLink: String?): RequestBuilder<Drawable> {
 }
 
 fun ImageView.loadSingleBlurredImg(imgLink: String?) {
-    Glide.with(this).load(imgLink).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(this)
+    Glide.with(this).load(imgLink).apply(RequestOptions.bitmapTransform(BlurTransformation(15, 3))).into(this)
 }

@@ -66,16 +66,16 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.ptBookPublishedTv.fadeInText(it.published)
                 binding.ptBookDescTv.fadeInText(it.description)
 
-                binding.appbarLayout?.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                binding.appbarLayout.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
                     if (verticalOffset == 0) {
                         if (state !== CollapsingToolbarLayoutState.EXPANDED) {
                             state = CollapsingToolbarLayoutState.EXPANDED //Modify the status token to expand
-                            binding.collapsing?.title = "" //Set title to EXPANDED
+                            binding.collapsing.title = "" //Set title to EXPANDED
                             //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
                         }
                     } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
                         if (state !== CollapsingToolbarLayoutState.COLLAPSED) {
-                            binding.collapsing?.fadeInText(it.title) //Set title not to display
+                            binding.collapsing.fadeInText(it.title) //Set title not to display
                             //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.black)
                             state = CollapsingToolbarLayoutState.COLLAPSED //Modified status marked as folded
                         }
@@ -85,7 +85,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                                 //Hide Play Button When Changed from Folding to Intermediate State
                             }
                             //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                            binding.collapsing?.title = "" //Set title to INTERNEDIATE
+                            binding.collapsing.title = "" //Set title to INTERNEDIATE
                             state = CollapsingToolbarLayoutState.INTERNEDIATE //Modify the status tag to the middle
                         }
                     }
@@ -117,7 +117,9 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 }
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
                 binding.ptBookImageIv.loadImg(it.imgLink)
-                binding.ptBookImageBgIv?.loadSingleBlurredImg(it.imgLink)
+                binding.ptBookImageBgStartIv?.loadSingleBlurredImg(it.imgLink)
+                binding.ptBookImageBgMiddleIv?.loadSingleBlurredImg(it.imgLink)
+                binding.ptBookImageBgEndIv?.loadSingleBlurredImg(it.imgLink)
             }
         })
 

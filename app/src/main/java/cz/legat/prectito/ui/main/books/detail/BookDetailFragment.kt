@@ -93,7 +93,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
                 binding.ptBookAuthorTv.setOnClickListener {
                     book.author?.authorId?.let { authorId ->
-                        startActivity(requireContext().goToAuthorDetailIntent(authorId))
+                        startActivity(requireContext().goToAuthorDetailIntent(authorId, book.author?.name!!, book.author?.authorImgLink!!))
                     }
                 }
 

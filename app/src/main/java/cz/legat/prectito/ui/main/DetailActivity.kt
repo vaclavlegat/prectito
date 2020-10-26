@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import cz.legat.core.extensions.ID_IMG_LINK
 import cz.legat.core.extensions.ID_KEY
+import cz.legat.core.extensions.ID_NAME
 import cz.legat.core.extensions.IS_BOOK_KEY
 import cz.legat.prectito.R
 import cz.legat.prectito.databinding.PtActivityDetailBinding
@@ -25,11 +27,13 @@ class DetailActivity : AppCompatActivity() {
 
         navController = Navigation.findNavController(this, R.id.detail_nav_host_fragment)
         val id = intent.extras?.getString(ID_KEY)
+        val name = intent.extras?.getString(ID_NAME)
+        val imgLink = intent.extras?.getString(ID_IMG_LINK)
         id?.let {
             if (intent.extras?.getBoolean(IS_BOOK_KEY) == true) {
                 navController.navigate(R.id.bookDetailFragment, bundleOf(ID_KEY to id))
             } else {
-                navController.navigate(R.id.authorsDetailFragment, bundleOf(ID_KEY to id))
+                navController.navigate(R.id.authorsDetailFragment, bundleOf(ID_KEY to id, ID_NAME to name!!, ID_IMG_LINK to imgLink!!))
             }
         }
     }

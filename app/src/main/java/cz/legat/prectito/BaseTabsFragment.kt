@@ -4,23 +4,17 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import cz.legat.core.extensions.ID_IMG_LINK
 import cz.legat.core.extensions.ID_KEY
-import cz.legat.core.extensions.ID_NAME
 import cz.legat.prectito.databinding.PtDetailTabsFragmentBinding
 import cz.legat.core.ui.BindingFragment
 
 abstract class BaseTabsFragment : BindingFragment<PtDetailTabsFragmentBinding>(PtDetailTabsFragmentBinding::inflate) {
 
     protected var id: String? = null
-    protected var name: String? = null
-    protected var imgLink: String? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
-        name = arguments?.getString(ID_NAME) ?: throw IllegalArgumentException()
-        imgLink = arguments?.getString(ID_IMG_LINK) ?: throw IllegalArgumentException()
         binding.ptDetailPager.adapter = DetailAdapter(this)
         TabLayoutMediator(binding.ptDetailTabs, binding.ptDetailPager) { tab, position ->
             tab.text = tabTitles()[position]

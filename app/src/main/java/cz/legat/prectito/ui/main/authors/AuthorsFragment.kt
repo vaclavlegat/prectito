@@ -31,7 +31,7 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuth
         viewManager = GridLayoutManager(activity, GRID_COLUMNS)
         viewAdapter = AuthorsAdapter(object : AuthorsAdapter.OnAuthorClickedListener {
             override fun onAuthor(author: Author) {
-                startActivity(requireContext().goToAuthorDetailIntent(author.authorId, author.name, author.authorImgLink))
+                startActivity(requireContext().goToAuthorDetailIntent(author.authorId))
             }
         })
 

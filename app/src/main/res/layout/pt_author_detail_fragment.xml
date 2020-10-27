@@ -9,32 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/pt_author_image_iv"
-            android:layout_width="120dp"
-            android:layout_height="160dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/pt_author_name_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="@color/pt_color_text"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/pt_author_image_iv"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/pt_author_life_tv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -42,8 +19,8 @@
             android:textColor="@color/pt_color_text"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/pt_author_image_iv"
-            app:layout_constraintTop_toBottomOf="@+id/pt_author_name_tv" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/pt_author_cv_tv"
@@ -58,7 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pt_author_image_iv" />
+            app:layout_constraintTop_toBottomOf="@+id/pt_author_life_tv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

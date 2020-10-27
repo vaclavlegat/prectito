@@ -50,7 +50,6 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(project(Modules.core))
-    implementation(project(Modules.bookdb))
 
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)
@@ -92,7 +91,8 @@ dependencies {
     implementation (Libs.playServicesVision)
     implementation (Libs.barcodeScanning)
 
-
+    implementation (Libs.glide)
+    annotationProcessor (Libs.glideCompiler)
     implementation (Libs.preference)
 
     implementation(Libs.converterScalars)
@@ -101,6 +101,7 @@ dependencies {
 
     implementation (Libs.moshiAdapters)
     implementation (Libs.moshiKotlin)
+    implementation (Libs.palette)
     kapt(Libs.moshiKotlinCodegen)
 
     // test

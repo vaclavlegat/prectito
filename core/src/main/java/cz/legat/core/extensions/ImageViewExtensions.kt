@@ -1,19 +1,24 @@
 package cz.legat.core.extensions
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.palette.graphics.Palette
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import cz.legat.core.R
-import jp.wasabeef.glide.transformations.BlurTransformation
 
 fun ImageView.tintedDrawable(@DrawableRes drawableRes: Int, @ColorRes colorRes: Int) {
     val vectorDrawable = VectorDrawableCompat.create(
@@ -44,6 +49,31 @@ fun ImageView.loadSingleImg(imgLink: String?): RequestBuilder<Drawable> {
         .transition(DrawableTransitionOptions.withCrossFade(200))
 }
 
-fun ImageView.loadSingleBlurredImg(imgLink: String?) {
-    Glide.with(this).load(imgLink).apply(RequestOptions.bitmapTransform(BlurTransformation(15, 3))).into(this)
+fun ImageView.loadWithBackground(imgLink: String?, background: View) {
+    val iv = this
+    Glide.with(this).asBitmap().load(imgLink).addListener(object : RequestListener<Bitmap> {
+        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+            return false
+        }
+
+        override fun onResourceReady(
+            resource: Bitmap?,
+            model: Any?,
+            target: Target<Bitmap>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
+            if (resource != null) {
+                val p: Palette = Palette.from(resource).generate()
+                val color =  p.getMutedColor(ContextCompat.getColor(iv.context, R.color.pt_color_background))
+                if(color == ContextCompat.getColor(iv.context, R.color.pt_color_background)){
+                    val colorDominamnt =  p.getDominantColor(ContextCompat.getColor(iv.context, R.color.pt_color_background))
+                    background.setBackgroundColor(colorDominamnt)
+                } else {
+                    background.setBackgroundColor(color)
+                }
+            }
+            return false
+        }
+    }).into(this)
 }

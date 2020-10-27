@@ -1,22 +1,31 @@
 package cz.legat.prectito.ui.main.books.detail
 
+import android.R.attr
 import android.animation.ValueAnimator
+import android.graphics.Bitmap
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import cz.legat.core.base.BaseAdapter
 import cz.legat.core.extensions.ID_KEY
 import cz.legat.core.extensions.fadeInText
 import cz.legat.core.extensions.goneIf
 import cz.legat.core.extensions.loadImg
-import cz.legat.core.extensions.loadSingleBlurredImg
+import cz.legat.core.extensions.loadWithBackground
 import cz.legat.core.extensions.visibleIf
 import cz.legat.core.model.Comment
 import cz.legat.core.ui.BindingFragment
@@ -93,7 +102,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
                 binding.ptBookAuthorTv.setOnClickListener {
                     book.author?.authorId?.let { authorId ->
-                        startActivity(requireContext().goToAuthorDetailIntent(authorId, book.author?.name!!, book.author?.authorImgLink!!))
+                        startActivity(requireContext().goToAuthorDetailIntent(authorId))
                     }
                 }
 
@@ -116,10 +125,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                     )
                 }
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
-                binding.ptBookImageIv.loadImg(it.imgLink)
-                binding.ptBookImageBgStartIv?.loadSingleBlurredImg(it.imgLink)
-                binding.ptBookImageBgMiddleIv?.loadSingleBlurredImg(it.imgLink)
-                binding.ptBookImageBgEndIv?.loadSingleBlurredImg(it.imgLink)
+                binding.ptBookImageIv.loadWithBackground(it.imgLink, binding.ptBookImageBg)
             }
         })
 

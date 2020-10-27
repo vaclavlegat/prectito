@@ -25,10 +25,8 @@ class AuthorBioFragment : BindingFragment<PtAuthorDetailFragmentBinding>(PtAutho
         viewModel.author.observe(viewLifecycleOwner,
             Observer<cz.legat.core.model.Author?> {
                 it?.let {
-                    binding.ptAuthorNameTv.fadeInText(it.name)
                     binding.ptAuthorLifeTv.fadeInText(it.life)
                     binding.ptAuthorCvTv.fadeInText(it.cv)
-                    binding.ptAuthorImageIv.loadImg(it.authorImgLink)
                 }
             })
     }

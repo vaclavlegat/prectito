@@ -20,6 +20,7 @@ object Libs {
     // images
     val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
+    val glideTransformation = "jp.wasabeef:glide-transformations:${Versions.glideTransformationVersion}"
 
     // lifecycle
     val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
@@ -64,4 +65,6 @@ object Libs {
     val moshiAdapters = "com.squareup.moshi:moshi-adapters:${Versions.moshiVersion}"
     val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshiVersion}"
     val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshiVersion}"
+
+    val palette = "androidx.palette:palette:${Versions.paletteVersion}"
 }

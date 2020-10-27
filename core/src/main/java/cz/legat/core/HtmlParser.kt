@@ -184,13 +184,17 @@ open class HtmlParser {
         val name = document.select("h1[itemprop=name]").text()
 
         val regex = "\\d{4}".toRegex()
-        val life = regex.find(document.select("h3[class=norma]").text())
+        val regexEnd = "- \\d{4}".toRegex()
+        val lifeStart = regex.find(document.select("h3[class=norma]").text())
+        val lifeEnd = regexEnd.find(document.select("h3[class=norma]").text())
+
+        val life = lifeStart?.value + if (lifeEnd?.value != null) " ${lifeEnd.value}" else ""
 
         val cv = document.select("div[id=tabcontent]").select("p[class=new2]").text()
         val imgLink = document.select("div[class=circle-avatar]").attr("style")
             .removePrefix("background-image:url(").removeSuffix(")")
 
-        return Author(id, name, life?.value, imgLink, cv)
+        return Author(id, name, life, imgLink, cv)
     }
 
     open fun parseAuthorBooks(html: String, page: Int): List<Book> {

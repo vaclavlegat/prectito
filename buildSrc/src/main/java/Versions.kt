@@ -14,6 +14,7 @@ object Versions {
 
     // images
     const val glideVersion = "4.11.0"
+    const val glideTransformationVersion = "4.3.0"
 
     // lifecycle
     const val lifecycleVersion = "2.2.0"
@@ -49,4 +50,6 @@ object Versions {
     const val preferenceVersion = "1.1.1"
     const val converterScalarsVersion = "2.9.0"
     const val guavaVersion = "27.1-jre"
+
+    const val paletteVersion = "1.0.0"
 }

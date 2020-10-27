@@ -50,6 +50,7 @@ dependencies {
     implementation (Libs.hiltLifecycle)
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
+    implementation (Libs.palette)
     implementation (Libs.glide)
     annotationProcessor (Libs.glideCompiler)
     implementation (Libs.roomRuntime)
@@ -59,7 +60,7 @@ dependencies {
     implementation (Libs.moshiAdapters)
     implementation (Libs.moshiKotlin)
 
-    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    implementation (Libs.glideTransformation)
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)
     androidTestImplementation (Libs.espresso)

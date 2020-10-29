@@ -5,8 +5,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import cz.legat.core.extensions.ID_KEY
-import cz.legat.core.paging.preparePagingLiveData
+import cz.legat.core.paging.AuthorsBooksPagingSource
+import cz.legat.core.paging.AuthorsPagingSource
 import cz.legat.core.repository.AuthorsRepository
 import kotlinx.coroutines.Dispatchers
 
@@ -21,5 +26,10 @@ class AuthorDetailViewModel @ViewModelInject constructor(
         }
     }
 
-    val books = preparePagingLiveData(savedStateHandle.get<String>(ID_KEY)!!, authorsRepository::getAuthorBooks)
+    val booksFlow = Pager(
+        config = PagingConfig(pageSize = 40, initialLoadSize = 40, enablePlaceholders = false),
+        pagingSourceFactory = {
+            AuthorsBooksPagingSource(authorsRepository, savedStateHandle.get<String>(ID_KEY)!!)
+        }
+    ).flow.cachedIn(viewModelScope)
 }

@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.model.Author
 import cz.legat.core.extensions.loadImg
 
-class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): PagedListAdapter<Author, AuthorsAdapter.AuthorViewHolder>(DIFF_CALLBACK) {
+class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): PagingDataAdapter<Author, AuthorsAdapter.AuthorViewHolder>(DIFF_CALLBACK) {
 
     interface OnAuthorClickedListener {
         fun onAuthor(author: Author)

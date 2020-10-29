@@ -26,7 +26,7 @@ interface BooksService {
     suspend fun getBookComments(@Path("id") id: String, @Query("c") by: String = "all"): Response<String>
 
     @GET("/autori")
-    suspend fun getAuthors(@Query("id") page: Int, @Query("dle") by: String = "rat"): Response<String>
+    suspend fun getAuthors(@Query("id") page: Int,@Query("nid") nid: String?,  @Query("dle") by: String = "rat"): Response<String>
 
     @GET("/zivotopis/{id}")
     suspend fun getAuthor(@Path("id") id: String): Response<String>

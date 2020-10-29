@@ -1,19 +1,25 @@
 package cz.legat.prectito.ui.main.authors
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.core.model.Author
+import cz.legat.core.model.Countries
 import cz.legat.prectito.databinding.PtFragmentAuthorsBinding
 import cz.legat.prectito.navigation.goToAuthorDetailIntent
 import cz.legat.core.ui.BindingFragment
+import cz.legat.prectito.ui.main.FilterActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuthorsBinding::inflate) {
@@ -35,6 +41,10 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuth
             }
         })
 
+        binding.ptAddFilter.setOnClickListener {
+            startActivityForResult(Intent(requireActivity(), FilterActivity::class.java), 0)
+        }
+
         binding.rvAuthors.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -42,10 +52,21 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuth
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data?.extras?.containsKey("country") == true) {
+            val country = data.extras?.getSerializable("country") as Countries
+            viewModel.filter(country.id.toString())
+            viewAdapter.refresh()
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.authors.observe(viewLifecycleOwner, Observer<PagedList<Author>> {
-            viewAdapter.submitList(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.flow.collectLatest { pagingData ->
+                viewAdapter.submitData(pagingData)
+            }
+        }
     }
 }

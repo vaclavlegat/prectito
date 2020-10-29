@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.core.model.Book
@@ -14,6 +15,8 @@ import cz.legat.core.extensions.withId
 import cz.legat.prectito.navigation.goToBookDetailIntent
 import cz.legat.core.ui.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthorBooksFragment : BindingFragment<PtMainFragmentBinding>(PtMainFragmentBinding::inflate) {
@@ -44,9 +47,11 @@ class AuthorBooksFragment : BindingFragment<PtMainFragmentBinding>(PtMainFragmen
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.ptProgress.visible()
-        viewModel.books.observe(viewLifecycleOwner, Observer<PagedList<Book>> { books ->
-            binding.ptProgress.gone()
-            booksAdapter.submitList(books)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.booksFlow.collectLatest { pagingData ->
+                binding.ptProgress.gone()
+                booksAdapter.submitData(pagingData)
+            }
+        }
     }
 }

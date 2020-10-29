@@ -6,6 +6,8 @@ import cz.legat.core.model.Comment
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.jsoup.nodes.Node
+import org.jsoup.select.NodeFilter
 
 open class HtmlParser {
 
@@ -216,14 +218,14 @@ open class HtmlParser {
             if (page > lastPage) {
                 return mutableListOf()
             }
-        } else {
-            if (page > 1) {
-                return mutableListOf()
-            }
+        } else if (page > 1) {
+            return mutableListOf()
         }
 
-        val searchElements =
-            document.select("p[class=new2]").subList(0, document.select("p[class=new2]").size - 2)
+        val new2 = document.select("p[class=new2]")
+        val searchElements = new2.filter {
+            it.select("img").isNotEmpty()
+        }
         val images = document.select("img[class=inahled4]")
         val results = mutableListOf<Book>()
         searchElements.forEachIndexed { index, element ->

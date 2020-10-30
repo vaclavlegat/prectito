@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/authorsDetailFragment"
-        android:name="cz.legat.prectito.ui.main.authors.detail.AuthorDetailFragment"
+        android:name="cz.legat.authors.detail.AuthorDetailFragment"
         android:label="Detail"
         tools:layout="@layout/pt_detail_tabs_fragment">
         <argument

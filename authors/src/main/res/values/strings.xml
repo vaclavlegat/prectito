@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Authors</string>
+    <string name="pt_add_filter">Add filter</string>
+    <string name="pt_choose_country">Choose country</string>
+</resources>

@@ -45,7 +45,6 @@
     <string name="pt_authors">Authors</string>
     <string name="pt_comments">Comments</string>
     <string name="pt_more_comments">More comments</string>
-    <string name="pt_add_filter">Add filter</string>
     <string name="title_activity_filter">FilterActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -55,6 +54,5 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="pt_choose_country">Choose country</string>
 
 </resources>

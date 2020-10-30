@@ -7,22 +7,22 @@ abstract class BaseRepository {
 
     val PARSER = HtmlParser()
 
-    protected suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): Result<T> {
+    protected suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): NetworkResult<T> {
         val response: Response<T>
         try {
             response = call.invoke()
         } catch (t: Throwable) {
-            return Result.Error(t)
+            return NetworkResult.Error(t)
         }
 
         if (!response.isSuccessful) {
-            return Result.Error(Throwable("Unsuccessful call"))
+            return NetworkResult.Error(Throwable("Unsuccessful call"))
         } else {
             if (response.body() == null) {
-                return Result.Error(Throwable("Empty body"))
+                return NetworkResult.Error(Throwable("Empty body"))
             }
         }
-        return Result.Success(response.body()!!)
+        return NetworkResult.Success(response.body()!!)
     }
 
 }

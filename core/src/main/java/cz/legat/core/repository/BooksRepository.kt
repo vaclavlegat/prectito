@@ -5,6 +5,7 @@ import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
 import cz.legat.core.api.BooksService
 import cz.legat.core.base.BaseRepository
+import cz.legat.core.base.NetworkResult
 import cz.legat.core.persistence.HomeBooks
 import cz.legat.core.persistence.HomeBooksDao
 import cz.legat.core.persistence.NEW
@@ -43,7 +44,7 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getPopularBooks() }) {
-            is cz.legat.core.base.Result.Success -> {
+            is NetworkResult.Success -> {
                 val popular = HtmlParser().parseBooksPopular(result.data)
                 popularCache.clear()
                 popularCache.addAll(popular)
@@ -51,7 +52,7 @@ class BooksRepository @Inject constructor(
                 homeBooksDao.insert(homeBooks)
                 popular
             }
-            is cz.legat.core.base.Result.Error -> listOf()
+            is NetworkResult.Error -> listOf()
         }
     }
 
@@ -68,7 +69,7 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getNewBooks() }) {
-            is cz.legat.core.base.Result.Success -> {
+            is NetworkResult.Success -> {
                 val new = PARSER.parseBooksPopular(result.data)
                 newCache.clear()
                 newCache.addAll(new)
@@ -76,7 +77,7 @@ class BooksRepository @Inject constructor(
                 homeBooksDao.insert(homeBooks)
                 new
             }
-            is cz.legat.core.base.Result.Error -> listOf()
+            is NetworkResult.Error -> listOf()
         }
     }
 
@@ -89,7 +90,7 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getBook(id) }) {
-            is cz.legat.core.base.Result.Success -> {
+            is NetworkResult.Success -> {
                 val book = PARSER.parseBook(id, result.data)
                 val updatedBook = book.copy(
                     description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
@@ -100,7 +101,7 @@ class BooksRepository @Inject constructor(
                 booksCache[id] = updatedBook
                 updatedBook
             }
-            is cz.legat.core.base.Result.Error -> null
+            is NetworkResult.Error -> null
         }
     }
 
@@ -114,18 +115,18 @@ class BooksRepository @Inject constructor(
         }
 
         return when (val result = apiCall { booksService.getBookComments(id) }) {
-            is cz.legat.core.base.Result.Success -> {
+            is NetworkResult.Success -> {
                 val comments = PARSER.parseBookComments(result.data)
                 commentsCache[id] = comments
                 comments
             }
-            is cz.legat.core.base.Result.Error -> listOf()
+            is NetworkResult.Error -> listOf()
         }
     }
 
     suspend fun getBookByISBN(isbn: String): SavedBook? {
         return when (val result = apiCall { booksService.getBookByISBN(isbn) }) {
-            is cz.legat.core.base.Result.Success -> {
+            is NetworkResult.Success -> {
                 val book = PARSER.parseBook(isbn, result.data)
                 SavedBook(
                     title = book.title,
@@ -136,7 +137,7 @@ class BooksRepository @Inject constructor(
                     language = book.language
                 )
             }
-            is cz.legat.core.base.Result.Error -> SavedBook(isbn = isbn)
+            is NetworkResult.Error -> SavedBook(isbn = isbn)
         }
     }
 
@@ -145,12 +146,12 @@ class BooksRepository @Inject constructor(
             return searchedBooksCache[query] ?: listOf()
         }
         return when (val result = apiCall { booksService.searchBook(query) }) {
-            is cz.legat.core.base.Result.Success -> {
+            is NetworkResult.Success -> {
                 val searchBooks = PARSER.parseBookSearchResults(result.data)
                 searchedBooksCache[query] = searchBooks
                 searchBooks
             }
-            is cz.legat.core.base.Result.Error -> listOf()
+            is NetworkResult.Error -> listOf()
         }
     }
 

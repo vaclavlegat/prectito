@@ -1,20 +1,17 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     id("org.jetbrains.kotlin.android.extensions")
-    kotlin("kapt")
-    id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
+    kotlin("kapt")
     id("kotlin-android")
 }
-
 
 android {
     compileSdkVersion (Android.compileSdkVersion)
     buildToolsVersion = Android.buildToolsVersion
 
     defaultConfig {
-        applicationId = Android.applicationId
         minSdkVersion (Android.minSdkVersion)
         targetSdkVersion (Android.targetSdkVersion)
         versionCode  = Android.versionCode
@@ -31,6 +28,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -39,18 +40,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
-
 }
+
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     implementation(project(Modules.core))
-    implementation(project(Modules.authors))
 
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)
@@ -109,4 +104,5 @@ dependencies {
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)
     androidTestImplementation (Libs.espresso)
+
 }

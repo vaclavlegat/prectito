@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/authorsFragment"
-        android:name="cz.legat.prectito.ui.main.authors.AuthorsFragment"
+        android:name="cz.legat.authors.AuthorsFragment"
         android:label="Authors"
         tools:layout="@layout/pt_fragment_authors">
     </fragment>

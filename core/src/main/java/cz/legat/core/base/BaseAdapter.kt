@@ -26,7 +26,7 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = items[position]
-        holder.bind(item)
+        holder.bind(item, position)
         holder.view.setOnClickListener { onItemClickedListener.onItem(item) }
     }
 
@@ -40,6 +40,6 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
     abstract fun viewHolder(view: View): BaseViewHolder
 
     abstract inner class BaseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(item: T)
+        abstract fun bind(item: T, position: Int)
     }
 }

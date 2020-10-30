@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cz.legat.core.extensions.gone
+import cz.legat.core.extensions.visible
 import cz.legat.core.model.Author
 import cz.legat.core.model.Countries
 import cz.legat.prectito.databinding.PtFragmentAuthorsBinding
@@ -45,19 +47,31 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuth
             startActivityForResult(Intent(requireActivity(), FilterActivity::class.java), 0)
         }
 
+        binding.ptCoutryChip.setOnClickListener {
+            startActivityForResult(Intent(requireActivity(), FilterActivity::class.java), 0)
+        }
+
         binding.rvAuthors.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        binding.ptAddFilter.visible()
+        binding.ptCoutryChip.gone()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data?.extras?.containsKey("country") == true) {
+            binding.ptProgress.visible()
+            binding.rvAuthors.gone()
             val country = data.extras?.getSerializable("country") as Countries
             viewModel.filter(country.id.toString())
             viewAdapter.refresh()
+            binding.ptAddFilter.gone()
+            binding.ptCoutryChip.visible()
+            binding.ptCoutryChip.text = country.country
         }
     }
 
@@ -65,6 +79,8 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuth
         super.onActivityCreated(savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
+                binding.ptProgress.gone()
+                binding.rvAuthors.visible()
                 viewAdapter.submitData(pagingData)
             }
         }

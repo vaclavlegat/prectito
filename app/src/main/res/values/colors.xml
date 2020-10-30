@@ -35,4 +35,6 @@
   <color name="pt_rating_80">#c94053</color>
   <color name="pt_rating_100">#c71c10</color>
 
+  <color name="pt_item_background">#191a1f</color>
+
 </resources>

@@ -25,7 +25,7 @@ class SearchResultsAdapter(private val onItemClickedListener: OnItemClickedListe
         private val titleTv = view.findViewById<TextView>(R.id.pt_book_title_tv)
         private val imageIv = view.findViewById<ImageView>(R.id.pt_book_image_iv)
 
-        override fun bind(item: SearchResult) {
+        override fun bind(item: SearchResult, position: Int) {
             with(item) {
                 authorTv.text = getResultSubtitle()
                 titleTv.text = getResultTitle()

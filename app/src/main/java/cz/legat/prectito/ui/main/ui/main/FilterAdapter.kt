@@ -1,8 +1,8 @@
 package cz.legat.prectito.ui.main.ui.main
 
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import cz.legat.core.base.BaseAdapter
 import cz.legat.core.model.Countries
 import cz.legat.prectito.R
@@ -22,7 +22,8 @@ class FilterAdapter(private val onItemClickedListener: OnItemClickedListener<Cou
 
         private val countryTv = view.findViewById<TextView>(R.id.pt_country_name)
 
-        override fun bind(item: Countries) {
+        override fun bind(item: Countries, position: Int) {
+            view.setBackgroundResource(if (position % 2 == 0) R.drawable.pt_item_ripple else R.drawable.pt_item_light_ripple)
             with(item) {
                 countryTv.text = item.country
             }

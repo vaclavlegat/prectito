@@ -33,7 +33,7 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
             view.findViewById<LinearLayout>(R.id.pt_comment_rating_holder_ll)
         private val layout = view
 
-        override fun bind(c: Comment) {
+        override fun bind(c: Comment, position: Int) {
             with(c) {
                 tvUser.fadeInText(c.user)
                 tvComment.fadeInText(c.comment)

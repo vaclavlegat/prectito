@@ -190,7 +190,7 @@ open class HtmlParser {
         val lifeStart = regex.find(document.select("h3[class=norma]").text())
         val lifeEnd = regexEnd.find(document.select("h3[class=norma]").text())
 
-        val life = lifeStart?.value + if (lifeEnd?.value != null) " ${lifeEnd.value}" else ""
+        val life = lifeStart?.value ?: "" + if (lifeEnd?.value != null) " ${lifeEnd.value}" else ""
 
         val cv = document.select("div[id=tabcontent]").select("p[class=new2]").text()
         val imgLink = document.select("div[class=circle-avatar]").attr("style")

@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.prectito.R
 import cz.legat.core.persistence.SavedBook
-import cz.legat.prectito.ui.main.books.BooksViewModel
+import cz.legat.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyBooksFragment : Fragment() {
 
-    private val viewModel: BooksViewModel by viewModels()
+    private val viewModel: cz.legat.books.BooksViewModel by viewModels()
 
     lateinit var booksRv: RecyclerView
     lateinit var booksAdapter: MyBooksAdapter

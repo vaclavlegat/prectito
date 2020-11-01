@@ -51,6 +51,7 @@ dependencies {
 
     implementation(project(Modules.core))
     implementation(project(Modules.authors))
+    implementation(project(Modules.books))
 
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)

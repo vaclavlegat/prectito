@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pt_rating_trash">Trash</string>
+    <string name="pt_tab_title_authors">authors</string>
+    <string name="pt_popular_books">Popular books</string>
+    <string name="pt_new_books">New releases</string>
+    <string name="pt_authors">Authors</string>
+    <string name="pt_comments">Comments</string>
+    <string name="pt_more_comments">More comments</string>
+</resources>

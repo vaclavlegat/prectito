@@ -16,14 +16,14 @@ import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visibleIf
 import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
-import cz.legat.prectito.ui.main.books.BooksFragment
-import cz.legat.prectito.ui.main.books.BooksViewModel
+import cz.legat.books.BooksFragment
+import cz.legat.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
-    private val viewModel: BooksViewModel by viewModels()
+    private val viewModel: cz.legat.books.BooksViewModel by viewModels()
 
     lateinit var booksAdapter: SearchResultsAdapter
     private var handler = Handler()
@@ -44,7 +44,7 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
     }
 
     companion object {
-        fun newInstance() = BooksFragment()
+        fun newInstance() = cz.legat.books.BooksFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -8,18 +8,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.authors.databinding.PtFragmentAuthorsBinding
+import cz.legat.authors.filter.FilterActivity
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
 import cz.legat.core.model.Author
 import cz.legat.core.model.Countries
 //import cz.legat.prectito.navigation.goToAuthorDetailIntent
 import cz.legat.core.ui.BindingFragment
+import cz.legat.navigation.AuthorsNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuthorsBinding::inflate) {
+
+    @Inject lateinit var navigator: AuthorsNavigator
 
     companion object {
         private const val GRID_COLUMNS = 3
@@ -34,16 +39,16 @@ class AuthorsFragment : BindingFragment<PtFragmentAuthorsBinding>(PtFragmentAuth
         viewManager = GridLayoutManager(activity, GRID_COLUMNS)
         viewAdapter = AuthorsAdapter(object : AuthorsAdapter.OnAuthorClickedListener {
             override fun onAuthor(author: Author) {
-                //startActivity(requireContext().goToAuthorDetailIntent(author.authorId))
+                startActivity(navigator.getOpenDetailIntent(requireContext(), author.authorId))
             }
         })
 
         binding.ptAddFilter.setOnClickListener {
-            startActivityForResult(Intent(requireActivity(), FilterActivity::class.java), 0)
+            startActivityForResult(navigator.getCountryFilterIntent(requireContext()), 0)
         }
 
         binding.ptCoutryChip.setOnClickListener {
-            startActivityForResult(Intent(requireActivity(), FilterActivity::class.java), 0)
+            startActivityForResult(navigator.getCountryFilterIntent(requireContext()), 0)
         }
 
         binding.rvAuthors.apply {

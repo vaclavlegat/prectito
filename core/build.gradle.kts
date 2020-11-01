@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(project(Modules.navigation))
     implementation(Libs.paging)
     implementation(Libs.jsoup)
     implementation(Libs.okhttp)

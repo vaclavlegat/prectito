@@ -107,7 +107,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.main.books.detail.BookDetailFragment">
+            tools:context="cz.legat.books.BookDetailFragment">
 
             <TextView
                 android:id="@+id/pt_book_author_tv"

@@ -14,10 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cz.legat.authors.FilterActivity"
+            android:name="cz.legat.authors.filter.FilterActivity"
             android:label="@string/title_activity_filter">
         </activity>
-        <activity android:name=".ui.main.DetailActivity" />
         <activity
             android:name=".ui.main.ui.main.SplashActivity"
             android:noHistory="true" >

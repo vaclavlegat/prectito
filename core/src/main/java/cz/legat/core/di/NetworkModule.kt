@@ -1,6 +1,5 @@
 package cz.legat.core.di
 
-import cz.legat.core.api.BooksService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,11 +12,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 @Module
 @InstallIn(ApplicationComponent::class)
 object NetworkModule {
-
-    @Provides
-    fun provideBookService(retrofit: Retrofit): BooksService {
-        return retrofit.create(BooksService::class.java)
-    }
 
     @Provides
     fun provideHttpClient(): OkHttpClient {

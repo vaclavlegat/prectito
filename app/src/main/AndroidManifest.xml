@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cz.legat.authors.filter.FilterActivity"
+            android:name="cz.legat.authors.ui.filter.FilterActivity"
             android:label="@string/title_activity_filter">
         </activity>
         <activity

@@ -10,20 +10,19 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import cz.legat.books.ui.BooksViewModel
 import cz.legat.core.model.SearchResult
 import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visibleIf
 import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
-import cz.legat.books.BooksFragment
-import cz.legat.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
-    private val viewModel: cz.legat.books.BooksViewModel by viewModels()
+    private val viewModel: BooksViewModel by viewModels()
 
     lateinit var booksAdapter: SearchResultsAdapter
     private var handler = Handler()
@@ -41,10 +40,6 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
     override fun onDetach() {
         super.onDetach()
         callback = null
-    }
-
-    companion object {
-        fun newInstance() = cz.legat.books.BooksFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

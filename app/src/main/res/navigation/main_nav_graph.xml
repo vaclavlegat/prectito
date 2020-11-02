@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="cz.legat.books.HomeFragment"
+        android:name="cz.legat.books.ui.HomeFragment"
         android:label="Home"
         tools:layout="@layout/pt_home_fragment">
     </fragment>
 
     <fragment
         android:id="@+id/authorsFragment"
-        android:name="cz.legat.authors.AuthorsFragment"
+        android:name="cz.legat.authors.ui.AuthorsFragment"
         android:label="Authors"
         tools:layout="@layout/pt_fragment_authors">
     </fragment>

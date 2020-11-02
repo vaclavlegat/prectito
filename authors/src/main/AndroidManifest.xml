@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true" >
 
-        <activity android:name=".DetailActivity"/>
-        <activity android:name=".filter.FilterActivity"/>
+        <activity android:name=".ui.DetailActivity"/>
+        <activity android:name="cz.legat.authors.ui.filter.FilterActivity"/>
 
     </application>
 

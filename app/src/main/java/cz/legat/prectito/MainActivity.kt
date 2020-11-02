@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import cz.legat.prectito.databinding.PtMainActivityBinding
-import cz.legat.books.HomeFragment
+import cz.legat.books.ui.HomeFragment
 import cz.legat.prectito.ui.main.search.SearchResultsActivity
 import dagger.hilt.android.AndroidEntryPoint
 

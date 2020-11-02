@@ -2,8 +2,8 @@ package cz.legat.authors.navigation
 
 import android.content.Context
 import android.content.Intent
-import cz.legat.authors.DetailActivity
-import cz.legat.authors.filter.FilterActivity
+import cz.legat.authors.ui.DetailActivity
+import cz.legat.authors.ui.filter.FilterActivity
 import cz.legat.navigation.AuthorsNavigator
 
 class AuthorsNavigatorImpl: AuthorsNavigator {

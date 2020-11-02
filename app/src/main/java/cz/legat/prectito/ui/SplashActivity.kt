@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.ui.main
+package cz.legat.prectito.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

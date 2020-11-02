@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.ui.main
+package cz.legat.prectito.ui
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

@@ -53,9 +53,6 @@ dependencies {
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
 
-    implementation (Libs.roomRuntime)
-    kapt (Libs.roomCompiler) // For Kotlin use kapt instead of annotationProcessor
-
     // core
     implementation (Libs.appcompat)
     implementation (Libs.coreKtx)
@@ -72,9 +69,6 @@ dependencies {
     implementation (Libs.navigationUiKtx)
 
     // network
-    implementation (Libs.converterMoshi)
-    implementation (Libs.loggingInterceptor)
-    implementation (Libs.okhttp)
     implementation (Libs.retrofit)
 
     // ui
@@ -85,22 +79,11 @@ dependencies {
 
     implementation (Libs.paging)
 
-    implementation (Libs.playServicesVision)
-    implementation (Libs.barcodeScanning)
-
     implementation (Libs.glide)
-    annotationProcessor (Libs.glideCompiler)
-    implementation (Libs.preference)
+    kapt (Libs.glideCompiler)
 
-    implementation(Libs.converterScalars)
-
-    api (Libs.guava)
-
-    implementation (Libs.moshiAdapters)
-    implementation (Libs.moshiKotlin)
     implementation (Libs.palette)
-    kapt(Libs.moshiKotlinCodegen)
-
+    
     // test
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)

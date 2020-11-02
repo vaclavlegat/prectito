@@ -4,4 +4,5 @@ object Modules {
     val authors = ":authors"
     val books = ":books"
     val navigation = ":navigation"
+    val scanner = ":scanner"
 }

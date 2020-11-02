@@ -3,7 +3,6 @@
     package="cz.legat.prectito" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".PrectitoApp"
@@ -28,7 +27,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.main.search.SearchResultsActivity" />
-        <activity android:name=".barcode.LiveBarcodeScanningActivity" />
+        <activity android:name="cz.legat.scanner.barcode.LiveBarcodeScanningActivity" />
     </application>
 
 </manifest>

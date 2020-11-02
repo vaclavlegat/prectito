@@ -20,8 +20,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/otherFragment"
-        android:name="cz.legat.prectito.ui.main.other.OtherFragment"
+        android:id="@+id/myBooksFragment"
+        android:name="cz.legat.scanner.ui.MyBooksFragment"
         android:label="Other"
         tools:layout="@layout/pt_other_fragment">
     </fragment>

@@ -130,6 +130,7 @@ class BooksRepositoryImpl @Inject constructor(
             is NetworkResult.Success -> {
                 val book = PARSER.parseBook(isbn, result.data)
                 SavedBook(
+                    bookId = book.id,
                     title = book.title,
                     author = book.author?.name,
                     isbn = isbn,

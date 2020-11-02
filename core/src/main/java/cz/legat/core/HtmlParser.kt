@@ -42,7 +42,7 @@ open class HtmlParser {
     open fun parseBook(id: String, html: String): Book {
         val document = Jsoup.parse(html)
         return Book(
-            id,
+            parseBookId(document),
             parseBookTitle(document),
             parseBookAuthor(document),
             parseBookDescription(document),
@@ -57,6 +57,10 @@ open class HtmlParser {
             parseRating(document),
             parseRatingsCount(document)
         )
+    }
+
+    private fun parseBookId(document: Document): String {
+        return document.select("a[class=b_comments]").attr("href").removePrefix("knihy/")
     }
 
     //<h1 itemprop="name">R.U.R.</h1>
@@ -287,7 +291,7 @@ open class HtmlParser {
                 stars
             }
         } catch (e: NumberFormatException) {
-            0
+            -1
         }
 
         return Comment(id, user, comment, avatarLink, date, likes, rating)

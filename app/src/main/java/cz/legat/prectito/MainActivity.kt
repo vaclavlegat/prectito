@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener {
             val fragmentId = when (item.itemId) {
                 R.id.home -> R.id.homeFragment
                 R.id.authors -> R.id.authorsFragment
-                R.id.other -> R.id.otherFragment
+                R.id.mybooks -> R.id.myBooksFragment
                 R.id.settings -> R.id.settingsFragment
                 else -> R.id.homeFragment
             }

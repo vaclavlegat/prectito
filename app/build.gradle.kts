@@ -52,6 +52,7 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.authors))
     implementation(project(Modules.books))
+    implementation(project(Modules.scanner))
 
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)
@@ -78,9 +79,6 @@ dependencies {
     implementation (Libs.material)
     implementation (Libs.recyclerView)
     implementation (Libs.viewPager2)
-
-    implementation (Libs.playServicesVision)
-    implementation (Libs.barcodeScanning)
 
     implementation (Libs.preference)
     implementation (Libs.retrofit)

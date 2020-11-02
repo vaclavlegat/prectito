@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class SavedBook(
     @PrimaryKey(autoGenerate = true) val uid: Int? = null,
+    @ColumnInfo(name = "book_id") val bookId: String? = null,
     @ColumnInfo(name = "title") val title: String? = null,
     @ColumnInfo(name = "subtitle") val subtitle: String? = null,
     @ColumnInfo(name = "author") val author: String? = null,
@@ -25,12 +26,14 @@ data class SavedBook(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readString()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(uid?:0)
+        parcel.writeString(bookId)
         parcel.writeString(title)
         parcel.writeString(subtitle)
         parcel.writeString(author)

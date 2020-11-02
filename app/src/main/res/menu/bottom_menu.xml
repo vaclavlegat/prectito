@@ -22,11 +22,11 @@
             android:title=""/>
 
         <item
-            android:id="@+id/other"
-            android:icon="@drawable/pt_close_icon"
+            android:id="@+id/mybooks"
+            android:icon="@drawable/pt_library_icon"
             app:showAsAction="always"
             android:enabled="true"
-            android:title="Other"/>
+            android:title="My Books"/>
 
         <item
             android:id="@+id/settings"

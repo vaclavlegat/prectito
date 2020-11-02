@@ -1,3 +1,4 @@
+include(":scanner")
 include(":books")
 include(":navigation")
 include(":authors")

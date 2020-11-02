@@ -29,24 +29,7 @@ class BooksViewModel @ViewModelInject constructor(
         emit(booksRepository.getNewBooks().dropLast(1))
     }
 
-    var myBooks: MutableLiveData<List<SavedBook>> = MutableLiveData()
-
     var searchBooks: MutableLiveData<List<SearchResult>> = MutableLiveData()
-
-    fun removeBook(book: SavedBook) {
-        viewModelScope.launch(Dispatchers.IO) {
-            booksRepository.removeBook(book)
-        }
-    }
-
-    fun loadMyBooks() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val books = booksRepository.getMyBooks()
-            withContext(Dispatchers.Main) {
-                myBooks.value = books
-            }
-        }
-    }
 
     fun searchBook(query: String?) {
         if (query.isNullOrEmpty()) {

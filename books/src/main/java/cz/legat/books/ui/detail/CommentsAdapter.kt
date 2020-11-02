@@ -48,7 +48,7 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
                         star.layoutParams = LinearLayout.LayoutParams(32, 32)
                         llRatingHolder.addView(star)
                     }
-                } else {
+                } else if(rating == 0) {
                     val trash = TextView(layout.context)
                     trash.fadeInText(layout.context.getString(R.string.pt_rating_trash))
                     trash.setTextColor(ContextCompat.getColor(layout.context, R.color.white))

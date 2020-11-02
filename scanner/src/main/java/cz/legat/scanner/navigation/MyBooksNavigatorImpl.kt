@@ -5,7 +5,7 @@ import android.content.Intent
 import cz.legat.navigation.MyBooksNavigator
 import cz.legat.scanner.barcode.LiveBarcodeScanningActivity
 
-class MyBooksNavigatorImpl: MyBooksNavigator {
+internal class MyBooksNavigatorImpl: MyBooksNavigator {
     override fun getOpenScannerIntent(context: Context): Intent {
         return LiveBarcodeScanningActivity.intent(context)
     }

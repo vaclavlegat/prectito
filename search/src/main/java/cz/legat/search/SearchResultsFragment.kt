@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.search
+package cz.legat.search
 
 import android.content.Context
 import android.os.Bundle
@@ -10,19 +10,18 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import cz.legat.books.ui.BooksViewModel
 import cz.legat.core.model.SearchResult
-import cz.legat.prectito.databinding.PtSearchResultsFragmentBinding
-import cz.legat.core.extensions.gone
-import cz.legat.core.extensions.visibleIf
 import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
+import cz.legat.core.extensions.gone
+import cz.legat.core.extensions.visibleIf
+import cz.legat.search.databinding.PtSearchResultsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
-    private val viewModel: BooksViewModel by viewModels()
+    private val viewModel: SearchResultsViewModel by viewModels()
 
     lateinit var booksAdapter: SearchResultsAdapter
     private var handler = Handler()
@@ -87,10 +86,6 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
         })
         binding.ptSearchEt.requestFocus()
         showKeyboard(requireContext())
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     private fun showKeyboard(context: Context) {

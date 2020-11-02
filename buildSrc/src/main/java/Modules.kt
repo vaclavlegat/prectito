@@ -5,4 +5,5 @@ object Modules {
     val books = ":books"
     val navigation = ":navigation"
     val scanner = ":scanner"
+    val search = ":search"
 }

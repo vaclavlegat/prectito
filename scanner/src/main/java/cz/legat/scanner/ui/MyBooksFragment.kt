@@ -15,6 +15,7 @@ import cz.legat.navigation.BooksNavigator
 import cz.legat.navigation.MyBooksNavigator
 import cz.legat.scanner.barcode.Utils
 import cz.legat.scanner.databinding.PtMyBooksFragmentBinding
+import cz.legat.scanner.navigation.MyBooksNavigatorImpl
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -1,9 +1,8 @@
-package cz.legat.prectito.ui.main.search
+package cz.legat.search
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import cz.legat.prectito.R
 import cz.legat.core.model.SearchResult
 import cz.legat.core.extensions.loadImg
 import cz.legat.core.base.BaseAdapter

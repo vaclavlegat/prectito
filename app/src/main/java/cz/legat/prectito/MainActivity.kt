@@ -1,6 +1,5 @@
 package cz.legat.prectito
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -8,8 +7,9 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import cz.legat.prectito.databinding.PtMainActivityBinding
 import cz.legat.books.ui.HomeFragment
-import cz.legat.prectito.ui.main.search.SearchResultsActivity
+import cz.legat.navigation.SearchNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 const val RESULT_ID = 0
 
@@ -20,13 +20,15 @@ class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener {
     private var currentTab = 0
     lateinit var binding: PtMainActivityBinding
 
+    @Inject lateinit var searchNavigator: SearchNavigator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = PtMainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.ptSearchFab.setOnClickListener {
-            startActivityForResult(Intent(this, SearchResultsActivity::class.java), RESULT_ID)
+            startActivityForResult(searchNavigator.getOpenSearchIntent(this), RESULT_ID)
         }
 
         navController = findNavController(this, R.id.nav_host_fragment)

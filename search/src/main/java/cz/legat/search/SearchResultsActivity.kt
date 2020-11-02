@@ -1,11 +1,12 @@
-package cz.legat.prectito.ui.main.search
+package cz.legat.search
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cz.legat.navigation.AuthorsNavigator
 import cz.legat.navigation.BooksNavigator
-import cz.legat.prectito.databinding.PtActivitySearchResultsBinding
-//import cz.legat.prectito.navigation.goToDetailIntent
+import cz.legat.search.databinding.PtActivitySearchResultsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,5 +30,11 @@ class SearchResultsActivity : AppCompatActivity(), SearchResultsFragment.OnResul
             authorsNavigator.getOpenDetailIntent(this, id)
         }
         startActivity(intent)
+    }
+
+    companion object {
+        fun intent(context: Context): Intent {
+            return Intent(context, SearchResultsActivity::class.java)
+        }
     }
 }

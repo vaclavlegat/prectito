@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="cz.legat.prectito.ui.SplashFragment"
-        android:label="Splash"
+        android:label="@string/pt_splash"
         tools:layout="@layout/pt_splash_fragment">
     </fragment>
 

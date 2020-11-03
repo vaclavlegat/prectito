@@ -7,8 +7,8 @@
     android:background="@color/pt_color_background">
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/pt_logo_size"
+        android:layout_height="@dimen/pt_logo_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pt_color_background"
-    tools:context="cz.legat.books.BooksFragment">
+    android:background="@color/pt_color_background">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pt_books_rw"

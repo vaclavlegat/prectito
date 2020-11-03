@@ -4,16 +4,16 @@
         <item
             android:id="@+id/home"
             android:icon="@drawable/pt_home_icon"
-            app:showAsAction="always"
+            app:showAsAction="ifRoom"
             android:enabled="true"
-            android:title="Home"/>
+            android:title="@string/pt_home"/>
 
         <item
             android:id="@+id/authors"
             android:icon="@drawable/pt_authors_icon"
-            app:showAsAction="always"
+            app:showAsAction="ifRoom"
             android:enabled="true"
-            android:title="Authors"/>
+            android:title="@string/pt_authors"/>
 
         <item
             android:id="@+id/empty"
@@ -24,14 +24,14 @@
         <item
             android:id="@+id/mybooks"
             android:icon="@drawable/pt_library_icon"
-            app:showAsAction="always"
+            app:showAsAction="ifRoom"
             android:enabled="true"
-            android:title="My Books"/>
+            android:title="@string/pt_my_books"/>
 
         <item
             android:id="@+id/settings"
             android:icon="@drawable/pt_settings_icon"
             android:enabled="true"
-            app:showAsAction="always"
-            android:title="Settings"/>
+            app:showAsAction="ifRoom"
+            android:title="@string/pt_settings"/>
 </menu>

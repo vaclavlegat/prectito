@@ -8,28 +8,28 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="cz.legat.books.ui.HomeFragment"
-        android:label="Home"
+        android:label="@string/pt_home"
         tools:layout="@layout/pt_home_fragment">
     </fragment>
 
     <fragment
         android:id="@+id/authorsFragment"
         android:name="cz.legat.authors.ui.AuthorsFragment"
-        android:label="Authors"
+        android:label="@string/pt_authors"
         tools:layout="@layout/pt_fragment_authors">
     </fragment>
 
     <fragment
         android:id="@+id/myBooksFragment"
         android:name="cz.legat.scanner.ui.MyBooksFragment"
-        android:label="Other"
+        android:label="@string/pt_my_books"
         tools:layout="@layout/pt_my_books_fragment">
     </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"
         android:name="cz.legat.prectito.ui.SettingsFragment"
-        android:label="Settings"
+        android:label="@string/pt_settings"
         tools:layout="@layout/pt_fragment_authors">
     </fragment>
 

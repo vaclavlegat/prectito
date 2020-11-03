@@ -10,6 +10,6 @@
   <color name="white">#FFFFFFFF</color>
   <color name="black">#FF000000</color>
 
-  <color name="pt_search_bar_active">#333333</color>
+  <color name="pt_bottom_navigation_disabled">#888888</color>
 
 </resources>

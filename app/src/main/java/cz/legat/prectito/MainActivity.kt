@@ -1,20 +1,23 @@
 package cz.legat.prectito
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import cz.legat.prectito.databinding.PtMainActivityBinding
 import cz.legat.books.ui.HomeFragment
+import cz.legat.core.base.BaseActivity
 import cz.legat.navigation.SearchNavigator
+import cz.legat.prectito.databinding.PtMainActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 const val RESULT_ID = 0
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), HomeFragment.TabChangeListener {
+class MainActivity : BaseActivity(), HomeFragment.TabChangeListener {
 
     private lateinit var navController: NavController
     private var currentTab = 0

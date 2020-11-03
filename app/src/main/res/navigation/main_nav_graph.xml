@@ -23,12 +23,12 @@
         android:id="@+id/myBooksFragment"
         android:name="cz.legat.scanner.ui.MyBooksFragment"
         android:label="Other"
-        tools:layout="@layout/pt_other_fragment">
+        tools:layout="@layout/pt_my_books_fragment">
     </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="cz.legat.prectito.ui.main.settings.SettingsFragment"
+        android:name="cz.legat.prectito.ui.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/pt_fragment_authors">
     </fragment>

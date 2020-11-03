@@ -13,10 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cz.legat.authors.ui.filter.FilterActivity"
-            android:label="@string/title_activity_filter">
-        </activity>
-        <activity
             android:name=".ui.SplashActivity"
             android:noHistory="true" >
             <intent-filter>
@@ -26,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name="cz.legat.scanner.barcode.LiveBarcodeScanningActivity" />
     </application>
 
 </manifest>

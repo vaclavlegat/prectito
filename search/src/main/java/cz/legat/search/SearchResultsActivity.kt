@@ -31,10 +31,4 @@ class SearchResultsActivity : AppCompatActivity(), SearchResultsFragment.OnResul
         }
         startActivity(intent)
     }
-
-    companion object {
-        fun intent(context: Context): Intent {
-            return Intent(context, SearchResultsActivity::class.java)
-        }
-    }
 }

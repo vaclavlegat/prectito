@@ -1,7 +1,5 @@
 package cz.legat.books.ui.detail
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
@@ -36,14 +34,6 @@ class DetailActivity : AppCompatActivity() {
             finish()
         } else {
             super.onBackPressed()
-        }
-    }
-
-    companion object {
-        fun intent(context: Context, id: String): Intent {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("id", id)
-            return intent
         }
     }
 }

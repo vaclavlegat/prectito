@@ -4,4 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <application>
+        <activity android:name="cz.legat.scanner.barcode.LiveBarcodeScanningActivity" />
+    </application>
 </manifest>

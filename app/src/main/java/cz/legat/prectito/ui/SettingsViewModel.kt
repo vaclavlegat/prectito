@@ -1,4 +1,4 @@
-package cz.legat.prectito.ui.main.settings
+package cz.legat.prectito.ui
 
 import androidx.lifecycle.ViewModel
 

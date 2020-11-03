@@ -38,12 +38,4 @@ class DetailActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-    companion object {
-        fun intent(context: Context, id: String): Intent {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("id", id)
-            return intent
-        }
-    }
 }

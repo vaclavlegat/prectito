@@ -36,11 +36,5 @@ class FilterActivity : AppCompatActivity() {
             setHasFixedSize(true)
         }
     }
-
-    companion object{
-        fun intent(context: Context): Intent {
-            return Intent(context, FilterActivity::class.java)
-        }
-    }
 }
 

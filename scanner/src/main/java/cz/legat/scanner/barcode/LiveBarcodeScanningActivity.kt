@@ -241,9 +241,5 @@ class LiveBarcodeScanningActivity : AppCompatActivity(), OnClickListener {
 
     companion object {
         private const val TAG = "LiveBarcodeActivity"
-
-        fun intent(context: Context): Intent {
-            return Intent(context, LiveBarcodeScanningActivity::class.java)
-        }
     }
 }

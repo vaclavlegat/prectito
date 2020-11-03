@@ -14,6 +14,5 @@
     <string name="pt_authors">Authors</string>
     <string name="pt_comments">Comments</string>
     <string name="pt_more_comments">More comments</string>
-    <string name="title_activity_filter">FilterActivity</string>
 
 </resources>

@@ -14,7 +14,7 @@
       android:layout_gravity="start"
       android:padding="@dimen/top_action_button_padding"
       android:contentDescription="@string/cd_close_button"
-      app:srcCompat="@drawable/ic_close_vd_white_24"/>
+      app:srcCompat="@drawable/pt_close_icon"/>
 
   <ImageView
       android:id="@+id/manual_button"
@@ -32,6 +32,6 @@
       android:layout_alignParentEnd="true"
       android:padding="@dimen/top_action_button_padding"
       android:contentDescription="@string/cd_flash_button"
-      app:srcCompat="@drawable/camera_flash"/>
+      app:srcCompat="@drawable/pt_flash_icon"/>
 
 </RelativeLayout>

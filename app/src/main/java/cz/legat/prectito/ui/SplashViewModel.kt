@@ -7,12 +7,10 @@ import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 
-class SplashViewModel @ViewModelInject constructor(booksRepository: BooksRepository) : ViewModel() {
+class SplashViewModel @ViewModelInject constructor() : ViewModel() {
 
     var goHome = liveData(Dispatchers.IO) {
-        booksRepository.getPopularBooks()
-        booksRepository.getNewBooks()
-        delay(2000)
+        delay(1000)
         emit(true)
     }
 }

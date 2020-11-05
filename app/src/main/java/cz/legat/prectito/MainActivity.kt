@@ -1,13 +1,9 @@
 package cz.legat.prectito
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import cz.legat.books.ui.HomeFragment
 import cz.legat.core.base.BaseActivity
 import cz.legat.navigation.SearchNavigator
 import cz.legat.prectito.databinding.PtMainActivityBinding
@@ -17,10 +13,9 @@ import javax.inject.Inject
 const val RESULT_ID = 0
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(), HomeFragment.TabChangeListener {
+class MainActivity : BaseActivity() {
 
     private lateinit var navController: NavController
-    private var currentTab = 0
     lateinit var binding: PtMainActivityBinding
 
     @Inject lateinit var searchNavigator: SearchNavigator
@@ -53,10 +48,6 @@ class MainActivity : BaseActivity(), HomeFragment.TabChangeListener {
 
 
         setSupportActionBar(binding.bottomAppBar)
-    }
-
-    override fun onTabChanged(position: Int) {
-        currentTab = position
     }
 
     override fun onBackPressed() {

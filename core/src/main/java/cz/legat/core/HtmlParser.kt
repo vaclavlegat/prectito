@@ -3,13 +3,51 @@ package cz.legat.core
 import cz.legat.core.model.Author
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
+import cz.legat.core.model.Overview
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
-import org.jsoup.nodes.Node
-import org.jsoup.select.NodeFilter
 
 open class HtmlParser {
+
+    open fun parseOverview(html: String): Overview {
+        val document = Jsoup.parse(html)
+        val popularBooks = mutableListOf<Book>()
+        val newBooks = mutableListOf<Book>()
+        val eBooks = mutableListOf<Book>()
+
+        val popularAndNew = document.select("div[class=midbook_cover_tit]")
+        val remoteEBooks = document.select("div[class=nbox_book]")
+
+        for ((index, element) in popularAndNew.withIndex()) {
+            val id = element.select("a").attr("href").removePrefix("knihy/")
+            val title = element.select("a").text()
+            val imgSrc = element.select("img").attr("src")
+            val book = Book(
+                id = id,
+                title = title,
+                imgLink = imgSrc
+            )
+            if (index < 3) {
+                popularBooks.add(book)
+            } else {
+                newBooks.add(book)
+            }
+        }
+
+        for (element in remoteEBooks) {
+            val id = element.parent().attr("href").removePrefix("knihy/")
+            val title = element.select("div[class=title]").text()
+            val imgSrc = element.select("img").attr("src")
+            val book = Book(
+                id = id,
+                title = title,
+                imgLink = imgSrc
+            )
+            eBooks.add(book)
+        }
+        return Overview(popularBooks, newBooks, eBooks.take(3))
+    }
 
     open fun parseBooksPopular(html: String): List<Book> {
         val document = Jsoup.parse(html)
@@ -73,7 +111,7 @@ open class HtmlParser {
         val author = document.select("span[itemprop=author]")
         val id = document.select("span[itemprop=author] > a").attr("href").removePrefix("autori/")
 
-        return Author(id, author.text(),"","")
+        return Author(id, author.text(), "", "")
     }
 
     //<p id="bdetdesc" class="justify new2 odtop_big" itemprop="description">
@@ -245,7 +283,7 @@ open class HtmlParser {
         return Book(
             id = id,
             title = title,
-            author = Author(name = shortDesc,authorId = "", authorImgLink = ""),
+            author = Author(name = shortDesc, authorId = "", authorImgLink = ""),
             description = shortDesc,
             imgLink = imgLink
         )

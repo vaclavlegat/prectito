@@ -2,9 +2,11 @@ package cz.legat.core.repository
 
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
+import cz.legat.core.model.Overview
 import cz.legat.core.persistence.SavedBook
 
 interface BooksRepository {
+    suspend fun getOverview(): Overview
     suspend fun getMyBooks(): List<SavedBook>
     suspend fun getPopularBooks(): List<Book>
     suspend fun getNewBooks(): List<Book>

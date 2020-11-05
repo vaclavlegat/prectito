@@ -7,6 +7,9 @@ import retrofit2.http.Query
 
 interface BooksService {
 
+    @GET("/")
+    suspend fun getOverview(): Response<String>
+
     @GET("/knihy")
     suspend fun getPopularBooks(): Response<String>
 

@@ -82,6 +82,7 @@ dependencies {
     implementation (Libs.glide)
     kapt (Libs.glideCompiler)
 
+    implementation ("com.jakewharton.timber:timber:4.7.1")
     implementation (Libs.palette)
 
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.28-alpha")

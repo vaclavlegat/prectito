@@ -3,7 +3,7 @@ package cz.legat.books.di
 import cz.legat.books.data.remote.BooksService
 import cz.legat.books.navigation.BooksNavigatorImpl
 import cz.legat.books.repository.BooksRepositoryImpl
-import cz.legat.core.persistence.HomeBooksDao
+import cz.legat.core.persistence.OverviewDao
 import cz.legat.core.persistence.SavedBookDao
 import cz.legat.core.repository.BooksRepository
 import cz.legat.navigation.BooksNavigator
@@ -33,8 +33,8 @@ object BooksModule {
     fun provideBooksRepository(
         booksService: BooksService,
         savedBookDao: SavedBookDao,
-        homeBooksDao: HomeBooksDao
+        overviewDao: OverviewDao
     ): BooksRepository {
-        return BooksRepositoryImpl(booksService, savedBookDao, homeBooksDao)
+        return BooksRepositoryImpl(booksService, savedBookDao, overviewDao)
     }
 }

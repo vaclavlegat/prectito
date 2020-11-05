@@ -3,7 +3,7 @@ package cz.legat.core.di
 import android.content.Context
 import androidx.room.Room
 import cz.legat.core.persistence.AppDatabase
-import cz.legat.core.persistence.HomeBooksDao
+import cz.legat.core.persistence.OverviewDao
 import cz.legat.core.persistence.SavedBookDao
 import dagger.Module
 import dagger.Provides
@@ -29,7 +29,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideHomeBooksDao(db: AppDatabase): HomeBooksDao {
-        return db.homeBooksDao()
+    fun provideOverviewBooksDao(db: AppDatabase): OverviewDao {
+        return db.overviewBooksDao()
     }
 }

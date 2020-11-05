@@ -1,25 +1,28 @@
 package cz.legat.books.repository
 
+import android.util.Log
 import cz.legat.books.data.remote.BooksService
 import cz.legat.core.HtmlParser
-import cz.legat.core.model.Book
-import cz.legat.core.model.Comment
 import cz.legat.core.base.BaseRepository
 import cz.legat.core.base.NetworkResult
-import cz.legat.core.persistence.HomeBooks
-import cz.legat.core.persistence.HomeBooksDao
-import cz.legat.core.persistence.NEW
-import cz.legat.core.persistence.POPULAR
+import cz.legat.core.model.Book
+import cz.legat.core.model.Comment
+import cz.legat.core.model.Overview
+import cz.legat.core.persistence.LocalOverview
+import cz.legat.core.persistence.OverviewDao
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.persistence.SavedBookDao
 import cz.legat.core.repository.BooksRepository
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
+
+const val TAG = "BOOKS REPO"
 
 class BooksRepositoryImpl @Inject constructor(
     private val booksService: BooksService,
     private val savedBookDao: SavedBookDao,
-    private val homeBooksDao: HomeBooksDao
+    private val overviewDao: OverviewDao
 ) : BooksRepository, BaseRepository() {
 
     private val popularCache = mutableListOf<Book>()
@@ -27,6 +30,27 @@ class BooksRepositoryImpl @Inject constructor(
     private val commentsCache = hashMapOf<String, List<Comment>>()
     private val searchedBooksCache = hashMapOf<String, List<Book>>()
     private val booksCache = hashMapOf<String, Book>()
+
+    override suspend fun getOverview(): Overview {
+        val dbBooks = overviewDao.getOverview()
+        if (dbBooks != null && Date().before(Date(dbBooks.timestamp.time + 60 * 60 * 1000))) {
+            Timber.d("returning db overview")
+            return Overview(dbBooks.popularBooks, dbBooks.newBooks, dbBooks.eBooks)
+        } else if (dbBooks != null) {
+            overviewDao.delete(dbBooks)
+        }
+
+        return when (val result = apiCall { booksService.getOverview() }) {
+            is NetworkResult.Success -> {
+                val overview = HtmlParser().parseOverview(result.data)
+                overviewDao.insert(LocalOverview(popularBooks = overview.popularBooks, newBooks = overview.newBooks, eBooks = overview.eBooks))
+                val saved = overviewDao.getOverview()
+                Timber.d( "returning remote overview")
+                Overview(saved!!.popularBooks, saved.newBooks, saved.eBooks)
+            }
+            is NetworkResult.Error -> Overview(listOf(), listOf(), listOf())
+        }
+    }
 
     override suspend fun getMyBooks(): List<SavedBook> {
         return savedBookDao.getAll()
@@ -37,20 +61,11 @@ class BooksRepositoryImpl @Inject constructor(
             return popularCache
         }
 
-        val dbBooks = homeBooksDao.getByType(POPULAR)
-        if (dbBooks != null && Date().before(Date(dbBooks.timestamp.time + 60 * 60 * 1000))) {
-            return dbBooks.books
-        } else if (dbBooks != null) {
-            homeBooksDao.delete(dbBooks)
-        }
-
         return when (val result = apiCall { booksService.getPopularBooks() }) {
             is NetworkResult.Success -> {
                 val popular = HtmlParser().parseBooksPopular(result.data)
                 popularCache.clear()
                 popularCache.addAll(popular)
-                val homeBooks = HomeBooks(timestamp = Date(), type = POPULAR, books = popular)
-                homeBooksDao.insert(homeBooks)
                 popular
             }
             is NetworkResult.Error -> listOf()
@@ -62,20 +77,11 @@ class BooksRepositoryImpl @Inject constructor(
             return newCache
         }
 
-        val dbBooks = homeBooksDao.getByType(NEW)
-        if (dbBooks != null && Date().before(Date(dbBooks.timestamp.time + 60 * 60 * 1000))) {
-            return dbBooks.books
-        } else if (dbBooks != null) {
-            homeBooksDao.delete(dbBooks)
-        }
-
         return when (val result = apiCall { booksService.getNewBooks() }) {
             is NetworkResult.Success -> {
                 val new = PARSER.parseBooksPopular(result.data)
                 newCache.clear()
                 newCache.addAll(new)
-                val homeBooks = HomeBooks(timestamp = Date(), type = NEW, books = new)
-                homeBooksDao.insert(homeBooks)
                 new
             }
             is NetworkResult.Error -> listOf()
@@ -94,10 +100,10 @@ class BooksRepositoryImpl @Inject constructor(
             is NetworkResult.Success -> {
                 val book = PARSER.parseBook(id, result.data)
                 val updatedBook = book.copy(
-                    description = if (book.description.contains("Popis knihy zde zatím bohužel není.") || !book.description.contains(
+                    description = if (book.description!!.contains("Popis knihy zde zatím bohužel není.") || !book.description!!.contains(
                             "celý text"
                         )
-                    ) book.description else book.description.dropLast(12)
+                    ) book.description else book.description!!.dropLast(12)
                 )
                 booksCache[id] = updatedBook
                 updatedBook

@@ -9,4 +9,4 @@ const val POPULAR = "POPULAR"
 const val NEW = "NEW"
 
 @Entity
-data class HomeBooks(@PrimaryKey(autoGenerate = true) var id: Int = 0, val timestamp: Date, val books: List<Book>, val type: String)
+data class LocalOverview(@PrimaryKey(autoGenerate = true) var id: Int = 0, val timestamp: Date = Date(), val popularBooks: List<Book>, val newBooks: List<Book>, val eBooks: List<Book>)

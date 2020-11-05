@@ -5,15 +5,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import cz.legat.core.model.Overview
 
 @Dao
-interface HomeBooksDao {
-    @Query("SELECT * FROM homebooks where type = :type LIMIT 1")
-    suspend fun getByType(type: String): HomeBooks?
+interface OverviewDao {
+    @Query("SELECT * FROM localoverview LIMIT 1")
+    suspend fun getOverview(): LocalOverview?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(homeBooks: HomeBooks)
+    fun insert(overview: LocalOverview)
 
     @Delete
-    fun delete(homeBooks: HomeBooks)
+    fun delete(overview: LocalOverview)
 }

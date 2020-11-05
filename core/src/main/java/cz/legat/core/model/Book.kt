@@ -6,7 +6,7 @@ data class Book(
     @Json(name = "id") val id: String,
     @Json(name = "title") val title: String,
     @Json(name = "author") val author: Author? = null,
-    @Json(name = "description") val description: String,
+    @Json(name = "description") val description: String? = null,
     @Json(name = "isbn") val isbn: String? = null,
     @Json(name = "published") val published: String? = null,
     @Json(name = "numberOfPages") val numberOfPages: String? = null,
@@ -17,12 +17,15 @@ data class Book(
     @Json(name = "publisher") val publisher: String? = null,
     @Json(name = "rating") val rating: String? = null,
     @Json(name = "ratingsCount") val ratingsCount: String? = null
-): SearchResult{
+) : SearchResult {
     override fun getResultTitle(): String {
         return title
     }
 
     override fun getResultSubtitle(): String {
+        if (description == null) {
+            return ""
+        }
         var author = ""
         var published = ""
 

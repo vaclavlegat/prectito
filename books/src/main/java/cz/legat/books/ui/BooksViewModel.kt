@@ -15,43 +15,10 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 class BooksViewModel @ViewModelInject constructor(
-    private val booksRepository: BooksRepository,
-    private val authorsRepository: AuthorsRepository
+    private val booksRepository: BooksRepository
 ) : ViewModel() {
 
-    var lastQuery: String = ""
-
-    var popularBooks = liveData(Dispatchers.IO) {
-        emit(booksRepository.getPopularBooks().dropLast(1))
-    }
-
-    var newBooks = liveData(Dispatchers.IO) {
-        emit(booksRepository.getNewBooks().dropLast(1))
-    }
-
-    var searchBooks: MutableLiveData<List<SearchResult>> = MutableLiveData()
-
-    fun searchBook(query: String?) {
-        if (query.isNullOrEmpty()) {
-            return
-        }
-        query.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                val books = booksRepository.searchBook(query)
-                val authors = authorsRepository.searchAuthor(query)
-                val all = mutableListOf<SearchResult>()
-                all.addAll(books)
-                all.addAll(authors)
-
-                val filtered = all.filter {
-                    it.getResultTitle().toLowerCase(Locale.getDefault()).contains(query.toLowerCase(Locale.getDefault()))
-                }
-
-                lastQuery = query
-                withContext(Dispatchers.Main) {
-                    searchBooks.value = filtered
-                }
-            }
-        }
+    var overview = liveData(Dispatchers.IO) {
+        emit(booksRepository.getOverview())
     }
 }

@@ -67,4 +67,6 @@ object Libs {
     val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshiVersion}"
 
     val palette = "androidx.palette:palette:${Versions.paletteVersion}"
+
+    val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
 }

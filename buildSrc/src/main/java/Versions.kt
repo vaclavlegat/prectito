@@ -52,4 +52,5 @@ object Versions {
     const val guavaVersion = "27.1-jre"
 
     const val paletteVersion = "1.0.0"
+    const val timberVersion = "4.7.1"
 }

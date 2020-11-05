@@ -86,7 +86,7 @@ dependencies {
     implementation (Libs.roomRuntime)
     api (Libs.guava)
 
-    implementation ("com.jakewharton.timber:timber:4.7.1")
+    implementation (Libs.timber)
 
     // test
     testImplementation (Libs.junit)

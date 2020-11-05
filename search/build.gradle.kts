@@ -85,6 +85,10 @@ dependencies {
     implementation (Libs.palette)
 
     // test
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4")
+    testImplementation ("androidx.arch.core:core-testing:2.0.0-alpha1")
+    testImplementation("io.mockk:mockk:1.10.2")
+    androidTestImplementation("io.mockk:mockk-android:1.10.2")
     testImplementation (Libs.junit)
     androidTestImplementation (Libs.junitext)
     androidTestImplementation (Libs.espresso)

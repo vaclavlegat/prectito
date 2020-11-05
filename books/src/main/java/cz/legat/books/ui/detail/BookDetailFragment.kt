@@ -1,20 +1,19 @@
 package cz.legat.books.ui.detail
 
-import android.animation.ValueAnimator
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import cz.legat.books.R
 import cz.legat.books.databinding.PtBookDetailFragmentBinding
 import cz.legat.core.base.BaseAdapter
+import cz.legat.core.extensions.AppBarOffsetOffsetChangedListener
 import cz.legat.core.extensions.ID_KEY
+import cz.legat.core.extensions.OnAppBarOffsetChangedListener
+import cz.legat.core.extensions.animateRating
 import cz.legat.core.extensions.fadeInText
 import cz.legat.core.extensions.goneIf
 import cz.legat.core.extensions.loadWithBackground
@@ -25,10 +24,6 @@ import cz.legat.navigation.AuthorsNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-private enum class CollapsingToolbarLayoutState {
-    EXPANDED, COLLAPSED, INTERNEDIATE
-}
-
 @AndroidEntryPoint
 class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDetailFragmentBinding::inflate) {
 
@@ -37,8 +32,6 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
     private var commentsAdapter: CommentsAdapter? = null
 
     @Inject lateinit var authorsNavigator: AuthorsNavigator
-
-    private var state: CollapsingToolbarLayoutState = CollapsingToolbarLayoutState.EXPANDED
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
@@ -67,31 +60,19 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.ptBookAuthorTv.fadeInText(book.author?.name)
                 binding.ptBookPublishedTv.fadeInText(book.published)
                 binding.ptBookDescTv.fadeInText(book.description)
-
-                binding.appbarLayout.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                    if (verticalOffset == 0) {
-                        if (state !== CollapsingToolbarLayoutState.EXPANDED) {
-                            state = CollapsingToolbarLayoutState.EXPANDED //Modify the status token to expand
-                            binding.collapsing.title = "" //Set title to EXPANDED
-                            //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                        }
-                    } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
-                        if (state !== CollapsingToolbarLayoutState.COLLAPSED) {
-                            binding.collapsing.fadeInText(book.title) //Set title not to display
-                            //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.black)
-                            state = CollapsingToolbarLayoutState.COLLAPSED //Modified status marked as folded
-                        }
-                    } else {
-                        if (state !== CollapsingToolbarLayoutState.INTERNEDIATE) {
-                            if (state === CollapsingToolbarLayoutState.COLLAPSED) {
-                                //Hide Play Button When Changed from Folding to Intermediate State
-                            }
-                            //activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                            binding.collapsing.title = "" //Set title to INTERNEDIATE
-                            state = CollapsingToolbarLayoutState.INTERNEDIATE //Modify the status tag to the middle
-                        }
+                binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
+                    override fun onExpanded() {
+                        binding.collapsing.title = ""
                     }
-                })
+
+                    override fun onCollapsed() {
+                        binding.collapsing.fadeInText(book.title)
+                    }
+
+                    override fun onIntermediate() {
+                        binding.collapsing.title = ""
+                    }
+                }))
 
                 binding.ptBookAuthorTv.setOnClickListener {
                     book.author?.authorId?.let { authorId ->
@@ -99,24 +80,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                     }
                 }
 
-                binding.ptBookRatingTv.fadeInText("0 %")
-                ValueAnimator.ofInt(book.rating?.toInt() ?: 0).apply {
-                    addUpdateListener { animation ->
-                        binding.ptBookRatingTv.text = "${animation.animatedValue as Int} %"
-                    }
-                    duration = 1000
-                    start()
-                }
-
-                val ratingBG = binding.ptBookRatingTv.background
-                if (ratingBG is GradientDrawable) {
-                    ratingBG.setColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            getRatingColor(book.rating)
-                        )
-                    )
-                }
+                binding.ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
                 binding.ptBookImageIv.loadWithBackground(book.imgLink, binding.ptBookImageBg)
             }
@@ -130,17 +94,5 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
         viewModel.showMoreCommentsVisible.observe(viewLifecycleOwner, Observer {
             binding.ptMoreCommentsBtn.visibleIf(it)
         })
-    }
-
-    private fun getRatingColor(rating: String?): Int {
-        return when (rating?.toInt()) {
-            in 0..30 -> R.color.pt_rating_30
-            in 31..50 -> R.color.pt_rating_50
-            in 51..80 -> R.color.pt_rating_70
-            in 81..90 -> R.color.pt_rating_80
-            else -> {
-                R.color.pt_rating_100
-            }
-        }
     }
 }

@@ -1,7 +1,5 @@
 package cz.legat.books.ui.detail
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -17,8 +15,10 @@ import cz.legat.core.extensions.ID_KEY
 import cz.legat.core.extensions.OnAppBarOffsetChangedListener
 import cz.legat.core.extensions.animateRating
 import cz.legat.core.extensions.fadeInText
+import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.goneIf
 import cz.legat.core.extensions.loadWithBackground
+import cz.legat.core.extensions.visible
 import cz.legat.core.extensions.visibleIf
 import cz.legat.core.model.Comment
 import cz.legat.core.ui.BindingFragment
@@ -67,14 +67,17 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
                     override fun onExpanded() {
                         binding.collapsing.title = ""
+                        binding.ptBookLinkBtn.visibleIf(book.eBookLink!=null)
                     }
 
                     override fun onCollapsed() {
                         binding.collapsing.fadeInText(book.title)
+                        binding.ptBookLinkBtn.gone()
                     }
 
                     override fun onIntermediate() {
                         binding.collapsing.title = ""
+                        binding.ptBookLinkBtn.visibleIf(book.eBookLink!=null)
                     }
                 }))
 

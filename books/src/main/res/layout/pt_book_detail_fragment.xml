@@ -64,7 +64,8 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:textColor="@color/pt_color_text"
-                android:textSize="20sp"
+                android:textSize="14sp"
+                android:backgroundTint="@color/colorAccent"
                 android:visibility="gone"
                 android:text="@string/e_book"
                 android:layout_gravity="end|bottom" />

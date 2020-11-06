@@ -10,6 +10,7 @@ interface BooksRepository {
     suspend fun getMyBooks(): List<SavedBook>
     suspend fun getPopularBooks(): List<Book>
     suspend fun getNewBooks(): List<Book>
+    suspend fun getEBooks(): List<Book>
     suspend fun getBook(id: String?): Book?
     suspend fun getBookComments(id: String?): List<Comment>
     suspend fun getBookByISBN(isbn: String): SavedBook?

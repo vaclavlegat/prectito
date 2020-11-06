@@ -49,7 +49,7 @@ open class HtmlParser {
         return Overview(popularBooks, newBooks, eBooks.take(3))
     }
 
-    open fun parseBooksPopular(html: String): List<Book> {
+    open fun parseBooks(html: String): List<Book> {
         val document = Jsoup.parse(html)
 
         val titles = document.select("a[class=biggest odr]")
@@ -68,6 +68,33 @@ open class HtmlParser {
                     id = id,
                     title = title,
                     author = Author(name = authors[index].text(), authorId = "", authorImgLink = ""),
+                    description = shortDescs[index].text(),
+                    imgLink = imgSrc
+                )
+            )
+        }
+
+        return popularBooks
+    }
+
+    open fun parseEBooks(html: String): List<Book> {
+        val document = Jsoup.parse(html)
+
+        val titles = document.select("a[class=new]")
+        val imgAttrs = document.select("img[class=inahled4]")
+        val shortDescs = document.select("p[class=new odtop]")
+
+        val popularBooks = mutableListOf<Book>()
+
+        for ((index, element) in imgAttrs.withIndex()) {
+            val id = titles[index].select("a").attr("href").removePrefix("knihy/")
+            val title = titles[index].text()
+            val imgSrc = element.attr("src")
+            popularBooks.add(
+                Book(
+                    id = id,
+                    title = title,
+                    author = null,
                     description = shortDescs[index].text(),
                     imgLink = imgSrc
                 )

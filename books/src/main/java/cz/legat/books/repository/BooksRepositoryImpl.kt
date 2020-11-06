@@ -27,6 +27,7 @@ class BooksRepositoryImpl @Inject constructor(
 
     private val popularCache = mutableListOf<Book>()
     private val newCache = mutableListOf<Book>()
+    private val eBookCache = mutableListOf<Book>()
     private val commentsCache = hashMapOf<String, List<Comment>>()
     private val searchedBooksCache = hashMapOf<String, List<Book>>()
     private val booksCache = hashMapOf<String, Book>()
@@ -63,7 +64,7 @@ class BooksRepositoryImpl @Inject constructor(
 
         return when (val result = apiCall { booksService.getPopularBooks() }) {
             is NetworkResult.Success -> {
-                val popular = HtmlParser().parseBooksPopular(result.data)
+                val popular = HtmlParser().parseBooks(result.data)
                 popularCache.clear()
                 popularCache.addAll(popular)
                 popular
@@ -79,10 +80,26 @@ class BooksRepositoryImpl @Inject constructor(
 
         return when (val result = apiCall { booksService.getNewBooks() }) {
             is NetworkResult.Success -> {
-                val new = PARSER.parseBooksPopular(result.data)
+                val new = PARSER.parseBooks(result.data)
                 newCache.clear()
                 newCache.addAll(new)
                 new
+            }
+            is NetworkResult.Error -> listOf()
+        }
+    }
+
+    override suspend fun getEBooks(): List<Book> {
+        if (eBookCache.isNotEmpty()) {
+            return eBookCache
+        }
+
+        return when (val result = apiCall { booksService.getEBooks() }) {
+            is NetworkResult.Success -> {
+                val ebooks = PARSER.parseEBooks(result.data)
+                eBookCache.clear()
+                eBookCache.addAll(ebooks)
+                ebooks
             }
             is NetworkResult.Error -> listOf()
         }

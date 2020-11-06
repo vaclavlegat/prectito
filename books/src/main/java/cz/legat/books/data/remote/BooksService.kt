@@ -16,6 +16,9 @@ interface BooksService {
     @GET("/prave-vyslo-knizni-novinky")
     suspend fun getNewBooks(): Response<String>
 
+    @GET("/eknihy-zdarma-ke-stazeni")
+    suspend fun getEBooks(): Response<String>
+
     @GET("knihy/{id}")
     suspend fun getBook(@Path("id") id: String, @Query("show") show: String = "binfo"): Response<String>
 

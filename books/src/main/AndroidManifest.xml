@@ -4,6 +4,7 @@
 
     <application>
         <activity android:name=".ui.detail.DetailActivity" />
+        <activity android:name=".ui.BooksActivity" />
     </application>
 
 </manifest>

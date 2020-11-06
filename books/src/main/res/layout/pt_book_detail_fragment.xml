@@ -53,6 +53,22 @@
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
+            <Button
+                android:id="@+id/pt_book_link_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="64dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/pt_color_text"
+                android:textSize="20sp"
+                android:visibility="gone"
+                android:text="@string/e_book"
+                android:layout_gravity="end|bottom" />
+
             <TextView
                 android:id="@+id/pt_book_rating_tv"
                 android:layout_width="wrap_content"

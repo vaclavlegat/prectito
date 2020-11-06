@@ -16,7 +16,8 @@ data class Book(
     @Json(name = "translator") val translator: String? = null,
     @Json(name = "publisher") val publisher: String? = null,
     @Json(name = "rating") val rating: String? = null,
-    @Json(name = "ratingsCount") val ratingsCount: String? = null
+    @Json(name = "ratingsCount") val ratingsCount: String? = null,
+    @Json(name = "eBookLink") val eBookLink: String? = null
 ) : SearchResult {
     override fun getResultTitle(): String {
         return title

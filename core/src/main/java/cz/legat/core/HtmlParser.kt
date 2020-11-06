@@ -93,7 +93,8 @@ open class HtmlParser {
             parseTranslator(document),
             parsePublisher(document),
             parseRating(document),
-            parseRatingsCount(document)
+            parseRatingsCount(document),
+            parseEBookLink(document)
         )
     }
 
@@ -150,6 +151,19 @@ open class HtmlParser {
 
     private fun parseBookImgLink(document: Document): String {
         return document.select("img[class=kniha_img]").attr("src")
+    }
+
+    private fun parseEBookLink(document: Document): String? {
+        val drop = document.select("div[class=dropdown_black]")
+        val links = drop.select("a")
+        val ebookLinks = mutableListOf<String>()
+        for(e in links){
+            ebookLinks.add(e.attr("href"))
+        }
+
+        val filtered = ebookLinks.filter { it.contains(".pdf") }
+
+        return if(filtered.isEmpty()) null else filtered.first()
     }
 
     private fun parseRating(document: Document): String {

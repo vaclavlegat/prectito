@@ -10,6 +10,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import retrofit2.Retrofit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 object AuthorsModule {
 
     @Provides
-    fun provideAuthorsService(retrofit: Retrofit): AuthorsService {
+    fun provideAuthorsService(@Named("retrofit") retrofit: Retrofit): AuthorsService {
         return retrofit.create(AuthorsService::class.java)
     }
 

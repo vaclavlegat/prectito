@@ -50,6 +50,9 @@ dependencies {
 
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     kapt (Libs.hiltCompiler)
     kapt (Libs.hiltAndroidCompiler)
 

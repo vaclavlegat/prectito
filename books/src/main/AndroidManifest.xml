@@ -3,7 +3,7 @@
     package="cz.legat.books">
 
     <application>
-        <activity android:name=".ui.detail.DetailActivity"/>
+        <activity android:name=".ui.detail.DetailActivity" />
     </application>
 
 </manifest>

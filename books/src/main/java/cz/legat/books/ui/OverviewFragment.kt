@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BindingFragment<PtHomeFragmentBinding>(PtHomeFragmentBinding::inflate) {
+class OverviewFragment : BindingFragment<PtHomeFragmentBinding>(PtHomeFragmentBinding::inflate) {
 
     @Inject lateinit var navigator: BooksNavigator
 
@@ -24,14 +24,14 @@ class HomeFragment : BindingFragment<PtHomeFragmentBinding>(PtHomeFragmentBindin
     private var newBooksAdapter: BooksAdapter? = null
     private var eBooksAdapter: BooksAdapter? = null
 
+    private val bookListener = object : BaseAdapter.OnItemClickedListener<Book> {
+        override fun onItem(item: Book) {
+            startActivity(navigator.getOpenDetailIntent(requireContext(), item.id))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val bookListener = object : BaseAdapter.OnItemClickedListener<Book> {
-            override fun onItem(item: Book) {
-                startActivity(navigator.getOpenDetailIntent(requireContext(), item.id))
-            }
-        }
 
         popularBooksAdapter = BooksAdapter(bookListener)
         newBooksAdapter = BooksAdapter(bookListener)

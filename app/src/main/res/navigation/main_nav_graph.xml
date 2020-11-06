@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="cz.legat.books.ui.HomeFragment"
+        android:name="cz.legat.books.ui.OverviewFragment"
         android:label="@string/pt_home"
         tools:layout="@layout/pt_home_fragment">
     </fragment>

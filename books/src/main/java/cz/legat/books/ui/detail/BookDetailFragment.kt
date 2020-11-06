@@ -1,5 +1,7 @@
 package cz.legat.books.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -21,6 +23,7 @@ import cz.legat.core.extensions.visibleIf
 import cz.legat.core.model.Comment
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.AuthorsNavigator
+import cz.legat.navigation.BooksNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,6 +35,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
     private var commentsAdapter: CommentsAdapter? = null
 
     @Inject lateinit var authorsNavigator: AuthorsNavigator
+    @Inject lateinit var bookNavigator: BooksNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
@@ -83,6 +87,17 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
                 binding.ptBookImageIv.loadWithBackground(book.imgLink, binding.ptBookImageBg)
+
+                binding.ptBookLinkBtn.visibleIf(book.eBookLink != null)
+                binding.ptBookLinkBtn.setOnClickListener {
+                    viewModel.downloadPdf(book.eBookLink)
+                }
+            }
+        })
+
+        viewModel.filePath.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                startActivity(bookNavigator.getOpenPdfIntent(requireContext(), it))
             }
         })
 

@@ -15,30 +15,25 @@ import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visibleIf
+import cz.legat.navigation.AuthorsNavigator
+import cz.legat.navigation.BooksNavigator
 import cz.legat.search.databinding.PtSearchResultsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
     private val viewModel: SearchResultsViewModel by viewModels()
 
+    @Inject lateinit var booksNavigator: BooksNavigator
+    @Inject lateinit var authorsNavigator: AuthorsNavigator
+
     lateinit var booksAdapter: SearchResultsAdapter
     private var handler = Handler()
-    private var callback: OnResultCallback? = null
 
     interface OnResultCallback {
         fun onResult(id: String, isBook: Boolean)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callback = context as SearchResultsActivity
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +43,12 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
                 BaseAdapter.OnItemClickedListener<SearchResult> {
                 override fun onItem(item: SearchResult) {
                     hideKeyboard(requireContext())
-                    callback?.onResult(item.getResultId(), item.isBook())
+                    val intent = if (item.isBook()) {
+                        booksNavigator.getOpenDetailIntent(requireContext(), item.getResultId())
+                    } else {
+                        authorsNavigator.getOpenDetailIntent(requireContext(), item.getResultId())
+                    }
+                    startActivity(intent)
                 }
             })
 

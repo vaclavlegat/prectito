@@ -24,11 +24,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = PtMainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.ptSearchFab.setOnClickListener {
-            startActivityForResult(searchNavigator.getOpenSearchIntent(this), RESULT_ID)
-        }
-
         navController = findNavController(this, R.id.nav_host_fragment)
 
         binding.bottomNavigation.setupWithNavController(navController)
@@ -37,17 +32,17 @@ class MainActivity : BaseActivity() {
             val fragmentId = when (item.itemId) {
                 R.id.home -> R.id.homeFragment
                 R.id.authors -> R.id.authorsFragment
+                R.id.search -> R.id.searchResultsFragment
                 R.id.mybooks -> R.id.myBooksFragment
                 R.id.settings -> R.id.settingsFragment
-                else -> R.id.homeFragment
+                else -> null
             }
 
-            navController.navigate(fragmentId)
+            fragmentId?.let {
+                navController.navigate(it)
+            }
             true
         }
-
-
-        setSupportActionBar(binding.bottomAppBar)
     }
 
     override fun onBackPressed() {

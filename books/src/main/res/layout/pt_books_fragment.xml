@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/pt_toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/pt_app_name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pt_books_rv"

@@ -16,10 +16,11 @@
             android:title="@string/pt_authors"/>
 
         <item
-            android:id="@+id/empty"
-            app:showAsAction="never"
-            android:enabled="false"
-            android:title=""/>
+            android:id="@+id/search"
+            android:icon="@drawable/pt_icon_search"
+            app:showAsAction="ifRoom"
+            android:enabled="true"
+            android:title="@string/pt_search"/>
 
         <item
             android:id="@+id/mybooks"

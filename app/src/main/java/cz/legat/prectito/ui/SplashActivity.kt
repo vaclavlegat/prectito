@@ -2,6 +2,8 @@ package cz.legat.prectito.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import cz.legat.prectito.R
 import cz.legat.prectito.databinding.PtActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 

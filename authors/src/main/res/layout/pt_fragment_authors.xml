@@ -12,6 +12,7 @@
         android:text="@string/pt_add_filter"
         android:textColor="@color/white"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/colorAccent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"

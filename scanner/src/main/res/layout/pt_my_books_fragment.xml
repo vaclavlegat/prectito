@@ -11,6 +11,7 @@
         android:id="@+id/pt_add_book_btn"
         android:layout_width="wrap_content"
         android:text="@string/pt_add_book"
+        android:backgroundTint="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

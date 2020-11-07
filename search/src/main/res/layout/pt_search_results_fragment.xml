@@ -35,7 +35,7 @@
             android:id="@+id/pt_search_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Type..."
+            android:hint="@string/pt_type"
             android:focusableInTouchMode="true"
             android:background="@drawable/pt_et_default"
             android:textColor="@color/white"

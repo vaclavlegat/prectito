@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pt_rating_trash">Odpad</string>
+    <string name="pt_tab_title_authors">Autoři</string>
+    <string name="pt_popular_books">Populární</string>
+    <string name="pt_new_books">Právě vydané</string>
+    <string name="pt_authors">Autoři</string>
+    <string name="pt_comments">Komentáře</string>
+    <string name="pt_more_comments">Další komentáře</string>
+    <string name="pt_e_books">E-knihy</string>
+    <string name="pt_e_book">E-kniha</string>
+    <string name="pt_ebooks">E-knihy</string>
+    <string name="pt_app_name">Prectito</string>
+    <string name="pt_more">Více</string>
+</resources>

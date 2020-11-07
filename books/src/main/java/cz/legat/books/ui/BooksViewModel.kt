@@ -17,7 +17,7 @@ class BooksViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val type = savedStateHandle.get<String>("type") ?: throw NullPointerException("Type must be provided")
+    val type = savedStateHandle.get<String>("type") ?: throw NullPointerException("Type must be provided")
 
     val books = liveData(Dispatchers.IO) {
         emit(

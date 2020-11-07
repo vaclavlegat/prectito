@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import cz.legat.books.R
 import cz.legat.books.databinding.PtBooksFragmentBinding
-import cz.legat.books.databinding.PtHomeFragmentBinding
 import cz.legat.core.base.BaseAdapter
 import cz.legat.core.extensions.simpleGrid
 import cz.legat.core.model.Book
@@ -30,12 +30,17 @@ class BooksFragment : BindingFragment<PtBooksFragmentBinding>(PtBooksFragmentBin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ptToolbar.title = "Popular"
+        binding.ptToolbar.title = when (viewModel.type) {
+            POPULAR -> getString(R.string.pt_popular_books)
+            NEW -> getString(R.string.pt_new_books)
+            EBOOK -> getString(R.string.pt_ebooks)
+            else -> ""
+        }
         booksAdapter = BooksAdapter(bookListener)
         binding.ptBooksRv.simpleGrid(booksAdapter)
 
-        val emptyBook = Book(id = "",title = "", imgLink = "")
-        val emptyBooks = listOf(emptyBook, emptyBook, emptyBook,emptyBook, emptyBook, emptyBook,emptyBook, emptyBook, emptyBook)
+        val emptyBook = Book(id = "", title = "", imgLink = "")
+        val emptyBooks = listOf(emptyBook, emptyBook, emptyBook, emptyBook, emptyBook, emptyBook, emptyBook, emptyBook, emptyBook)
 
         booksAdapter?.update(emptyBooks)
     }

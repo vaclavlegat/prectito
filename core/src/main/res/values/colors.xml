@@ -6,6 +6,7 @@
   <color name="pt_color_background">#0F1013</color>
   <color name="pt_color_background_transparent">#660F1013</color>
   <color name="pt_color_text">#F5F5F5</color>
+  <color name="pt_color_text_more_btn">#C5C5C5</color>
   <color name="transparent">#00000000</color>
   <color name="white">#FFFFFFFF</color>
   <color name="black">#FF000000</color>

@@ -8,5 +8,8 @@
     <string name="pt_comments">Comments</string>
     <string name="pt_more_comments">More comments</string>
     <string name="pt_e_books">E-books</string>
-    <string name="e_book">e-book</string>
+    <string name="pt_e_book">e-book</string>
+    <string name="pt_ebooks">E-books</string>
+    <string name="pt_app_name">Prectito</string>
+    <string name="pt_more">More</string>
 </resources>

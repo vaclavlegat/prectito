@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Prectito</string>
+    <string name="pt_tab_title_popular">Populární</string>
+    <string name="pt_tab_title_new">Právě vydané</string>
+    <string name="pt_tab_title_scan">Skenovat</string>
+
+    <string name="pt_search">Hledat</string>
+    <string name="pt_rating_trash">Odpad</string>
+    <string name="pt_tab_title_authors">Autoři</string>
+    <string name="pt_popular_books">Populární</string>
+    <string name="pt_new_books">Právě vydané</string>
+    <string name="pt_authors">Autoři</string>
+    <string name="pt_comments">Komentáře</string>
+    <string name="pt_more_comments">Další komentáře</string>
+    <string name="pt_settings">Nastavení</string>
+    <string name="pt_home">Přehled</string>
+    <string name="pt_my_books">Moje</string>
+    <string name="pt_splash">Splash</string>
+</resources>

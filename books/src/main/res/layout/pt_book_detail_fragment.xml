@@ -5,14 +5,13 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/pt_color_background">
+    android:background="@color/pt_color_background"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        app:liftOnScroll="true"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -20,37 +19,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimaryDark"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimaryDark"
+            app:expandedTitleMarginBottom="16dp"
+            app:expandedTitleMarginStart="16dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:statusBarScrim="?attr/colorPrimaryVariant"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
             <FrameLayout
-                android:id="@+id/pt_book_image_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7" />
+                android:fitsSystemWindows="true"
+                android:orientation="horizontal">
 
-            </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/pt_book_image_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-            <FrameLayout
-                android:background="@drawable/pt_appbar_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/pt_image_title_background" />
+
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/pt_book_image_iv"
                 android:layout_width="120dp"
                 android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:scaleType="fitCenter"
-                android:layout_gravity="center_horizontal"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
@@ -58,52 +59,40 @@
                 android:id="@+id/pt_book_rating_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:layout_marginTop="64dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/pt_rating_bg"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_marginTop="64dp"
-                android:paddingBottom="8dp"
                 android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
                 android:textColor="@color/pt_color_text"
                 android:textSize="20sp"
                 android:visibility="gone"
-                android:layout_gravity="end|top"
                 tools:text="87 %" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:orientation="horizontal"
-                android:background="@drawable/pt_image_title_background">
-
-                <TextView
-                    android:id="@+id/pt_book_title_tv"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:textColor="@color/pt_color_text"
-                    android:textSize="22sp"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="scroll|enterAlways" />
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/pt_book_link_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
                     android:layout_marginStart="16dp"
-                    android:paddingBottom="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:paddingStart="16dp"
                     android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/pt_e_book"
                     android:textColor="@color/pt_color_text"
                     android:textSize="14sp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:visibility="gone"
-                    android:text="@string/pt_e_book" />
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -195,11 +184,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/colorAccent"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
                 android:text="@string/pt_more_comments"
                 android:visibility="gone"
-                android:backgroundTint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

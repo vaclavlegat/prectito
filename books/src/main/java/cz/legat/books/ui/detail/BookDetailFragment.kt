@@ -2,6 +2,7 @@ package cz.legat.books.ui.detail
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -60,13 +61,14 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
         viewModel.book.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
-                binding.ptBookTitleTv.fadeInText(book.title)
+                //binding.ptBookTitleTv.fadeInText(book.title)
+                binding.collapsing.title = book.title
                 binding.ptBookAuthorTv.fadeInText(book.author?.name)
                 binding.ptBookPublishedTv.fadeInText(book.published)
                 binding.ptBookDescTv.fadeInText(book.description)
                 binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
                     override fun onExpanded() {
-                        binding.collapsing.title = ""
+                        binding.collapsing.title = book.title
                         binding.ptBookLinkBtn.visibleIf(book.eBookLink!=null)
                     }
 
@@ -76,7 +78,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                     }
 
                     override fun onIntermediate() {
-                        binding.collapsing.title = ""
+                        binding.collapsing.title = book.title
                         binding.ptBookLinkBtn.visibleIf(book.eBookLink!=null)
                     }
                 }))

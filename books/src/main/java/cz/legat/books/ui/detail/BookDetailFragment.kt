@@ -2,7 +2,8 @@ package cz.legat.books.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -11,22 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.books.R
 import cz.legat.books.databinding.PtBookDetailFragmentBinding
 import cz.legat.core.base.BaseAdapter
-import cz.legat.core.extensions.AppBarOffsetOffsetChangedListener
-import cz.legat.core.extensions.ID_KEY
-import cz.legat.core.extensions.OnAppBarOffsetChangedListener
-import cz.legat.core.extensions.animateRating
-import cz.legat.core.extensions.fadeInText
-import cz.legat.core.extensions.gone
-import cz.legat.core.extensions.goneIf
-import cz.legat.core.extensions.loadWithBackground
-import cz.legat.core.extensions.visible
-import cz.legat.core.extensions.visibleIf
+import cz.legat.core.extensions.*
 import cz.legat.core.model.Comment
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.AuthorsNavigator
 import cz.legat.navigation.BooksNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDetailFragmentBinding::inflate) {
@@ -37,6 +30,15 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
     @Inject lateinit var authorsNavigator: AuthorsNavigator
     @Inject lateinit var bookNavigator: BooksNavigator
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val w = activity?.window
+        w?.setFlags(
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
@@ -66,26 +68,28 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 binding.ptBookAuthorTv.fadeInText(book.author?.name)
                 binding.ptBookPublishedTv.fadeInText(book.published)
                 binding.ptBookDescTv.fadeInText(book.description)
-                binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
-                    override fun onExpanded() {
-                        binding.collapsing.title = book.title
-                        binding.ptBookLinkBtn.visibleIf(book.eBookLink!=null)
-                    }
+                binding.appbarLayout.addOnOffsetChangedListener(
+                    AppBarOffsetOffsetChangedListener(
+                        object : OnAppBarOffsetChangedListener {
+                            override fun onExpanded() {
+                            }
 
-                    override fun onCollapsed() {
-                        binding.collapsing.fadeInText(book.title)
-                        binding.ptBookLinkBtn.gone()
-                    }
+                            override fun onCollapsed() {
+                            }
 
-                    override fun onIntermediate() {
-                        binding.collapsing.title = book.title
-                        binding.ptBookLinkBtn.visibleIf(book.eBookLink!=null)
-                    }
-                }))
+                            override fun onIntermediate() {
+                            }
+                        })
+                )
 
                 binding.ptBookAuthorTv.setOnClickListener {
                     book.author?.authorId?.let { authorId ->
-                        startActivity(authorsNavigator.getOpenDetailIntent(requireContext(), authorId))
+                        startActivity(
+                            authorsNavigator.getOpenDetailIntent(
+                                requireContext(),
+                                authorId
+                            )
+                        )
                     }
                 }
 

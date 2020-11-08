@@ -29,21 +29,21 @@ class AuthorDetailFragment : BaseTabsFragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel.author.observe(viewLifecycleOwner, Observer {
-            binding.ptAuthorNameTv.fadeInText(it?.name)
+            binding.collapsing.fadeInText(it?.name)
             binding.ptAuthorImageIv.loadImg(it?.authorImgLink)
             binding.ptAuthorImageIv.loadWithBackground(it?.authorImgLink, binding.ptImageBg)
 
             binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
                 override fun onExpanded() {
-                    binding.collapsing.title = ""
+
                 }
 
                 override fun onCollapsed() {
-                    binding.collapsing.fadeInText(it?.name)
+
                 }
 
                 override fun onIntermediate() {
-                    binding.collapsing.title = ""
+
                 }
             }))
 

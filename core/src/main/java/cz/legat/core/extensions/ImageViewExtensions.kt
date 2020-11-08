@@ -1,5 +1,7 @@
 package cz.legat.core.extensions
 
+import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -65,9 +67,9 @@ fun ImageView.loadWithBackground(imgLink: String?, background: View) {
         ): Boolean {
             if (resource != null) {
                 val p: Palette = Palette.from(resource).generate()
-                val color =  p.getMutedColor(ContextCompat.getColor(iv.context, R.color.pt_color_background))
-                if(color == ContextCompat.getColor(iv.context, R.color.pt_color_background)){
-                    val colorDominamnt =  p.getDominantColor(ContextCompat.getColor(iv.context, R.color.pt_color_background))
+                val color =  p.getMutedColor(ContextCompat.getColor(iv.context, R.color.pt_star_color))
+                if(color == ContextCompat.getColor(iv.context, R.color.pt_star_color)){
+                    val colorDominamnt =  p.getDominantColor(ContextCompat.getColor(iv.context, R.color.pt_star_color))
                     background.setBackgroundColor(colorDominamnt)
                 } else {
                     background.setBackgroundColor(color)

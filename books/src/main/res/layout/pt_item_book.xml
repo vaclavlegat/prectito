@@ -15,7 +15,6 @@
         android:layout_marginBottom="8dp"
         android:background="@color/pt_color_background_transparent"
         android:scaleType="centerCrop"
-        android:transitionName="book_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +25,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp"
-        android:background="@drawable/pt_image_title_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -37,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="16sp"
-            android:textColor="@color/pt_color_text"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <TextView
@@ -46,7 +44,6 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:visibility="gone"
-            android:textColor="@color/pt_color_text"
             app:layout_constraintBottom_toBottomOf="@id/pt_book_image_iv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

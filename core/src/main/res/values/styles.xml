@@ -68,7 +68,11 @@
         <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
     </style>
 
-    <style name="TextAppearance.Prectito.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+    <style name="TextAppearance.Prectito.Expanded" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="TextAppearance.Prectito.Collapsed" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

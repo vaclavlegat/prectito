@@ -4,16 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/pt_toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/pt_appbar"
+        style="@style/ThemeOverlay.Prectito.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="@string/pt_choose_country" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/pt_toolbar"
+            style="@style/Prectito.Toolbar"
+            android:layout_width="match_parent"
+            android:elevation="0dp"
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/pt_choose_country" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_countries"
@@ -24,5 +32,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pt_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/pt_appbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

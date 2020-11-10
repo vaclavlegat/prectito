@@ -1,4 +1,5 @@
 <resources>
     <string name="pt_add_filter">Add filter</string>
     <string name="pt_choose_country">Choose country</string>
+    <string name="pt_authors">Authors</string>
 </resources>

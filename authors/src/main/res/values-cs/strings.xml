@@ -2,4 +2,5 @@
 <resources>
     <string name="pt_add_filter">Filtrovat</string>
     <string name="pt_choose_country">Vyberte zemi</string>
+    <string name="pt_authors">Autoři</string>
 </resources>

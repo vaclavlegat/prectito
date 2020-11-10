@@ -1,6 +1,7 @@
 package cz.legat.authors.ui.detail
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,6 +17,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class AuthorDetailFragment : BaseTabsFragment() {
 
     private val viewModel: AuthorDetailViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val w = activity?.window
+        w?.setFlags(
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+        )
+    }
 
     override fun fragments(): List<Fragment> {
         return listOf(AuthorBioFragment.newInstance(id!!), AuthorBooksFragment.newInstance(id!!))

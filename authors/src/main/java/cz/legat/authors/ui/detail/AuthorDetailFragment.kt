@@ -2,21 +2,32 @@ package cz.legat.authors.ui.detail
 
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import cz.legat.authors.ui.BaseTabsFragment
-import cz.legat.core.extensions.AppBarOffsetOffsetChangedListener
-import cz.legat.core.extensions.OnAppBarOffsetChangedListener
-import cz.legat.core.extensions.fadeInText
-import cz.legat.core.extensions.loadImg
-import cz.legat.core.extensions.loadWithBackground
+import androidx.navigation.fragment.findNavController
+import cz.legat.authors.databinding.PtDetailTabsFragmentBinding
+import cz.legat.core.base.BaseAdapter
+import cz.legat.core.extensions.*
+import cz.legat.core.model.Book
+import cz.legat.core.ui.BindingFragment
+import cz.legat.navigation.BooksNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class AuthorDetailFragment : BaseTabsFragment() {
+class AuthorDetailFragment :
+    BindingFragment<PtDetailTabsFragmentBinding>(PtDetailTabsFragmentBinding::inflate) {
 
     private val viewModel: AuthorDetailViewModel by viewModels()
+
+    @Inject
+    lateinit var navigator: BooksNavigator
+
+    private val bookListener = object : BaseAdapter.OnItemClickedListener<Book> {
+        override fun onItem(item: Book) {
+            startActivity(navigator.getOpenDetailIntent(requireContext(), item.id))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,23 +38,35 @@ class AuthorDetailFragment : BaseTabsFragment() {
         )
     }
 
-    override fun fragments(): List<Fragment> {
-        return listOf(AuthorBioFragment.newInstance(id!!), AuthorBooksFragment.newInstance(id!!))
-    }
-
-    override fun tabTitles(): List<String> {
-        return listOf("Info", "Books")
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.author.observe(viewLifecycleOwner, Observer {
-            binding.collapsing.fadeInText(it?.name)
-            binding.ptAuthorImageIv.loadImg(it?.authorImgLink)
-            binding.ptAuthorImageIv.loadWithBackground(it?.authorImgLink, binding.ptImageBg)
+        val booksAdapter = BooksAdapter(bookListener)
+        binding.ptBooksRv.simpleGrid(booksAdapter)
 
-            binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
+        viewModel.books.observe(viewLifecycleOwner, Observer {
+            booksAdapter.update(it.take(3))
+            binding.ptMoreBtn.visibleIf(it.size > 3)
+        })
+
+        viewModel.author.observe(viewLifecycleOwner, Observer { author ->
+            binding.collapsing.fadeInText(author?.name)
+            binding.ptAuthorImageIv.loadImg(author?.authorImgLink)
+            binding.ptAuthorImageIv.loadWithBackground(author?.authorImgLink, binding.ptImageBg)
+            binding.ptAuthorLifeTv.fadeInText(author?.life)
+            binding.ptAuthorCvTv.fadeInText(author?.cv)
+            binding.ptAuthorCvTv.setOnClickListener {
+                author?.cv?.let { cv ->
+                    findNavController().navigate(AuthorDetailFragmentDirections.toBioFragment(cv))
+                }
+            }
+            binding.ptMoreBtn.setOnClickListener {
+                author?.authorId?.let { id ->
+                    findNavController().navigate(AuthorDetailFragmentDirections.toBooksFragment(id))
+                }
+            }
+            binding.appbarLayout.addOnOffsetChangedListener(AppBarOffsetOffsetChangedListener(object :
+                OnAppBarOffsetChangedListener {
                 override fun onExpanded() {
 
                 }

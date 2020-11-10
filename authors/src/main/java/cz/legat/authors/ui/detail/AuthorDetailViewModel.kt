@@ -31,4 +31,10 @@ class AuthorDetailViewModel @ViewModelInject constructor(
             BasePagingSource(authorsRepository::getAuthorBooks, savedStateHandle.get<String>(ID_KEY)!!)
         }
     ).flow.cachedIn(viewModelScope)
+
+    val books = liveData(Dispatchers.IO) {
+        savedStateHandle.get<String>(ID_KEY)?.let {
+            emit(authorsRepository.getAuthorBooks(1, it))
+        }
+    }
 }

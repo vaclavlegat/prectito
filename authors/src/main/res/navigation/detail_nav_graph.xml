@@ -14,7 +14,31 @@
             android:name="id"
             app:argType="string" />
         <action
-            android:id="@+id/authorDetailToBookDetail" />
+            android:id="@+id/toBioFragment"
+            app:destination="@id/authorsBioFragment" />
+        <action
+            android:id="@+id/toBooksFragment"
+            app:destination="@id/authorsBooksFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authorsBioFragment"
+        android:name="cz.legat.authors.ui.detail.AuthorBioFragment"
+        android:label="Detail"
+        tools:layout="@layout/pt_author_detail_fragment">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/authorsBooksFragment"
+        android:name="cz.legat.authors.ui.detail.AuthorBooksFragment"
+        android:label="Detail"
+        tools:layout="@layout/pt_author_books_fragment">
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
 
 </navigation>

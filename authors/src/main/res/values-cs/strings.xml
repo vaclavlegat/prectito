@@ -3,4 +3,7 @@
     <string name="pt_add_filter">Filtrovat</string>
     <string name="pt_choose_country">Vyberte zemi</string>
     <string name="pt_authors">Autoři</string>
+    <string name="pt_bio">Bio</string>
+    <string name="pt_books">Kniny</string>
+    <string name="pt_more">More</string>
 </resources>

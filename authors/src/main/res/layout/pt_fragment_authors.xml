@@ -22,34 +22,35 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="0dp"
-            app:title="@string/pt_authors" />
+            app:title="@string/pt_authors">
+
+            <Button
+                android:id="@+id/pt_add_filter"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="@string/pt_add_filter" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pt_coutry_chip"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="?attr/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="česká" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
-
-    <Button
-        android:id="@+id/pt_add_filter"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/pt_add_filter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pt_appbar"/>
-
-    <com.google.android.material.chip.Chip
-        android:id="@+id/pt_coutry_chip"
-        android:backgroundTint="?attr/colorAccent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/pt_appbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="česká" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_authors"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="72dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"

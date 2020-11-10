@@ -11,7 +11,7 @@ class BasePagingSource<T : Any>(private val dataProvider: (Int, String?) -> List
             LoadResult.Page(
                 data = response,
                 prevKey = null, // Only paging forward.
-                nextKey = if (response.isEmpty()) null else nextPageNumber + 1
+                nextKey = if (response.isEmpty() || response.size < 40) null else nextPageNumber + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android.extensions")
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin")
     id("kotlin-android")
 }
 

@@ -34,14 +34,12 @@ class AuthorsAdapter(val onAuthorClickedListener: OnAuthorClickedListener): Pagi
     inner class AuthorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val tvName = view.findViewById<TextView>(R.id.tv_author_name)
-        private val tvLife = view.findViewById<TextView>(R.id.tv_author_life)
         private val ivImage = view.findViewById<ImageView>(R.id.iv_author_image)
         private val layout = view
 
         internal fun bind(author: Author) {
             with(author) {
                 tvName.text = name
-                tvLife.text = life
                 authorImgLink.let {
                     ivImage.loadImg(it)
                 }

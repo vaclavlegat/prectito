@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import cz.legat.authors.R
 import cz.legat.authors.databinding.PtDetailTabsFragmentBinding
 import cz.legat.core.base.BaseAdapter
 import cz.legat.core.extensions.*
@@ -42,17 +43,20 @@ class AuthorDetailFragment :
         super.onActivityCreated(savedInstanceState)
 
         val booksAdapter = BooksAdapter(bookListener)
-        binding.ptBooksRv.simpleGrid(booksAdapter)
+        binding.ptBooksRv.simpleLinear(booksAdapter)
 
         viewModel.books.observe(viewLifecycleOwner, Observer {
-            booksAdapter.update(it.take(3))
-            binding.ptMoreBtn.visibleIf(it.size > 3)
+            booksAdapter.update(it)
+            binding.ptAllBooksBtn.visibleIf(it.isNotEmpty())
         })
 
         viewModel.author.observe(viewLifecycleOwner, Observer { author ->
-            binding.collapsing.fadeInText(author?.name)
+            binding.ptSearchBtn.setOnClickListener{
+                //findNavController().navigate(R.id.searchFragment)
+            }
             binding.ptAuthorImageIv.loadImg(author?.authorImgLink)
-            binding.ptAuthorImageIv.loadWithBackground(author?.authorImgLink, binding.ptImageBg)
+            //binding.ptAuthorImageIv.loadWithBackground(author?.authorImgLink, binding.ptImageBg)
+            binding.ptAuthorNameTv.fadeInText(author?.name)
             binding.ptAuthorLifeTv.fadeInText(author?.life)
             binding.ptAuthorCvTv.fadeInText(author?.cv)
             binding.ptAuthorCvTv.setOnClickListener {
@@ -60,7 +64,7 @@ class AuthorDetailFragment :
                     findNavController().navigate(AuthorDetailFragmentDirections.toBioFragment(cv))
                 }
             }
-            binding.ptMoreBtn.setOnClickListener {
+            binding.ptAllBooksBtn.setOnClickListener {
                 author?.authorId?.let { id ->
                     findNavController().navigate(AuthorDetailFragmentDirections.toBooksFragment(id))
                 }

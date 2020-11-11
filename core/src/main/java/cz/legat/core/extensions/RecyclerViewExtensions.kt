@@ -10,3 +10,9 @@ fun <E> RecyclerView.simpleGrid(dataAdapter: BaseAdapter<E>?) {
     layoutManager = GridLayoutManager(context, 3)
     adapter = dataAdapter
 }
+
+fun <E> RecyclerView.simpleLinear(dataAdapter: BaseAdapter<E>?) {
+    setHasFixedSize(true)
+    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    adapter = dataAdapter
+}

@@ -5,5 +5,6 @@
     <string name="pt_authors">Autoři</string>
     <string name="pt_bio">Bio</string>
     <string name="pt_books">Kniny</string>
-    <string name="pt_more">More</string>
+    <string name="pt_more">Více</string>
+    <string name="pt_all_books">Všechny</string>
 </resources>

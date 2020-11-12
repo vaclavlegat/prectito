@@ -30,15 +30,6 @@ class AuthorDetailFragment :
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val w = activity?.window
-        w?.setFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

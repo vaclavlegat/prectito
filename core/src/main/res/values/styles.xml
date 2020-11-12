@@ -70,6 +70,7 @@
 
     <style name="TextAppearance.Prectito.Expanded" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">36sp</item>
     </style>
     <style name="TextAppearance.Prectito.Collapsed" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">?attr/colorAccent</item>

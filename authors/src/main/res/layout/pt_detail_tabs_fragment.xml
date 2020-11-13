@@ -59,47 +59,61 @@
                 android:layout_marginBottom="8dp"
                 app:cardBackgroundColor="#EEEEEE">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/pt_author_image_iv"
                         android:layout_width="120dp"
                         android:layout_height="160dp"
-                        android:layout_gravity="start"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/pt_author_name_tv"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/pt_author_image_iv"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:textAppearance="@style/TextAppearance.Prectito.Expanded" />
 
                     <TextView
                         android:id="@+id/pt_author_life_tv"
-                        android:layout_width="match_parent"
+                        app:layout_constraintTop_toBottomOf="@id/pt_author_name_tv"
+                        android:layout_width="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/pt_author_image_iv"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:textSize="16sp" />
 
                     <FrameLayout
+                        android:id="@+id/pt_line"
+                        app:layout_constraintTop_toBottomOf="@id/pt_author_image_iv"
                         android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_width="match_parent"
                         android:background="#DDDDDD"
                         android:layout_height="1dp"/>
 
                     <TextView
+                        app:layout_constraintTop_toBottomOf="@id/pt_line"
                         android:id="@+id/pt_author_cv_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:background="?selectableItemBackground"
                         android:ellipsize="end"
                         android:maxLines="5"
@@ -108,7 +122,7 @@
                         android:paddingEnd="16dp"
                         android:paddingBottom="16dp"
                         android:textSize="16sp" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView

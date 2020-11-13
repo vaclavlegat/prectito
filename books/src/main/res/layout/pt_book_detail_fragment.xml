@@ -69,7 +69,6 @@
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
-                android:textColor="@color/pt_color_text"
                 android:textSize="20sp"
                 android:visibility="gone"
                 tools:text="87 %" />

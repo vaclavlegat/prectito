@@ -23,14 +23,10 @@ class BooksAdapter(private val onItemClickedListener: OnItemClickedListener<Book
 
     inner class BookViewHolder(view: View) : BaseAdapter<Book>.BaseViewHolder(view) {
 
-        private val authorTv = view.findViewById<TextView>(R.id.pt_book_author_tv)
-        private val titleTv = view.findViewById<TextView>(R.id.pt_book_title_tv)
         private val imageIv = view.findViewById<ImageView>(R.id.pt_book_image_iv)
 
         override fun bind(item: Book, position: Int) {
             with(item) {
-                authorTv.text = author?.name
-                titleTv.text = title
                 imageIv.loadImg(bigImgLink(), middleImgLink(), imgLink)
             }
         }

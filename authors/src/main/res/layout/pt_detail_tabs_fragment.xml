@@ -4,7 +4,6 @@
     android:id="@+id/home_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DDDDDD"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -57,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="#EEEEEE">
+                app:cardBackgroundColor="@color/pt_card_layout_background">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -103,7 +102,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_width="match_parent"
-                        android:background="#DDDDDD"
+                        android:background="@color/pt_line_color"
                         android:layout_height="1dp"/>
 
                     <TextView
@@ -130,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="#EEEEEE"
+                app:cardBackgroundColor="@color/pt_card_layout_background"
                 app:contentPaddingBottom="16dp"
                 app:contentPaddingTop="16dp">
 

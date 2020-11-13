@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pt_card_layout_background">#333333</color>
+    <color name="pt_card_background">#555555</color>
+    <color name="pt_line_color">#555555</color>
+</resources>

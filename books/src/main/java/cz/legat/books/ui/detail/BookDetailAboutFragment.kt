@@ -29,5 +29,9 @@ class BookDetailAboutFragment : BindingFragment<PtBookDetailAboutFragmentBinding
         super.onActivityCreated(savedInstanceState)
         val about = arguments?.getString("about") ?: throw IllegalArgumentException()
         binding.ptAboutTv.fadeInText(about)
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

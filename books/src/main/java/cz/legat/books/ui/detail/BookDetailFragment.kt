@@ -31,15 +31,6 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
     @Inject lateinit var authorsNavigator: AuthorsNavigator
     @Inject lateinit var bookNavigator: BooksNavigator
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val w = activity?.window
-        w?.setFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
         binding.ptMoreCommentsBtn.setOnClickListener {
@@ -63,25 +54,11 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
         viewModel.book.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
-                //binding.ptBookTitleTv.fadeInText(book.title)
-                binding.collapsing.title = book.title
+                binding.ptBookTitleTv.fadeInText(book.title)
                 binding.ptBookAuthorTv.fadeInText(book.author?.name)
                 binding.ptBookPublishedTv.fadeInText(book.published)
                 binding.ptBookDescTv.fadeInText(book.description)
-                binding.appbarLayout.addOnOffsetChangedListener(
-                    AppBarOffsetOffsetChangedListener(
-                        object : OnAppBarOffsetChangedListener {
-                            override fun onExpanded() {
-                            }
-
-                            override fun onCollapsed() {
-                            }
-
-                            override fun onIntermediate() {
-                            }
-                        })
-                )
-
+                binding.ptBookImageIv.loadImg(book.imgLink)
                 binding.ptBookAuthorTv.setOnClickListener {
                     book.author?.authorId?.let { authorId ->
                         startActivity(
@@ -95,11 +72,14 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
                 binding.ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
-                binding.ptBookImageIv.loadWithBackground(book.imgLink, binding.ptBookImageBg)
 
                 binding.ptBookLinkBtn.visibleIf(book.eBookLink != null)
                 binding.ptBookLinkBtn.setOnClickListener {
                     viewModel.downloadPdf(book.eBookLink)
+                }
+
+                binding.ptBookDescTv.setOnClickListener {
+                    findNavController().navigate(R.id.aboutFragment, bundleOf("about" to book.description))
                 }
             }
         })

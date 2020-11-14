@@ -38,7 +38,7 @@ fun TextView.animateRating(rating: Int){
         start()
     }
 
-    val ratingBG = background
+   /* val ratingBG = background
     if (ratingBG is GradientDrawable) {
         ratingBG.setColor(
             ContextCompat.getColor(
@@ -46,7 +46,7 @@ fun TextView.animateRating(rating: Int){
                 getRatingColor(rating)
             )
         )
-    }
+    }*/
 }
 
 private fun getRatingColor(rating: Int): Int {

@@ -25,4 +25,15 @@
             app:argType="string" />
     </fragment>
 
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="cz.legat.books.ui.detail.BookDetailAboutFragment"
+        android:label="About"
+        tools:layout="@layout/pt_book_detail_about_fragment">
+        <argument
+            android:name="about"
+            app:argType="string" />
+    </fragment>
+
+
 </navigation>

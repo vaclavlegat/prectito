@@ -1,5 +1,6 @@
 package cz.legat.books.ui.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -69,6 +70,22 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                         )
                     }
                 }
+
+                binding.appbarLayout.addOnOffsetChangedListener(
+                    AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener{
+                        override fun onExpanded() {
+                            binding.collapsing.title = ""
+                        }
+
+                        override fun onCollapsed() {
+                            binding.collapsing.fadeInText(book.title)
+                        }
+
+                        override fun onIntermediate() {
+                            binding.collapsing.title = ""
+                        }
+
+                    }))
 
                 binding.ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())

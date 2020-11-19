@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.books.R
@@ -19,6 +20,8 @@ import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.AuthorsNavigator
 import cz.legat.navigation.BooksNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -28,6 +31,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
     private val viewModel: BookDetailViewModel by viewModels()
 
     private var commentsAdapter: CommentsAdapter? = null
+    private var pagedCommentsAdapter: PagedCommentsAdapter? = null
 
     @Inject lateinit var authorsNavigator: AuthorsNavigator
     @Inject lateinit var bookNavigator: BooksNavigator
@@ -43,10 +47,17 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
             }
         })
 
+        pagedCommentsAdapter = PagedCommentsAdapter(object : PagedCommentsAdapter.OnCommentClickedListener{
+            override fun onComment(comment: Comment) {
+
+            }
+
+        })
+
         binding.ptCommentsRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = commentsAdapter
-            isNestedScrollingEnabled = false
+            adapter = pagedCommentsAdapter
+            setHasFixedSize(true)
         }
     }
 
@@ -109,11 +120,16 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
         viewModel.comments.observe(viewLifecycleOwner, Observer<List<Comment>> {
             binding.ptCommentsTitleTv.goneIf(it.isEmpty())
-            commentsAdapter?.update(it)
         })
 
-        viewModel.showMoreCommentsVisible.observe(viewLifecycleOwner, Observer {
-            binding.ptMoreCommentsBtn.visibleIf(it)
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.flow.collectLatest { pagingData ->
+                pagedCommentsAdapter?.submitData(pagingData)
+            }
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

@@ -1,6 +1,5 @@
 package cz.legat.books.repository
 
-import android.util.Log
 import cz.legat.books.data.remote.BooksService
 import cz.legat.core.HtmlParser
 import cz.legat.core.base.BaseRepository
@@ -44,9 +43,15 @@ class BooksRepositoryImpl @Inject constructor(
         return when (val result = apiCall { booksService.getOverview() }) {
             is NetworkResult.Success -> {
                 val overview = HtmlParser().parseOverview(result.data)
-                overviewDao.insert(LocalOverview(popularBooks = overview.popularBooks, newBooks = overview.newBooks, eBooks = overview.eBooks))
+                overviewDao.insert(
+                    LocalOverview(
+                        popularBooks = overview.popularBooks,
+                        newBooks = overview.newBooks,
+                        eBooks = overview.eBooks
+                    )
+                )
                 val saved = overviewDao.getOverview()
-                Timber.d( "returning remote overview")
+                Timber.d("returning remote overview")
                 Overview(saved!!.popularBooks, saved.newBooks, saved.eBooks)
             }
             is NetworkResult.Error -> Overview(listOf(), listOf(), listOf())
@@ -145,6 +150,16 @@ class BooksRepositoryImpl @Inject constructor(
                 comments
             }
             is NetworkResult.Error -> listOf()
+        }
+    }
+
+    override fun getBookCommentsByPage(page: Int, param: String?): List<Comment> {
+        val comments = commentsCache[param]
+        val toIndex = (page - 1) * 10 + 10
+        return if (toIndex < comments?.size ?: 0) {
+            comments?.subList((page - 1) * 10, toIndex) ?: listOf()
+        } else {
+            comments?.subList((page - 1) * 10, comments.size) ?: listOf()
         }
     }
 

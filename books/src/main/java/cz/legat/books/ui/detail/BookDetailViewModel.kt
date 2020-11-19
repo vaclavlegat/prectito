@@ -8,7 +8,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import cz.legat.core.extensions.ID_KEY
+import cz.legat.core.paging.BasePagingInternalSource
+import cz.legat.core.paging.BasePagingSource
 import cz.legat.core.repository.BooksRepository
 import cz.legat.core.repository.PdfRepository
 import kotlinx.coroutines.Dispatchers
@@ -34,16 +39,20 @@ class BookDetailViewModel @ViewModelInject constructor(
 
     val comments = liveData(Dispatchers.IO) {
         val comments = booksRepository.getBookComments(bookId)
-        withContext(Dispatchers.Main) {
-            showMoreCommentsVisible.value = comments.size > 3
-        }
-        emit(comments.take(3))
+        emit(comments.take(1))
     }
 
     val allComments = liveData(Dispatchers.IO) {
         val comments = booksRepository.getBookComments(bookId)
         emit(comments)
     }
+
+    val flow = Pager(
+        config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = false),
+        pagingSourceFactory = {
+            BasePagingInternalSource(booksRepository::getBookCommentsByPage, bookId)
+        }
+    ).flow.cachedIn(viewModelScope)
 
     val showMoreCommentsVisible: MutableLiveData<Boolean> = MutableLiveData()
 

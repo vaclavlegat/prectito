@@ -13,6 +13,7 @@ interface BooksRepository {
     suspend fun getEBooks(): List<Book>
     suspend fun getBook(id: String?): Book?
     suspend fun getBookComments(id: String?): List<Comment>
+    fun getBookCommentsByPage(page:Int, param: String?): List<Comment>
     suspend fun getBookByISBN(isbn: String): SavedBook?
     suspend fun searchBook(query: String): List<Book>
     fun saveBook(savedBook: SavedBook)

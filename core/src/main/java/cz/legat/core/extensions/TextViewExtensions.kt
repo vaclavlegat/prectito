@@ -19,6 +19,16 @@ fun TextView.fadeInText(value: String?) {
     }
 }
 
+fun TextView.fadeInTextFromStart(value: String?) {
+    text = value
+    visibility = View.VISIBLE
+    alpha = 0f
+    animate().apply {
+        duration = 200
+        alpha(1f)
+    }
+}
+
 fun CollapsingToolbarLayout.fadeInText(value: String?) {
     title = value
     visibility = View.VISIBLE

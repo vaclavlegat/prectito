@@ -66,7 +66,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
 
         viewModel.book.observe(viewLifecycleOwner, Observer { book ->
             book?.let {
-                binding.ptBookTitleTv.fadeInText(book.title)
+                binding.ptBookTitleTv.fadeInTextFromStart(book.title)
                 binding.ptBookAuthorTv.fadeInText(book.author?.name)
                 binding.ptBookPublishedTv.fadeInText(book.published)
                 binding.ptBookDescTv.fadeInText(book.description)

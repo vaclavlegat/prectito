@@ -36,6 +36,10 @@ open class HtmlParser {
         }
 
         for (element in remoteEBooks) {
+            val isEbook = element.parent().attr("onClick").contains("ebooks")
+            if(!isEbook) {
+                continue
+            }
             val id = element.parent().attr("href").removePrefix("knihy/")
             val title = element.select("div[class=title]").text()
             val imgSrc = element.select("img").attr("src")

@@ -37,24 +37,12 @@ class BookDetailViewModel @ViewModelInject constructor(
         emit(booksRepository.getBook(bookId))
     }
 
-    val comments = liveData(Dispatchers.IO) {
-        val comments = booksRepository.getBookComments(bookId)
-        emit(comments.take(1))
-    }
-
-    val allComments = liveData(Dispatchers.IO) {
-        val comments = booksRepository.getBookComments(bookId)
-        emit(comments)
-    }
-
     val flow = Pager(
         config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = false),
         pagingSourceFactory = {
             BasePagingInternalSource(booksRepository::getBookCommentsByPage, bookId)
         }
     ).flow.cachedIn(viewModelScope)
-
-    val showMoreCommentsVisible: MutableLiveData<Boolean> = MutableLiveData()
 
     val filePath: MutableLiveData<String> = MutableLiveData()
 

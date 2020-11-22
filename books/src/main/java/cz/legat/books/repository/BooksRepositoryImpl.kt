@@ -12,9 +12,12 @@ import cz.legat.core.persistence.OverviewDao
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.persistence.SavedBookDao
 import cz.legat.core.repository.BooksRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 const val TAG = "BOOKS REPO"
 
@@ -134,7 +137,7 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getBookComments(id: String?): List<Comment> {
+    override fun getBookComments(id: String?): List<Comment> {
         if (id == null) {
             return listOf()
         }
@@ -143,23 +146,25 @@ class BooksRepositoryImpl @Inject constructor(
             return commentsCache[id] ?: listOf()
         }
 
-        return when (val result = apiCall { booksService.getBookComments(id) }) {
-            is NetworkResult.Success -> {
-                val comments = PARSER.parseBookComments(result.data)
-                commentsCache[id] = comments
-                comments
+        return runBlocking {
+            when (val result = apiCall { booksService.getBookComments(id) }) {
+                is NetworkResult.Success -> {
+                    val comments = PARSER.parseBookComments(result.data)
+                    commentsCache[id] = comments
+                    comments
+                }
+                is NetworkResult.Error -> listOf()
             }
-            is NetworkResult.Error -> listOf()
         }
     }
 
     override fun getBookCommentsByPage(page: Int, param: String?): List<Comment> {
-        val comments = commentsCache[param]
+        val comments = getBookComments(param)
         val toIndex = (page - 1) * 10 + 10
-        return if (toIndex < comments?.size ?: 0) {
-            comments?.subList((page - 1) * 10, toIndex) ?: listOf()
+        return if (toIndex < comments.size) {
+            comments.subList((page - 1) * 10, toIndex)
         } else {
-            comments?.subList((page - 1) * 10, comments.size) ?: listOf()
+            comments.subList((page - 1) * 10, comments.size)
         }
     }
 

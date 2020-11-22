@@ -38,10 +38,6 @@ class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>(PtCommen
         }
 
         binding.ptProgress.visible()
-        viewModel.allComments.observe(viewLifecycleOwner, Observer<List<Comment>> {
-            binding.ptProgress.gone()
-            viewAdapter.update(it)
-        })
     }
 
 

@@ -26,15 +26,18 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDetailFragmentBinding::inflate) {
+class BookDetailFragment :
+    BindingFragment<PtBookDetailFragmentBinding>(PtBookDetailFragmentBinding::inflate) {
 
     private val viewModel: BookDetailViewModel by viewModels()
 
     private var commentsAdapter: CommentsAdapter? = null
     private var pagedCommentsAdapter: PagedCommentsAdapter? = null
 
-    @Inject lateinit var authorsNavigator: AuthorsNavigator
-    @Inject lateinit var bookNavigator: BooksNavigator
+    @Inject
+    lateinit var authorsNavigator: AuthorsNavigator
+    @Inject
+    lateinit var bookNavigator: BooksNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getString(ID_KEY) ?: throw IllegalArgumentException()
@@ -47,12 +50,13 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
             }
         })
 
-        pagedCommentsAdapter = PagedCommentsAdapter(object : PagedCommentsAdapter.OnCommentClickedListener{
-            override fun onComment(comment: Comment) {
+        pagedCommentsAdapter =
+            PagedCommentsAdapter(object : PagedCommentsAdapter.OnCommentClickedListener {
+                override fun onComment(comment: Comment) {
 
-            }
+                }
 
-        })
+            })
 
         binding.ptCommentsRv.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -83,7 +87,7 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 }
 
                 binding.appbarLayout.addOnOffsetChangedListener(
-                    AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener{
+                    AppBarOffsetOffsetChangedListener(object : OnAppBarOffsetChangedListener {
                         override fun onExpanded() {
                             binding.collapsing.title = ""
                         }
@@ -96,7 +100,8 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                             binding.collapsing.title = ""
                         }
 
-                    }))
+                    })
+                )
 
                 binding.ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
                 binding.ptBookRatingTv.goneIf(book.ratingsCount.isNullOrEmpty())
@@ -107,7 +112,10 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
                 }
 
                 binding.ptBookDescTv.setOnClickListener {
-                    findNavController().navigate(R.id.aboutFragment, bundleOf("about" to book.description))
+                    findNavController().navigate(
+                        R.id.aboutFragment,
+                        bundleOf("about" to book.description)
+                    )
                 }
             }
         })
@@ -116,10 +124,6 @@ class BookDetailFragment : BindingFragment<PtBookDetailFragmentBinding>(PtBookDe
             if (it != null) {
                 startActivity(bookNavigator.getOpenPdfIntent(requireContext(), it))
             }
-        })
-
-        viewModel.comments.observe(viewLifecycleOwner, Observer<List<Comment>> {
-            binding.ptCommentsTitleTv.goneIf(it.isEmpty())
         })
 
         viewLifecycleOwner.lifecycleScope.launch {

@@ -44,6 +44,7 @@ fun TextView.animateRating(rating: Int){
         addUpdateListener { animation ->
             text = "${animation.animatedValue as Int} %"
         }
+        visibility = View.VISIBLE
         duration = 1000
         start()
     }

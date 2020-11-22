@@ -52,6 +52,7 @@
                     android:paddingBottom="4dp"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -123,10 +124,42 @@
                     android:paddingBottom="8dp"
                     android:text="@string/pt_e_book"
                     android:textSize="14sp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/pt_book_author_tv"
                     app:layout_constraintTop_toBottomOf="@id/pt_book_title_tv" />
+
+                <FrameLayout
+                    android:background="@drawable/pt_appbar_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pt_book_published_tv"/>
+
+                <TextView
+                    android:id="@+id/pt_book_desc_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:elevation="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="5"
+                    android:padding="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pt_book_published_tv" />
+
+                <FrameLayout
+                    android:background="@drawable/pt_appbar_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pt_book_desc_tv"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -163,63 +196,15 @@
             android:layout_height="match_parent"
             tools:context="cz.legat.books.ui.detail.BookDetailFragment">
 
-            <FrameLayout
-                android:background="@drawable/pt_appbar_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/pt_book_desc_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
-                android:elevation="4dp"
-                android:ellipsize="end"
-                android:maxLines="5"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <FrameLayout
-                android:background="@drawable/pt_appbar_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pt_book_desc_tv"/>
-
-            <TextView
-                android:id="@+id/pt_comments_title_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:text="@string/pt_comments"
-                android:textAllCaps="true"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pt_book_desc_tv" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pt_comments_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:nestedScrollingEnabled="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pt_comments_title_tv" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/pt_more_comments_btn"

@@ -53,7 +53,7 @@ class OverviewFragment : BindingFragment<PtHomeFragmentBinding>(PtHomeFragmentBi
             else -> ""
         }
         val emptyBook = Book(id = "",title = "", imgLink = "")
-        val emptyBooks = listOf<Book>(emptyBook, emptyBook, emptyBook)
+        val emptyBooks = listOf(emptyBook, emptyBook, emptyBook)
         booksAdapter.update(emptyBooks)
         itemBinding.ptMoreBtn.setOnClickListener {
             startActivity(navigator.getOpenBooksIntent(requireContext(), type))

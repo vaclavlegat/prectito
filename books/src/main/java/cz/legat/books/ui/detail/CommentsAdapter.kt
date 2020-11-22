@@ -48,7 +48,7 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
                         star.layoutParams = LinearLayout.LayoutParams(32, 32)
                         llRatingHolder.addView(star)
                     }
-                } else if(rating == 0) {
+                } else if (rating == 0) {
                     val trash = TextView(layout.context)
                     trash.fadeInText(layout.context.getString(R.string.pt_rating_trash))
                     trash.setTextColor(ContextCompat.getColor(layout.context, R.color.white))
@@ -56,6 +56,28 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
                     llRatingHolder.addView(trash)
                 }
             }
+        }
+    }
+
+    override fun titleLayout(): Int {
+        return R.layout.pt_list_title
+    }
+
+    override fun title(): String? {
+        return "Comments"
+    }
+
+    override fun titleViewHolder(view: View): TitleViewHolder {
+        return TitleViewHolder(view)
+    }
+
+    inner class TitleViewHolder(view: View) : TitleBaseViewHolder(view) {
+
+        private val tvTitle = view.findViewById<TextView>(R.id.pt_title_tv)
+        private val layout = view
+
+        override fun bind(title: String) {
+            tvTitle.fadeInText(title)
         }
     }
 }

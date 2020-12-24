@@ -87,6 +87,8 @@ dependencies {
 
     implementation (Libs.timber)
     implementation (Libs.palette)
+
+    testImplementation ("io.appium:java-client:7.3.0")
     
     // test
     testImplementation (Libs.junit)

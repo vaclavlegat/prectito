@@ -133,7 +133,7 @@ class BookDetailFragment :
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            activity?.finish()
         }
     }
 }

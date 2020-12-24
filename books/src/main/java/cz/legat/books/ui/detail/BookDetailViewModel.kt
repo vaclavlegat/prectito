@@ -31,7 +31,7 @@ class BookDetailViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val bookId = savedStateHandle.get<String>(ID_KEY) ?: throw IllegalArgumentException("Book id not provided")
+    val bookId = savedStateHandle.get<String>(ID_KEY)
 
     val book = liveData(Dispatchers.IO) {
         emit(booksRepository.getBook(bookId))

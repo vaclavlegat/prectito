@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Prectito.Toolbar" parent="Widget.MaterialComponents.Toolbar.PrimarySurface">
-        <!-- Toolbar should always be within an AppBarLayout which provides the background. -->
-        <item name="android:background">#FFFFFF</item>
-    </style>
+
 
     <style name="ThemeOverlay.Prectito.AppBarLayout" parent="">
         <item name="android:textColorPrimary">?attr/colorPrimary</item>
@@ -48,14 +45,5 @@
         <item name="rippleColor">@color/mtrl_btn_ripple_color</item>
         <item name="backgroundTint">?attr/colorAccent</item>
         <item name="shapeAppearance">?attr/shapeAppearanceSmallComponent</item>
-    </style>
-
-    <style name="TextAppearance.Prectito.Expanded" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:textSize">36sp</item>
-    </style>
-    <style name="TextAppearance.Prectito.Collapsed" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:textSize">20sp</item>
     </style>
 </resources>

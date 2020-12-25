@@ -76,5 +76,9 @@ class AuthorDetailFragment :
             }))
 
         })
+
+        binding.toolbar.setNavigationOnClickListener {
+            activity?.finish()
+        }
     }
 }

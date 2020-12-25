@@ -23,18 +23,20 @@
             app:collapsedTitleTextAppearance="@style/TextAppearance.Prectito.Collapsed"
             android:id="@+id/collapsing"
             android:fitsSystemWindows="true"
+            android:background="@color/cardview_bg"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:fitsSystemWindows="true"
+                android:background="@color/cardview_bg"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 android:layout_height="wrap_content">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:background="@drawable/pt_appbar_background"
+                    android:background="@color/cardview_bg"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

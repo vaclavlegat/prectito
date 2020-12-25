@@ -34,5 +34,5 @@
 
   <color name="pt_bottom_navigation_disabled">#888888</color>
   <color name="pt_star_color">#AA4344</color>
-
+  <color name="cardview_bg">#ffffff</color>
 </resources>

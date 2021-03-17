@@ -7,8 +7,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.core.model.SearchResult
 import cz.legat.core.ui.BindingFragment
@@ -19,8 +21,11 @@ import cz.legat.navigation.AuthorsNavigator
 import cz.legat.navigation.BooksNavigator
 import cz.legat.search.databinding.PtSearchResultsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
@@ -30,7 +35,6 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
     @Inject lateinit var authorsNavigator: AuthorsNavigator
 
     lateinit var booksAdapter: SearchResultsAdapter
-    private var handler = Handler()
 
     interface OnResultCallback {
         fun onResult(id: String, isBook: Boolean)
@@ -58,32 +62,21 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
             setHasFixedSize(true)
         }
 
-        binding.ptSearchEt.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
+        binding.ptSearchEt.doAfterTextChanged {
+            lifecycleScope.launch {
+                viewModel.queryChannel.send(it.toString())
             }
+        }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                handler.removeCallbacksAndMessages(null)
-                handler.postDelayed(Runnable {
-                    query?.let {
-                        viewModel.searchBook(it.toString())
-                    }
-                }, 300)
-            }
+        viewModel.searchResult.observe(viewLifecycleOwner, Observer {
+            booksAdapter.update(it)
+            binding.ptProgress.gone()
         })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.ptProgress.visibleIf(!binding.ptSearchEt.text.isNullOrEmpty())
-        viewModel.searchBook(binding.ptSearchEt.text.toString())
-        viewModel.searchBooks.observe(viewLifecycleOwner, Observer<List<SearchResult>> {
-            booksAdapter.update(it)
-            binding.ptProgress.gone()
-        })
         binding.ptSearchEt.requestFocus()
         showKeyboard(requireContext())
     }

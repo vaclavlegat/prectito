@@ -47,7 +47,7 @@ fun ImageView.loadImg(vararg imgLinks: String?) {
 }
 
 fun ImageView.loadSingleImg(imgLink: String?): RequestBuilder<Drawable> {
-    return Glide.with(this).load(imgLink).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.pt_img_placeholder)
+    return Glide.with(this).load(imgLink).diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop().placeholder(R.drawable.pt_img_placeholder)
         .transition(DrawableTransitionOptions.withCrossFade(200))
 }
 

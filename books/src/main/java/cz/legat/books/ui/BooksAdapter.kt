@@ -1,34 +1,61 @@
 package cz.legat.books.ui
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import cz.legat.books.R
+import cz.legat.core.extensions.fadeInText
+import cz.legat.core.extensions.loadImg
 import cz.legat.core.model.Book
 import cz.legat.core.model.bigImgLink
 import cz.legat.core.model.middleImgLink
-import cz.legat.core.extensions.loadImg
-import cz.legat.core.base.BaseAdapter
-import cz.legat.core.extensions.fadeInText
 
 class BooksAdapter(private val onItemClickedListener: OnItemClickedListener<Book>) :
-    BaseAdapter<Book>(onItemClickedListener) {
+    RecyclerView.Adapter<BooksAdapter.BookViewHolder>() {
 
-    override fun layout(): Int {
-        return R.layout.pt_item_book
+    interface OnItemClickedListener<T> {
+        fun onItem(item: T)
     }
 
-    override fun viewHolder(view: View): BaseViewHolder {
+    private val items = mutableListOf<Book>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.pt_item_book, parent, false) as View
+
+        val height: Int = (parent.measuredWidth / 2.5).toInt()
+        val params = view.findViewById<ImageView>(R.id.pt_book_image_iv).layoutParams
+        params.height = height
+
         return BookViewHolder(view)
     }
 
-    inner class BookViewHolder(view: View) : BaseAdapter<Book>.BaseViewHolder(view) {
+    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
+        holder.bind(items[position])
+        holder.itemView.setOnClickListener {
+            onItemClickedListener.onItem(items[position])
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    fun update(updatedItems: List<Book>) {
+        items.clear()
+        items.addAll(updatedItems)
+        notifyDataSetChanged()
+    }
+
+    inner class BookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val imageIv = view.findViewById<ImageView>(R.id.pt_book_image_iv)
         private val titleTv = view.findViewById<TextView>(R.id.pt_title)
 
-
-        override fun bind(item: Book, position: Int) {
+        fun bind(item: Book) {
             with(item) {
                 imageIv.loadImg(bigImgLink(), middleImgLink(), imgLink)
                 titleTv.fadeInText(title)

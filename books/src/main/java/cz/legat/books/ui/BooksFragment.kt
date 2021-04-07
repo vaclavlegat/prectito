@@ -30,12 +30,6 @@ class BooksFragment : BindingFragment<PtBooksFragmentBinding>(PtBooksFragmentBin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ptToolbar.title = when (viewModel.type) {
-            POPULAR -> getString(R.string.pt_popular_books)
-            NEW -> getString(R.string.pt_new_books)
-            EBOOK -> getString(R.string.pt_ebooks)
-            else -> ""
-        }
         booksAdapter = BooksAdapter(bookListener)
         binding.ptBooksRv.simpleGrid(booksAdapter)
 

@@ -95,4 +95,6 @@ dependencies {
     androidTestImplementation (Libs.junitext)
     androidTestImplementation (Libs.espresso)
 
+    implementation ("dev.chrisbanes.insetter:insetter:0.5.0")
+
 }

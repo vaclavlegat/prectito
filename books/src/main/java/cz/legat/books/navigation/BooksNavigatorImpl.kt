@@ -3,19 +3,14 @@ package cz.legat.books.navigation
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import cz.legat.books.ui.BooksActivity
 import cz.legat.books.ui.detail.DetailActivity
 import cz.legat.core.extensions.intent
 import cz.legat.navigation.BooksNavigator
 
-internal class BooksNavigatorImpl: BooksNavigator {
+internal class BooksNavigatorImpl : BooksNavigator {
 
     override fun getOpenDetailIntent(context: Context, id: String): Intent {
         return context.intent<DetailActivity>().putExtra("id", id)
-    }
-
-    override fun getOpenBooksIntent(context: Context, type: String): Intent {
-        return context.intent<BooksActivity>().putExtra("type", type)
     }
 
     override fun getOpenPdfIntent(context: Context, url: String): Intent {

@@ -1,6 +1,7 @@
 package cz.legat.prectito
 
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -10,20 +11,23 @@ import cz.legat.prectito.databinding.PtMainActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-const val RESULT_ID = 0
-
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var navController: NavController
     lateinit var binding: PtMainActivityBinding
 
-    @Inject lateinit var searchNavigator: SearchNavigator
+    @Inject
+    lateinit var searchNavigator: SearchNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = PtMainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
         navController = findNavController(this, R.id.nav_host_fragment)
 
         binding.bottomNavigation.setupWithNavController(navController)

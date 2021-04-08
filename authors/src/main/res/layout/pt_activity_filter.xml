@@ -6,17 +6,18 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/pt_appbar"
-        style="@style/ThemeOverlay.Prectito.AppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/pt_toolbar"
-            style="@style/Prectito.Toolbar"
+            style="@style/Widget.Prectito.Toolbar"
+            android:theme="@style/Widget.Prectito.Toolbar"
             android:layout_width="match_parent"
             android:elevation="0dp"
             android:layout_height="?attr/actionBarSize"

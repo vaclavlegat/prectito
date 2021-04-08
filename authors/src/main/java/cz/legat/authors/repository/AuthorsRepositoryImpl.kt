@@ -16,7 +16,7 @@ class AuthorsRepositoryImpl @Inject constructor(private val authorsService: Auth
 
     override fun getAuthors(page: Int, id: String?): List<Author> {
         return runBlocking {
-            when (val result = apiCall { authorsService.getAuthors(page, id) }) {
+            when (val result = apiCall { authorsService.getAuthors(pageNumber = page, nid = id) }) {
                 is NetworkResult.Success -> {
                     val authors = PARSER.parseAuthors(result.data)
                     authors

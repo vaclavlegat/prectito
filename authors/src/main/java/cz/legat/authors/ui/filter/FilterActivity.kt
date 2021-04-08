@@ -1,9 +1,9 @@
 package cz.legat.authors.ui.filter
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import cz.legat.authors.databinding.PtActivityFilterBinding
@@ -18,6 +18,9 @@ class FilterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = PtActivityFilterBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
         val filterAdapter = FilterAdapter(object : BaseAdapter.OnItemClickedListener<Countries> {
             override fun onItem(item: Countries) {

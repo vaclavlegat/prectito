@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,38 +8,37 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/pt_appbar"
-        style="@style/ThemeOverlay.Prectito.AppBarLayout"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/pt_toolbar"
-            style="@style/Prectito.Toolbar"
+            android:theme="@style/Widget.Prectito.Toolbar"
+            style="@style/Widget.Prectito.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="0dp"
             app:title="@string/pt_authors">
 
-            <Button
+            <ImageView
                 android:id="@+id/pt_add_filter"
-                style="@style/Widget.MaterialComponents.Button"
+                app:srcCompat="@drawable/ic_filter"
+                android:background="?selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="16dp"
-                android:text="@string/pt_add_filter" />
+                android:padding="12dp"
+                android:layout_marginEnd="16dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/pt_coutry_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="?attr/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 tools:text="česká" />
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -48,22 +47,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_authors"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="72dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toBottomOf="@id/pt_appbar" />
 
     <ProgressBar
         android:id="@+id/pt_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_gravity="center" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

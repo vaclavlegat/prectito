@@ -31,7 +31,7 @@ object Versions {
     const val paging_version = "3.0.0-alpha07"
 
     // ui
-    const val constraintlayoutVersion = "1.1.3"
+    const val constraintlayoutVersion = "2.0.4"
     const val materialVersion = "1.3.0-alpha01"
     const val viewPager2Version = "1.0.0"
     const val recyclerViewVersion = "1.1.0"

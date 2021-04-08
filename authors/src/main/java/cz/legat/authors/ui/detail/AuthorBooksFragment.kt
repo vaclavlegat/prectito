@@ -19,14 +19,10 @@ import javax.inject.Inject
 class AuthorBooksFragment :
     BindingFragment<PtAuthorBooksFragmentBinding>(PtAuthorBooksFragmentBinding::inflate) {
 
-    private val viewModel: AuthorDetailViewModel by viewModels()
+    private val viewModel: AuthorBooksViewModel by viewModels()
     lateinit var booksAdapter: AuthorBooksAdapter
     @Inject
     lateinit var booksNavigator: BooksNavigator
-
-    companion object {
-        fun newInstance(id: String) = AuthorBooksFragment().withId(id)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

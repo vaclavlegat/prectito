@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_container"
     android:layout_width="match_parent"
@@ -8,182 +8,93 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
-        style="@style/ThemeOverlay.Prectito.AppBarLayout"
+        android:id="@+id/pt_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            style="@style/Prectito.Toolbar"
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motion"
             android:layout_width="match_parent"
-            app:navigationIcon="@drawable/pt_back_icon"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="0dp">
+            android:layout_height="match_parent"
+            app:layoutDescription="@xml/fragment_author_detail_tabs_scene"
+            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/pt_search_btn"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/pt_author_image_holder_iv"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                app:cardElevation="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/pt_author_image_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/pt_author_name_tv"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pt_author_image_holder_iv" />
+
+            <TextView
+                android:id="@+id/pt_author_date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:tint="#666666"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_search" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pt_book_title_tv" />
 
-        </com.google.android.material.appbar.MaterialToolbar>
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/pt_toolbar"
+                style="@style/Widget.Prectito.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:theme="@style/Widget.Prectito.Toolbar"
+                app:navigationIcon="@drawable/pt_back_icon" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                app:tabIndicatorColor="?attr/colorSurface"
+                app:tabTextColor="@color/tabs_selector" />
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout">
+        app:layout_constraintTop_toBottomOf="@id/pt_appbar" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/cardview_bg"
-                android:layout_marginBottom="8dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/pt_author_image_iv"
-                        android:layout_width="120dp"
-                        android:layout_height="160dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop" />
-
-                    <TextView
-                        android:id="@+id/pt_author_name_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/pt_author_image_iv"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:textAppearance="@style/TextAppearance.Prectito.Expanded" />
-
-                    <TextView
-                        android:id="@+id/pt_author_life_tv"
-                        app:layout_constraintTop_toBottomOf="@id/pt_author_name_tv"
-                        android:layout_width="0dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/pt_author_image_iv"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:textSize="16sp" />
-
-                    <FrameLayout
-                        android:id="@+id/pt_line"
-                        app:layout_constraintTop_toBottomOf="@id/pt_author_image_iv"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_width="match_parent"
-                        android:background="@color/pt_line_color"
-                        android:layout_height="1dp"/>
-
-                    <TextView
-                        app:layout_constraintTop_toBottomOf="@id/pt_line"
-                        android:id="@+id/pt_author_cv_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:background="?selectableItemBackground"
-                        android:ellipsize="end"
-                        android:maxLines="5"
-                        android:paddingStart="16dp"
-                        android:paddingTop="16dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="16dp"
-                        android:textSize="16sp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:contentPaddingBottom="16dp"
-                app:cardBackgroundColor="@color/cardview_bg"
-                app:contentPaddingTop="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/pt_title_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_weight="1"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:text="@string/pt_books"
-                            android:textAllCaps="true"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/pt_all_books_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="16dp"
-                            android:background="?selectableItemBackground"
-                            android:paddingStart="16dp"
-                            android:paddingTop="8dp"
-                            android:paddingEnd="16dp"
-                            android:paddingBottom="8dp"
-                            android:text="@string/pt_all_books"
-                            android:textAllCaps="true"
-                            android:textColor="?colorAccent"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/pt_books_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

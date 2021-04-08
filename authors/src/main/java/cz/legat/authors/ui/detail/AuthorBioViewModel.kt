@@ -14,16 +14,14 @@ import cz.legat.core.extensions.ID_KEY
 import cz.legat.core.paging.BasePagingSource
 import kotlinx.coroutines.Dispatchers
 
-class AuthorDetailViewModel @ViewModelInject constructor(
+class AuthorBioViewModel @ViewModelInject constructor(
     private val authorsRepository: AuthorsRepositoryImpl,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val authorId =
-        savedStateHandle.get<String>(ID_KEY) ?: throw IllegalArgumentException("No author id.")
+    val authorId = savedStateHandle.get<String>(ID_KEY) ?: throw IllegalArgumentException("No author id.")
 
     val author = liveData(Dispatchers.IO) {
-
         emit(authorsRepository.getAuthor(authorId))
     }
 }

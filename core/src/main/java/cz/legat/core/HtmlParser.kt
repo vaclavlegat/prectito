@@ -377,7 +377,7 @@ open class HtmlParser {
             -1
         }
 
-        return Comment(id, user, comment, avatarLink, date, likes, rating)
+        return Comment(id, user.replace(" nahlásit", "").trim(), comment, avatarLink, date, likes, rating)
     }
 
     open fun parseAuthorQuotes(html: String): List<String> {

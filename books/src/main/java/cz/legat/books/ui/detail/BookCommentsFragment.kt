@@ -3,6 +3,7 @@ package cz.legat.books.ui.detail
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cz.legat.books.databinding.PtCommentsFragmentBinding
@@ -13,21 +14,23 @@ import cz.legat.core.base.BaseAdapter
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>(PtCommentsFragmentBinding::inflate) {
 
-    private val viewModel: BookDetailViewModel by viewModels()
+    private val viewModel: BookCommentsViewModel by viewModels()
 
-    private lateinit var viewAdapter: CommentsAdapter
+    private lateinit var viewAdapter: PagedCommentsAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         viewManager = LinearLayoutManager(activity)
-        viewAdapter = CommentsAdapter(object: BaseAdapter.OnItemClickedListener<Comment>{
-            override fun onItem(item: Comment) {
+        viewAdapter = PagedCommentsAdapter(object: PagedCommentsAdapter.OnCommentClickedListener{
+            override fun onComment(comment: Comment) {
 
             }
         })
@@ -38,6 +41,13 @@ class BookCommentsFragment : BindingFragment<PtCommentsFragmentBinding>(PtCommen
         }
 
         binding.ptProgress.visible()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.flow.collectLatest {
+                binding.ptProgress.gone()
+                viewAdapter.submitData(it)
+            }
+        }
     }
 
 

@@ -18,10 +18,14 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-    <style name="Prectito.Toolbar" parent="Widget.MaterialComponents.Toolbar.PrimarySurface">
-        <!-- Toolbar should always be within an AppBarLayout which provides the background. -->
-        <item name="android:background">#333340</item>
+
+    <style name="Widget.Prectito.Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <!-- color used by navigation icon and overflow icon -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:elevation">0dp</item>
     </style>
+
     <style name="TextAppearance.Prectito.Expanded" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">36sp</item>

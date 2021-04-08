@@ -29,6 +29,6 @@ interface BooksService {
     suspend fun searchBook(@Query("q") query: String): Response<String>
 
     @GET("/knihy/{id}")
-    suspend fun getBookComments(@Path("id") id: String, @Query("c") by: String = "all"): Response<String>
+    suspend fun getBookComments(@Path("id") id: String, @Query("orderBy") orderBy: String = "new", @Query("str") page: Int): Response<String>
 
 }

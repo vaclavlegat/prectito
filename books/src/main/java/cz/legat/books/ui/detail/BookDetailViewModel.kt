@@ -37,13 +37,6 @@ class BookDetailViewModel @ViewModelInject constructor(
         emit(booksRepository.getBook(bookId))
     }
 
-    val flow = Pager(
-        config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = false),
-        pagingSourceFactory = {
-            BasePagingInternalSource(booksRepository::getBookCommentsByPage, bookId)
-        }
-    ).flow.cachedIn(viewModelScope)
-
     val filePath: MutableLiveData<String> = MutableLiveData()
 
     fun downloadPdf(url: String?) {

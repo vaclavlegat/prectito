@@ -8,222 +8,141 @@
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
-        style="@style/ThemeOverlay.Prectito.AppBarLayout"
+        android:id="@+id/pt_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.Prectito.Collapsed"
-            android:id="@+id/collapsing"
-            android:fitsSystemWindows="true"
-            android:background="@color/cardview_bg"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:fitsSystemWindows="true"
-                android:background="@color/cardview_bg"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                android:layout_height="wrap_content">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@color/cardview_bg"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/pt_book_rating_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/pt_rating_bg"
-                    android:elevation="4dp"
-                    android:paddingStart="16dp"
-                    android:paddingTop="4dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="4dp"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="87 %" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/pt_book_image_holder_iv"
-                    android:layout_width="120dp"
-                    android:layout_height="180dp"
-                    android:layout_marginTop="116dp"
-                    android:translationZ="12dp"
-                    app:cardElevation="6dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/pt_book_image_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:scaleType="centerCrop" />
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/pt_book_title_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_image_holder_iv" />
-
-                <TextView
-                    android:id="@+id/pt_book_author_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_title_tv" />
-
-                <TextView
-                    android:id="@+id/pt_book_published_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_author_tv" />
-
-                <Button
-                    android:id="@+id/pt_book_link_btn"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:paddingStart="16dp"
-                    app:layout_constraintHorizontal_bias="1"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/pt_e_book"
-                    android:textSize="14sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/pt_book_author_tv"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_title_tv" />
-
-                <FrameLayout
-                    android:background="@drawable/pt_appbar_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_published_tv"/>
-
-                <TextView
-                    android:id="@+id/pt_book_desc_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?selectableItemBackground"
-                    android:elevation="4dp"
-                    android:ellipsize="end"
-                    android:maxLines="5"
-                    android:padding="16dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_published_tv" />
-
-                <FrameLayout
-                    android:background="@drawable/pt_appbar_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pt_book_desc_tv"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <FrameLayout
-                android:background="@drawable/pt_appbar_line"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="80dp"
-                app:layout_scrollFlags="snap"
-                app:layout_collapseMode="pin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Prectito.Toolbar"
-                app:navigationIcon="@drawable/pt_back_icon"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:layout_collapseMode="pin"
-                android:elevation="0dp" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/motion"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="cz.legat.books.ui.detail.BookDetailFragment">
+            app:layoutDescription="@xml/fragment_book_detail_tabs_scene"
+            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pt_comments_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/pt_book_image_holder_iv"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                app:cardElevation="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/pt_book_image_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/pt_book_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pt_book_image_holder_iv" />
+
+            <TextView
+                android:id="@+id/pt_book_author_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pt_book_title_tv" />
+
+            <TextView
+                android:id="@+id/pt_book_published_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="24dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pt_book_author_tv" />
 
             <Button
-                android:id="@+id/pt_more_comments_btn"
+                android:id="@+id/pt_book_link_btn"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:text="@string/pt_more_comments"
+                android:layout_marginEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/pt_e_book"
+                android:textSize="14sp"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toEndOf="@id/pt_book_author_tv"
+                app:layout_constraintTop_toBottomOf="@id/pt_book_title_tv" />
+
+            <TextView
+                android:id="@+id/pt_book_rating_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pt_rating_bg"
+                android:elevation="8dp"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pt_comments_rv" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="87 %" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/pt_toolbar"
+                style="@style/Widget.Prectito.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                android:theme="@style/Widget.Prectito.Toolbar"
+                app:navigationIcon="@drawable/pt_back_icon" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                app:tabIndicatorColor="?attr/colorSurface"
+                app:tabTextColor="@color/tabs_selector" />
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pt_appbar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

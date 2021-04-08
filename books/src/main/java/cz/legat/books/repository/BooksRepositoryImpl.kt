@@ -137,34 +137,15 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getBookComments(id: String?): List<Comment> {
-        if (id == null) {
-            return listOf()
-        }
-
-        if (commentsCache.containsKey(id)) {
-            return commentsCache[id] ?: listOf()
-        }
-
+    override fun getBookComments(id: String, page: Int): List<Comment> {
         return runBlocking {
-            when (val result = apiCall { booksService.getBookComments(id) }) {
+            when (val result = apiCall { booksService.getBookComments(id = id, page = page) }) {
                 is NetworkResult.Success -> {
                     val comments = PARSER.parseBookComments(result.data)
-                    commentsCache[id] = comments
                     comments
                 }
                 is NetworkResult.Error -> listOf()
             }
-        }
-    }
-
-    override fun getBookCommentsByPage(page: Int, param: String?): List<Comment> {
-        val comments = getBookComments(param)
-        val toIndex = (page - 1) * 10 + 10
-        return if (toIndex < comments.size) {
-            comments.subList((page - 1) * 10, toIndex)
-        } else {
-            comments.subList((page - 1) * 10, comments.size)
         }
     }
 

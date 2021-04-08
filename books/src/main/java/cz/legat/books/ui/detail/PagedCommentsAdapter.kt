@@ -51,7 +51,7 @@ class PagedCommentsAdapter(val onCommentClickedListener: OnCommentClickedListene
                 tvUser.fadeInText(c.user)
                 tvComment.fadeInText(c.comment)
                 tvDate.fadeInText(c.date)
-                //ivAvatar.loadImg(avatarLink)
+                ivAvatar.loadImg(avatarLink)
                 llRatingHolder.removeAllViews()
 
                 if (rating > 0) {

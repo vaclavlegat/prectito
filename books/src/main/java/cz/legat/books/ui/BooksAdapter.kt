@@ -26,9 +26,11 @@ class BooksAdapter(private val onItemClickedListener: OnItemClickedListener<Book
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.pt_item_book, parent, false) as View
 
-        val height: Int = (parent.measuredWidth / 2.5).toInt()
-        val params = view.findViewById<ImageView>(R.id.pt_book_image_iv).layoutParams
-        params.height = height
+        val viewWidth: Int = (parent.measuredWidth / 3)
+        val height: Int = (viewWidth * 1.6).toInt()
+        val viewParams = view.layoutParams
+        viewParams.width = viewWidth
+        viewParams.height = height
 
         return BookViewHolder(view)
     }

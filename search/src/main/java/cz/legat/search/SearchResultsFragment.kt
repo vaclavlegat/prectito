@@ -2,9 +2,6 @@ package cz.legat.search
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
@@ -12,11 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import cz.legat.core.model.SearchResult
-import cz.legat.core.ui.BindingFragment
 import cz.legat.core.base.BaseAdapter
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visibleIf
+import cz.legat.core.model.SearchResult
+import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.AuthorsNavigator
 import cz.legat.navigation.BooksNavigator
 import cz.legat.search.databinding.PtSearchResultsFragmentBinding
@@ -27,12 +24,15 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
+class SearchResultsFragment :
+    BindingFragment<PtSearchResultsFragmentBinding>(PtSearchResultsFragmentBinding::inflate) {
 
     private val viewModel: SearchResultsViewModel by viewModels()
 
-    @Inject lateinit var booksNavigator: BooksNavigator
-    @Inject lateinit var authorsNavigator: AuthorsNavigator
+    @Inject
+    lateinit var booksNavigator: BooksNavigator
+    @Inject
+    lateinit var authorsNavigator: AuthorsNavigator
 
     lateinit var booksAdapter: SearchResultsAdapter
 
@@ -62,11 +62,7 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
             setHasFixedSize(true)
         }
 
-        binding.ptSearchEt.doAfterTextChanged {
-            lifecycleScope.launch {
-                viewModel.queryChannel.send(it.toString())
-            }
-        }
+        setupSearchInput()
 
         viewModel.searchResult.observe(viewLifecycleOwner, Observer {
             booksAdapter.update(it)
@@ -74,10 +70,28 @@ class SearchResultsFragment : BindingFragment<PtSearchResultsFragmentBinding>(Pt
         })
     }
 
+    private fun setupSearchInput() = with(binding) {
+        searchInput.editText?.apply {
+            setText("")
+
+            doAfterTextChanged {
+                lifecycleScope.launch {
+                    viewModel.queryChannel.send(it.toString())
+                }
+            }
+        }
+
+        searchInput.setEndIconOnClickListener {
+            searchInput.editText?.apply {
+                setText("")
+            }
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding.ptProgress.visibleIf(!binding.ptSearchEt.text.isNullOrEmpty())
-        binding.ptSearchEt.requestFocus()
+        binding.ptProgress.visibleIf(!binding.searchInput.editText.toString().isNullOrEmpty())
+        binding.searchInput.requestFocus()
         showKeyboard(requireContext())
     }
 

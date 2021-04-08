@@ -1,57 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/pt_search_holder_ll"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:elevation="4dp"
-        android:background="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:srcCompat="@drawable/pt_holder_icon_search" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_input"
+            style="@style/Widget.Prectito.TextInput.InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:endIconDrawable="@drawable/ic_cancel"
+            app:startIconDrawable="@drawable/pt_holder_icon_search"
+            app:startIconTint="@color/white">
 
-        <EditText
-            android:id="@+id/pt_search_et"
-            android:layout_width="0dp"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_weight="1"
-            android:background="@drawable/pt_et_default"
-            android:focusableInTouchMode="true"
-            android:hint="@string/pt_type"
-            android:textColorHint="#666666"
-            android:textSize="18sp" />
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/Widget.Prectito.TextInput.InputField"
+                android:theme="@style/Widget.Prectito.TextInput.InputField"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAppearance="@style/TextAppearance.Prectito.Collapsed"
+                android:hint="@string/pt_type"
+                android:imeOptions="actionSearch"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
+                android:textColorHint="#DDDDDD" />
 
-    </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pt_books_rw"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pt_search_holder_ll" />
+        app:layout_constraintTop_toBottomOf="@id/appbar" />
 
     <ProgressBar
         android:id="@+id/pt_progress"
@@ -62,4 +60,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

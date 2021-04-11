@@ -21,7 +21,7 @@
       android:layout_alignTop="@+id/product_image"
       android:layout_toEndOf="@id/product_image"
       android:maxLines="1"
-      android:textColor="@color/black"
+      android:textColor="@color/vampireBlack"
       android:textSize="@dimen/product_item_title_size"/>
 
   <TextView
@@ -31,7 +31,7 @@
       android:layout_below="@+id/product_title"
       android:layout_toEndOf="@id/product_image"
       android:maxLines="2"
-      android:textColor="@color/product_description"
+      android:textColor="@color/vampireBlack"
       android:textSize="@dimen/product_item_subtitle_size"/>
 
   <View
@@ -39,6 +39,6 @@
       android:layout_height="@dimen/divider_height"
       android:layout_marginTop="@dimen/product_item_padding"
       android:layout_below="@+id/product_image"
-      android:background="@color/lighter_grey"/>
+      android:background="@color/white"/>
 
 </RelativeLayout>

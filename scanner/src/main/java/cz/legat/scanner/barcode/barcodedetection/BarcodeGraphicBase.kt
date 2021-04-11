@@ -31,13 +31,13 @@ import cz.legat.scanner.barcode.camera.GraphicOverlay
 internal abstract class BarcodeGraphicBase(overlay: GraphicOverlay) : GraphicOverlay.Graphic(overlay) {
 
     private val boxPaint: Paint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.barcode_reticle_stroke)
+        color = ContextCompat.getColor(context, R.color.vampireBlack)
         style = Style.STROKE
         strokeWidth = context.resources.getDimensionPixelOffset(R.dimen.barcode_reticle_stroke_width).toFloat()
     }
 
     private val scrimPaint: Paint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.barcode_reticle_background)
+        color = ContextCompat.getColor(context, R.color.vampireBlack)
     }
 
     private val eraserPaint: Paint = Paint().apply {

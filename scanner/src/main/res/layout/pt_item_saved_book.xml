@@ -11,7 +11,7 @@
         android:id="@+id/pt_book_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/pt_color_text"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -19,14 +19,14 @@
         android:id="@+id/pt_book_author_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/pt_color_text"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="12sp" />
 
     <TextView
         android:id="@+id/pt_book_published_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/pt_color_text"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="12sp" />
 
 

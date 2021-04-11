@@ -33,14 +33,14 @@
             android:id="@+id/pt_book_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/pt_color_text"
+            android:textColor="?attr/colorOnBackground"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/pt_book_author_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/pt_color_text"
+            android:textColor="?attr/colorOnBackground"
             app:layout_constraintBottom_toBottomOf="@id/pt_book_image_iv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

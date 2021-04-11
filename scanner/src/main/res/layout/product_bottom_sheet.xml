@@ -13,13 +13,13 @@
       android:ellipsize="end"
       android:fontFamily="sans-serif"
       android:maxLines="1"
-      android:textColor="@color/black"
+      android:textColor="@color/vampireBlack"
       android:textSize="@dimen/bottom_sheet_title_size"/>
 
   <View
       android:layout_width="match_parent"
       android:layout_height="@dimen/divider_height"
-      android:background="@color/lighter_grey"/>
+      android:background="@color/white"/>
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/product_recycler_view"

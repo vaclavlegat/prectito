@@ -27,7 +27,7 @@
       android:layout_height="match_parent"
       android:layout_marginTop="@dimen/top_action_bar_height"
       android:layout_marginBottom="@dimen/preview_card_carousel_height"
-      android:background="@color/transparent"/>
+      android:background="@android:color/transparent"/>
 
   <com.google.android.material.chip.Chip
       android:id="@+id/bottom_prompt_chip"
@@ -43,7 +43,7 @@
       android:textSize="@dimen/bottom_prompt_chip_text_size"
       android:visibility="gone"
       app:chipCornerRadius="@dimen/bottom_prompt_chip_corner_radius"
-      app:chipSurfaceColor="@color/dark"
+      app:chipSurfaceColor="@color/vampireBlack"
       app:closeIconVisible="false"/>
 
   <androidx.recyclerview.widget.RecyclerView
@@ -58,7 +58,7 @@
       android:id="@+id/loading_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/dark"
+      android:background="@color/vampireBlack"
       android:visibility="gone">
 
     <ProgressBar

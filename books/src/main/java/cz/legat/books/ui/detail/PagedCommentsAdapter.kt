@@ -57,7 +57,7 @@ class PagedCommentsAdapter(val onCommentClickedListener: OnCommentClickedListene
                 if (rating > 0) {
                     for (i in 1..rating) {
                         val star = ImageView(layout.context)
-                        star.tintedDrawable(R.drawable.pt_star_icon, R.color.pt_star_color)
+                        star.tintedDrawable(R.drawable.pt_star_icon, R.attr.colorPrimary)
                         star.layoutParams = LinearLayout.LayoutParams(32, 32)
                         llRatingHolder.addView(star)
                     }

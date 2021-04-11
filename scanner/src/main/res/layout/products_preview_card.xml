@@ -32,7 +32,7 @@
           android:paddingTop="@dimen/preview_card_title_padding_top"
           android:fontFamily="sans-serif-medium"
           android:maxLines="2"
-          android:textColor="@color/black"
+          android:textColor="@color/vampireBlack"
           android:textSize="@dimen/preview_card_title_text_size"/>
 
       <TextView
@@ -42,7 +42,7 @@
           android:paddingTop="@dimen/preview_card_subtitle_padding_top"
           android:fontFamily="sans-serif"
           android:maxLines="2"
-          android:textColor="@color/dark"
+          android:textColor="@color/vampireBlack"
           android:textSize="@dimen/preview_card_subtitle_text_size"/>
 
     </LinearLayout>

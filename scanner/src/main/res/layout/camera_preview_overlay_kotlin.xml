@@ -11,7 +11,7 @@
       android:id="@+id/static_overlay_container"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/transparent">
+      android:background="@android:color/transparent">
 
     <ProgressBar
         android:id="@+id/search_progress_bar"
@@ -37,7 +37,7 @@
         android:textSize="@dimen/bottom_prompt_chip_text_size"
         android:visibility="gone"
         app:chipCornerRadius="@dimen/bottom_prompt_chip_corner_radius"
-        app:chipSurfaceColor="@color/dark"
+        app:chipSurfaceColor="@color/vampireBlack"
         app:closeIconVisible="false"/>
 
   </FrameLayout>

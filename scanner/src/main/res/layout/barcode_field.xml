@@ -16,7 +16,7 @@
       android:layout_height="wrap_content"
       tools:text="Key"
       android:background="@color/white"
-      android:textColor="@color/black"
+      android:textColor="@color/vampireBlack"
       android:textSize="@dimen/barcode_field_label_size"/>
 
   <TextView
@@ -24,7 +24,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       tools:text="Value"
-      android:textColor="@color/barcode_field_value"
+      android:textColor="@color/vampireBlack"
       android:textSize="@dimen/barcode_field_value_size"/>
 
 </LinearLayout>

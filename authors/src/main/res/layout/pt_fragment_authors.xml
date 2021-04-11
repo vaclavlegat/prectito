@@ -15,8 +15,6 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/pt_toolbar"
-            android:theme="@style/Widget.Prectito.Toolbar"
-            style="@style/Widget.Prectito.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="0dp"
@@ -25,6 +23,7 @@
             <ImageView
                 android:id="@+id/pt_add_filter"
                 app:srcCompat="@drawable/ic_filter"
+                app:tint="@color/white"
                 android:background="?selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

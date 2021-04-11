@@ -23,7 +23,7 @@
       android:layout_height="wrap_content"
       android:paddingBottom="@dimen/home_page_mode_item_subtitle_padding_bottom"
       android:fontFamily="sans-serif"
-      android:textColor="@color/home_page_mode_item_subtitle"
+      android:textColor="@color/vampireBlack"
       android:textSize="@dimen/home_page_mode_item_subtitle_size"/>
 
   <View

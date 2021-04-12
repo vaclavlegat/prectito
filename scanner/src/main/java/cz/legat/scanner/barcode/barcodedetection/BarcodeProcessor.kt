@@ -25,12 +25,12 @@ import cz.legat.scanner.barcode.InputInfo
 import cz.legat.scanner.barcode.camera.CameraReticleAnimator
 import cz.legat.scanner.barcode.camera.FrameProcessorBase
 import cz.legat.scanner.barcode.camera.GraphicOverlay
-import cz.legat.scanner.barcode.camera.WorkflowModel
+import cz.legat.scanner.ui.ISBNViewModel
 import timber.log.Timber
 import java.io.IOException
 
 /** A processor to run the barcode detector.  */
-class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel: WorkflowModel) :
+class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel: ISBNViewModel) :
     FrameProcessorBase<List<Barcode>>() {
 
     private val scanner = BarcodeScanning.getClient()
@@ -62,11 +62,11 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
         if (barcodeInCenter == null) {
             cameraReticleAnimator.start()
             graphicOverlay.add(BarcodeReticleGraphic(graphicOverlay, cameraReticleAnimator))
-            workflowModel.setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
+            workflowModel.setWorkflowState(ISBNViewModel.WorkflowState.DETECTING)
         } else {
             cameraReticleAnimator.cancel()
             // Barcode size in the camera view is sufficient.
-            workflowModel.setWorkflowState(WorkflowModel.WorkflowState.DETECTED)
+            workflowModel.setWorkflowState(ISBNViewModel.WorkflowState.DETECTED)
             workflowModel.detectedBarcode.setValue(barcodeInCenter)
         }
         graphicOverlay.invalidate()

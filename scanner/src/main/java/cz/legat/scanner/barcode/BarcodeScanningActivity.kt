@@ -1,36 +1,14 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cz.legat.scanner.barcode
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
-import android.content.Context
-import android.content.Intent
 import android.hardware.Camera
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.chip.Chip
 import com.google.common.base.Objects
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
@@ -40,33 +18,29 @@ import cz.legat.scanner.barcode.barcodedetection.BarcodeManualFragment
 import cz.legat.scanner.barcode.barcodedetection.BarcodeProcessor
 import cz.legat.scanner.barcode.barcodedetection.BarcodeResultFragment
 import cz.legat.scanner.barcode.camera.CameraSource
-import cz.legat.scanner.barcode.camera.CameraSourcePreview
-import cz.legat.scanner.barcode.camera.GraphicOverlay
-import cz.legat.scanner.barcode.camera.WorkflowModel
-import cz.legat.scanner.databinding.ActivityLiveBarcodeKotlinBinding
+import cz.legat.scanner.databinding.ActivityBarcodeScanningBinding
 import cz.legat.scanner.ui.ISBNViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
 
 /** Demonstrates the barcode scanning workflow using camera preview.  */
 @AndroidEntryPoint
-class LiveBarcodeScanningActivity : AppCompatActivity() {
+class BarcodeScanningActivity : AppCompatActivity() {
 
     private val viewModel: ISBNViewModel by viewModels()
 
     private var cameraSource: CameraSource? = null
 
     private var promptChipAnimator: AnimatorSet? = null
-    private var workflowModel: WorkflowModel? = null
-    private var currentWorkflowState: WorkflowModel.WorkflowState? = null
 
-    private lateinit var binding: ActivityLiveBarcodeKotlinBinding
+    private var currentWorkflowState: ISBNViewModel.WorkflowState? = null
+
+    private lateinit var binding: ActivityBarcodeScanningBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLiveBarcodeKotlinBinding.inflate(LayoutInflater.from(this))
+        binding = ActivityBarcodeScanningBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
         binding.cameraPreviewGraphicOverlay.apply {
@@ -81,7 +55,7 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
                 setTarget(binding.bottomPromptChip)
             }
 
-        findViewById<View>(R.id.close_button).setOnClickListener {
+        binding.closeButton.setOnClickListener {
             onBackPressed()
         }
         binding.flashButton.apply {
@@ -110,10 +84,15 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        workflowModel?.markCameraFrozen()
-        currentWorkflowState = WorkflowModel.WorkflowState.NOT_STARTED
-        cameraSource?.setFrameProcessor(BarcodeProcessor(binding.cameraPreviewGraphicOverlay, workflowModel!!))
-        workflowModel?.setWorkflowState(WorkflowModel.WorkflowState.DETECTING)
+        viewModel.markCameraFrozen()
+        currentWorkflowState = ISBNViewModel.WorkflowState.NOT_STARTED
+        cameraSource?.setFrameProcessor(
+            BarcodeProcessor(
+                binding.cameraPreviewGraphicOverlay,
+                viewModel
+            )
+        )
+        viewModel.setWorkflowState(ISBNViewModel.WorkflowState.DETECTING)
     }
 
     override fun onPostResume() {
@@ -123,7 +102,7 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        currentWorkflowState = WorkflowModel.WorkflowState.NOT_STARTED
+        currentWorkflowState = ISBNViewModel.WorkflowState.NOT_STARTED
         stopCameraPreview()
     }
 
@@ -134,11 +113,10 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
     }
 
     private fun startCameraPreview() {
-        val workflowModel = this.workflowModel ?: return
         val cameraSource = this.cameraSource ?: return
-        if (!workflowModel.isCameraLive) {
+        if (!viewModel.isCameraLive) {
             try {
-                workflowModel.markCameraLive()
+                viewModel.markCameraLive()
                 binding.cameraPreview.start(cameraSource)
             } catch (e: IOException) {
                 Timber.e("Failed to start camera preview!")
@@ -149,20 +127,18 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
     }
 
     private fun stopCameraPreview() {
-        val workflowModel = this.workflowModel ?: return
-        if (workflowModel.isCameraLive) {
-            workflowModel.markCameraFrozen()
+        if (viewModel.isCameraLive) {
+            viewModel.markCameraFrozen()
             binding.flashButton.isSelected = false
             binding.cameraPreview.stop()
         }
     }
 
     private fun setUpWorkflowModel() {
-        workflowModel = ViewModelProviders.of(this).get(WorkflowModel::class.java)
 
         // Observes the workflow state changes, if happens, update the overlay view indicators and
         // camera preview state.
-        workflowModel!!.workflowState.observe(this, Observer { workflowState ->
+        viewModel.workflowState.observe(this, Observer { workflowState ->
             if (workflowState == null || Objects.equal(currentWorkflowState, workflowState)) {
                 return@Observer
             }
@@ -173,22 +149,22 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
             val wasPromptChipGone = binding.bottomPromptChip.visibility == View.GONE
 
             when (workflowState) {
-                WorkflowModel.WorkflowState.DETECTING -> {
+                ISBNViewModel.WorkflowState.DETECTING -> {
                     binding.bottomPromptChip.visible()
                     binding.bottomPromptChip.setText(R.string.prompt_point_at_a_barcode)
                     startCameraPreview()
                 }
-                WorkflowModel.WorkflowState.CONFIRMING -> {
+                ISBNViewModel.WorkflowState.CONFIRMING -> {
                     binding.bottomPromptChip.visible()
                     binding.bottomPromptChip.setText(R.string.prompt_move_camera_closer)
                     startCameraPreview()
                 }
-                WorkflowModel.WorkflowState.SEARCHING -> {
+                ISBNViewModel.WorkflowState.SEARCHING -> {
                     binding.bottomPromptChip.visible()
                     binding.bottomPromptChip.setText(R.string.prompt_searching)
                     stopCameraPreview()
                 }
-                WorkflowModel.WorkflowState.DETECTED, WorkflowModel.WorkflowState.SEARCHED -> {
+                ISBNViewModel.WorkflowState.DETECTED, ISBNViewModel.WorkflowState.SEARCHED -> {
                     binding.bottomPromptChip.gone()
                     stopCameraPreview()
                 }
@@ -227,7 +203,7 @@ class LiveBarcodeScanningActivity : AppCompatActivity() {
                 }
             })
 
-        workflowModel?.detectedBarcode?.observe(this, Observer { barcode ->
+        viewModel.detectedBarcode.observe(this, Observer { barcode ->
             if (barcode != null) {
                 viewModel.getBookByISBN(barcode.rawValue ?: "")
             }

@@ -119,24 +119,11 @@ class BarcodeScanningActivity : AppCompatActivity() {
 
     private fun setUpWorkflowModel() {
         viewModel.workflowState.observe(this, Observer { workflowState ->
-
-            val wasPromptChipGone = binding.bottomPromptChip.visibility == View.GONE
-
             when (workflowState) {
                 ISBNViewModel.WorkflowState.DETECTING -> {
                     binding.bottomPromptChip.visible()
                     binding.bottomPromptChip.setText(R.string.prompt_point_at_a_barcode)
                     startCameraPreview()
-                }
-                ISBNViewModel.WorkflowState.CONFIRMING -> {
-                    binding.bottomPromptChip.visible()
-                    binding.bottomPromptChip.setText(R.string.prompt_move_camera_closer)
-                    startCameraPreview()
-                }
-                ISBNViewModel.WorkflowState.SEARCHING -> {
-                    binding.bottomPromptChip.visible()
-                    binding.bottomPromptChip.setText(R.string.prompt_searching)
-                    stopCameraPreview()
                 }
                 ISBNViewModel.WorkflowState.DETECTED, ISBNViewModel.WorkflowState.SEARCHED -> {
                     binding.bottomPromptChip.gone()

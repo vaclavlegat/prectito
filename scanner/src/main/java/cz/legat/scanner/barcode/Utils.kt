@@ -1,39 +1,19 @@
-/*
- * Copyright 2020 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package cz.legat.scanner.barcode
 
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.graphics.Rect
-import android.graphics.YuvImage
+import android.graphics.*
 import android.hardware.Camera
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.google.mlkit.vision.common.InputImage
 import cz.legat.scanner.barcode.camera.CameraSizePair
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
-import java.util.ArrayList
+import java.util.*
 import kotlin.math.abs
 
 /** Utility class to provide helper methods.  */
@@ -44,10 +24,6 @@ object Utils {
      * considered to be the same aspect ratio.
      */
     const val ASPECT_RATIO_TOLERANCE = 0.01f
-
-    internal const val REQUEST_CODE_PHOTO_LIBRARY = 1
-
-    private const val TAG = "Utils"
 
     internal fun requestRuntimePermissions(activity: Activity) {
 
@@ -69,7 +45,10 @@ object Utils {
 
     private fun getRequiredPermissions(context: Context): Array<String> {
         return try {
-            val info = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS)
+            val info = context.packageManager.getPackageInfo(
+                context.packageName,
+                PackageManager.GET_PERMISSIONS
+            )
             val ps = info.requestedPermissions
             if (ps != null && ps.isNotEmpty()) ps else arrayOf()
         } catch (e: Exception) {
@@ -114,7 +93,7 @@ object Utils {
         // the preview sizes and hope that the camera can handle it.  Probably unlikely, but we still
         // account for it.
         if (validPreviewSizes.isEmpty()) {
-            Log.w(TAG, "No preview sizes have a corresponding same-aspect-ratio picture size.")
+            Timber.w("No preview sizes have a corresponding same-aspect-ratio picture size.")
             for (previewSize in supportedPreviewSizes) {
                 // The null picture size will let us know that we shouldn't set a picture size.
                 validPreviewSizes.add(CameraSizePair(previewSize, null))
@@ -143,7 +122,7 @@ object Utils {
             matrix.postRotate(rotationDegrees.toFloat())
             return Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, true)
         } catch (e: java.lang.Exception) {
-            Log.e(TAG, "Error: " + e.message)
+            Timber.e("Error: %s", e.message)
         }
         return null
     }

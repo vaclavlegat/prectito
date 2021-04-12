@@ -11,7 +11,6 @@ import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
 class ISBNViewModel @ViewModelInject constructor(
     private val booksRepository: BooksRepository
@@ -60,9 +59,6 @@ class ISBNViewModel @ViewModelInject constructor(
         NOT_STARTED,
         DETECTING,
         DETECTED,
-        CONFIRMING,
-        CONFIRMED,
-        SEARCHING,
         SEARCHED
     }
 

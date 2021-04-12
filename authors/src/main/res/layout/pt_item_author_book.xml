@@ -40,7 +40,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAlignment="center"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:visibility="visible" />
 
             <TextView
@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:visibility="gone"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/pt_book_image_iv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -1,8 +1,12 @@
 package cz.legat.authors.ui.detail
 
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
@@ -16,11 +20,13 @@ import cz.legat.authors.R
 import cz.legat.authors.databinding.PtDetailTabsFragmentBinding
 import cz.legat.core.extensions.dpToPx
 import cz.legat.core.extensions.fadeInText
+import cz.legat.core.extensions.getThemeColor
 import cz.legat.core.extensions.loadImg
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.BooksNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -56,6 +62,10 @@ class AuthorDetailFragment :
             val progress = -verticalOffset / (appBarLayout?.totalScrollRange?.toFloat() ?: 0f)
             binding.motion.progress = progress
             binding.motion.translationY = -verticalOffset.toFloat()
+
+            val result = ColorUtils.blendARGB(getThemeColor(R.attr.colorPrimary), getThemeColor(R.attr.colorPrimaryVariant), progress)
+
+            binding.ptAppbar.setBackgroundColor(result)
         })
 
         binding.motion.apply {

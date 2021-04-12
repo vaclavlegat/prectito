@@ -8,28 +8,39 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/pt_appbar"
-        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/pt_toolbar"
+            style="@style/Widget.Prectito.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:elevation="0dp"
-            app:title="@string/pt_authors">
+            android:theme="@style/Widget.Prectito.Toolbar">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:gravity="start|center_vertical"
+                android:text="@string/pt_authors"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/pt_add_filter"
-                app:srcCompat="@drawable/ic_filter"
-                app:tint="@color/white"
-                android:background="?selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackground"
                 android:padding="12dp"
-                android:layout_marginEnd="16dp" />
+                app:srcCompat="@drawable/ic_filter"
+                app:tint="@color/white" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/pt_coutry_chip"
@@ -38,6 +49,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="?attr/colorAccent"
+                android:textColor="@color/white"
                 tools:text="česká" />
 
         </com.google.android.material.appbar.MaterialToolbar>

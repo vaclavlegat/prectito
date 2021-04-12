@@ -3,6 +3,8 @@ package cz.legat.books.ui.detail
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
@@ -79,6 +81,8 @@ class BookDetailFragment :
             binding.motion.progress = progress
             binding.motion.translationY = -verticalOffset.toFloat()
             binding.ptBookRatingTv.goneIf(viewModel.book.value?.ratingsCount.isNullOrEmpty())
+            val result = ColorUtils.blendARGB(getThemeColor(R.attr.colorPrimary), getThemeColor(R.attr.colorPrimaryVariant), progress)
+            binding.ptAppbar.setBackgroundColor(result)
         })
 
         binding.motion.apply {

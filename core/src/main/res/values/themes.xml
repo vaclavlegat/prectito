@@ -2,13 +2,13 @@
 <resources>
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/sweetBrown</item>
-        <item name="colorPrimaryVariant">@color/japaneseCarmine</item>
+        <item name="colorPrimary">@color/japaneseCarmine</item>
+        <item name="colorPrimaryVariant">@color/persianPlum</item>
         <item name="colorAccent">@color/aquarium</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:textColor">@color/vampireBlack</item>
 
-        <item name="colorSecondary">@color/sweetBrown</item>
+        <item name="colorSecondary">@color/persianPlum</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorError">#C5032B</item>
         <item name="colorOnPrimary">@color/white</item>

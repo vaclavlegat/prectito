@@ -13,7 +13,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:elevation">0dp</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.Prectito.Toolbar</item>
-        <item name="titleTextAppearance">@style/TextAppearance.Prectito.Headline6</item>
+        <item name="titleTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
         <item name="titleMarginStart">16dp</item>
     </style>
 
@@ -31,7 +31,7 @@
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:textColorHint">#DDDDDD</item>
-        <item name="boxBackgroundColor">@color/sweetBrown</item>
+        <item name="boxBackgroundColor">@color/japaneseCarmine</item>
         <item name="hintAnimationEnabled">false</item>
         <item name="endIconTint">@color/white</item>
         <item name="endIconMode">clear_text</item>

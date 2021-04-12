@@ -8,8 +8,8 @@
         android:id="@+id/pt_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,11 +17,21 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/pt_toolbar"
             style="@style/Widget.Prectito.Toolbar"
-            android:theme="@style/Widget.Prectito.Toolbar"
             android:layout_width="match_parent"
-            android:elevation="0dp"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/pt_choose_country" />
+            android:elevation="0dp"
+            android:theme="@style/Widget.Prectito.Toolbar">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:gravity="start|center_vertical"
+                android:text="@string/pt_choose_country"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/white" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

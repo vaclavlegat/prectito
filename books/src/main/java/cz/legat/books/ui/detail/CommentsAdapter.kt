@@ -63,8 +63,8 @@ class CommentsAdapter(private val onItemClickedListener: OnItemClickedListener<C
         return R.layout.pt_list_title
     }
 
-    override fun title(): String? {
-        return "Comments"
+    override fun title(): Int? {
+        return R.string.pt_comments
     }
 
     override fun titleViewHolder(view: View): TitleViewHolder {

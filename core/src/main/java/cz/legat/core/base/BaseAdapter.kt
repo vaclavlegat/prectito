@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.jsoup.Connection
 
 const val TITLE = 0
 const val ITEM = 1
@@ -21,7 +20,7 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(if (viewType == TITLE) titleLayout()!! else layout(), parent, false) as View
-        return if (viewType == TITLE) titleViewHolder(view)!! else  viewHolder(view)
+        return if (viewType == TITLE) titleViewHolder(view)!! else viewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -29,7 +28,7 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0 && !title().isNullOrEmpty()) {
+        return if (position == 0 && title() != null) {
             TITLE
         } else {
             ITEM
@@ -38,8 +37,8 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
 
     override fun onBindViewHolder(holder: ParentViewHolder, position: Int) {
         val item = items[position]
-        when(holder){
-            is TitleBaseViewHolder -> holder.bind(item.title!!)
+        when (holder) {
+            is TitleBaseViewHolder -> holder.bind(holder.view.context.getString(item.title!!))
             is BaseViewHolder -> {
                 holder.bind(item.item!!, position)
                 holder.pview.setOnClickListener { onItemClickedListener.onItem(item.item) }
@@ -52,19 +51,19 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
         items.addAll(updatedItems.map {
             Item(null, it)
         })
-        if(!title().isNullOrEmpty()){
-            items.add(0, Item(title(),null))
+        if (title() != null) {
+            items.add(0, Item(title(), null))
         }
         notifyDataSetChanged()
     }
 
     abstract fun layout(): Int
     open fun titleLayout(): Int? = null
-    open fun title(): String? = null
+    open fun title(): Int? = null
     abstract fun viewHolder(view: View): BaseViewHolder
     open fun titleViewHolder(view: View): TitleBaseViewHolder? = null
 
-    abstract inner class ParentViewHolder(val pview: View) : RecyclerView.ViewHolder(pview){
+    abstract inner class ParentViewHolder(val pview: View) : RecyclerView.ViewHolder(pview) {
     }
 
     abstract inner class BaseViewHolder(val view: View) : ParentViewHolder(view) {
@@ -75,5 +74,5 @@ abstract class BaseAdapter<T>(private val onItemClickedListener: OnItemClickedLi
         abstract fun bind(item: String)
     }
 
-    data class Item<T> (val title:String? = null, val item:T? = null)
+    data class Item<T>(val title: Int? = null, val item: T? = null)
 }

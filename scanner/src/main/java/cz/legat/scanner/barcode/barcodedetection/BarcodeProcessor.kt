@@ -16,7 +16,6 @@
 
 package cz.legat.scanner.barcode.barcodedetection
 
-import android.util.Log
 import androidx.annotation.MainThread
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.Barcode
@@ -27,6 +26,7 @@ import cz.legat.scanner.barcode.camera.CameraReticleAnimator
 import cz.legat.scanner.barcode.camera.FrameProcessorBase
 import cz.legat.scanner.barcode.camera.GraphicOverlay
 import cz.legat.scanner.barcode.camera.WorkflowModel
+import timber.log.Timber
 import java.io.IOException
 
 /** A processor to run the barcode detector.  */
@@ -48,7 +48,7 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
 
         if (!workflowModel.isCameraLive) return
 
-        Log.d(TAG, "Barcode result size: ${results.size}")
+        Timber.d("Barcode result size: ${results.size}")
 
         // Picks the barcode, if exists, that covers the center of graphic overlay.
 
@@ -73,7 +73,7 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
     }
 
     override fun onFailure(e: Exception) {
-        Log.e(TAG, "Barcode detection failed!", e)
+        Timber.e("Barcode detection failed!")
     }
 
     override fun stop() {
@@ -81,11 +81,7 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
         try {
             scanner.close()
         } catch (e: IOException) {
-            Log.e(TAG, "Failed to close barcode detector!", e)
+            Timber.e("Failed to close barcode detector!")
         }
-    }
-
-    companion object {
-        private const val TAG = "BarcodeProcessor"
     }
 }

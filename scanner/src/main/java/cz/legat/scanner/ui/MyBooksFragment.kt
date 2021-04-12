@@ -17,6 +17,7 @@ import cz.legat.scanner.barcode.Utils
 import cz.legat.scanner.databinding.PtMyBooksFragmentBinding
 import cz.legat.scanner.navigation.MyBooksNavigatorImpl
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,6 +31,7 @@ class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.ptAppbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
         booksAdapter = MyBooksAdapter(object :
             MyBooksAdapter.OnBookClickedListener {
             override fun onBook(book: SavedBook) {

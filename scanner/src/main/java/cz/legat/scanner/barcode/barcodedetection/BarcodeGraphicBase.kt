@@ -37,7 +37,7 @@ internal abstract class BarcodeGraphicBase(overlay: GraphicOverlay) : GraphicOve
     }
 
     private val scrimPaint: Paint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.vampireBlack)
+        color = ContextCompat.getColor(context, R.color.vampireBlackSemi)
     }
 
     private val eraserPaint: Paint = Paint().apply {

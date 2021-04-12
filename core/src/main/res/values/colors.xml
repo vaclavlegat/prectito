@@ -6,5 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="whiteSemi">#88FFFFFF</color>
     <color name="vampireBlack">#080808</color>
+    <color name="vampireBlackSemi">#88080808</color>
     <color name="sweetBrownLight">#44A03A3B</color>
 </resources>

@@ -1,7 +1,5 @@
 package cz.legat.scanner.barcode
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
 import android.hardware.Camera
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +7,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.google.common.base.Objects
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
 import cz.legat.scanner.R
@@ -32,10 +29,6 @@ class BarcodeScanningActivity : AppCompatActivity() {
 
     private var cameraSource: CameraSource? = null
 
-    private var promptChipAnimator: AnimatorSet? = null
-
-    private var currentWorkflowState: ISBNViewModel.WorkflowState? = null
-
     private lateinit var binding: ActivityBarcodeScanningBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +39,6 @@ class BarcodeScanningActivity : AppCompatActivity() {
         binding.cameraPreviewGraphicOverlay.apply {
             cameraSource = CameraSource(this)
         }
-
-        promptChipAnimator =
-            (AnimatorInflater.loadAnimator(
-                this,
-                R.animator.bottom_prompt_chip_enter
-            ) as AnimatorSet).apply {
-                setTarget(binding.bottomPromptChip)
-            }
 
         binding.closeButton.setOnClickListener {
             onBackPressed()
@@ -85,7 +70,6 @@ class BarcodeScanningActivity : AppCompatActivity() {
         super.onResume()
 
         viewModel.markCameraFrozen()
-        currentWorkflowState = ISBNViewModel.WorkflowState.NOT_STARTED
         cameraSource?.setFrameProcessor(
             BarcodeProcessor(
                 binding.cameraPreviewGraphicOverlay,
@@ -102,7 +86,6 @@ class BarcodeScanningActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        currentWorkflowState = ISBNViewModel.WorkflowState.NOT_STARTED
         stopCameraPreview()
     }
 
@@ -135,16 +118,7 @@ class BarcodeScanningActivity : AppCompatActivity() {
     }
 
     private fun setUpWorkflowModel() {
-
-        // Observes the workflow state changes, if happens, update the overlay view indicators and
-        // camera preview state.
         viewModel.workflowState.observe(this, Observer { workflowState ->
-            if (workflowState == null || Objects.equal(currentWorkflowState, workflowState)) {
-                return@Observer
-            }
-
-            currentWorkflowState = workflowState
-            Timber.d("Current workflow state: ${currentWorkflowState!!.name}")
 
             val wasPromptChipGone = binding.bottomPromptChip.visibility == View.GONE
 
@@ -169,12 +143,6 @@ class BarcodeScanningActivity : AppCompatActivity() {
                     stopCameraPreview()
                 }
                 else -> binding.bottomPromptChip.gone()
-            }
-
-            val shouldPlayPromptChipEnteringAnimation =
-                wasPromptChipGone && binding.bottomPromptChip.visibility == View.VISIBLE
-            promptChipAnimator?.let {
-                if (shouldPlayPromptChipEnteringAnimation && !it.isRunning) it.start()
             }
         })
 

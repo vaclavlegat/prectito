@@ -11,7 +11,7 @@ import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.HashSet
+import java.util.*
 
 class ISBNViewModel @ViewModelInject constructor(
     private val booksRepository: BooksRepository
@@ -24,11 +24,8 @@ class ISBNViewModel @ViewModelInject constructor(
     val workflowState = MutableLiveData<WorkflowState>()
     val detectedBarcode = MutableLiveData<Barcode>()
 
-    private val objectIdsToSearch = HashSet<Int>()
-
     var isCameraLive = false
         private set
-
 
     fun getBookByISBN(isbn: String) {
         val query = isbn.replace("-", "")
@@ -76,10 +73,10 @@ class ISBNViewModel @ViewModelInject constructor(
 
     fun markCameraLive() {
         isCameraLive = true
-        objectIdsToSearch.clear()
     }
 
     fun markCameraFrozen() {
         isCameraLive = false
+        setWorkflowState(WorkflowState.NOT_STARTED)
     }
 }

@@ -28,20 +28,19 @@ import cz.legat.scanner.barcode.addOnSuccessListener
 import cz.legat.scanner.barcode.CameraInputInfo
 import cz.legat.scanner.barcode.InputInfo
 import cz.legat.scanner.barcode.ScopedExecutor
+import timber.log.Timber
 import java.nio.ByteBuffer
 
 
 /** Abstract base class of [FrameProcessor].  */
 abstract class FrameProcessorBase<T> : FrameProcessor {
 
-    // To keep the latest frame and its metadata.
     @GuardedBy("this")
     private var latestFrame: ByteBuffer? = null
 
     @GuardedBy("this")
     private var latestFrameMetaData: FrameMetadata? = null
 
-    // To keep the frame and metadata in process.
     @GuardedBy("this")
     private var processingFrame: ByteBuffer? = null
 
@@ -80,7 +79,7 @@ abstract class FrameProcessorBase<T> : FrameProcessor {
         val startMs = SystemClock.elapsedRealtime()
         detectInImage(image)
             .addOnSuccessListener(executor) { results: T ->
-                Log.d(TAG, "Latency is: ${SystemClock.elapsedRealtime() - startMs}")
+                Timber.d("Latency is: ${SystemClock.elapsedRealtime() - startMs}")
                 this@FrameProcessorBase.onSuccess(CameraInputInfo(frame, frameMetaData), results, graphicOverlay)
                 processLatestFrame(graphicOverlay)
             }
@@ -93,7 +92,6 @@ abstract class FrameProcessorBase<T> : FrameProcessor {
 
     protected abstract fun detectInImage(image: InputImage): Task<T>
 
-    /** Be called when the detection succeeds.  */
     protected abstract fun onSuccess(
         inputInfo: InputInfo,
         results: T,
@@ -101,8 +99,4 @@ abstract class FrameProcessorBase<T> : FrameProcessor {
     )
 
     protected abstract fun onFailure(e: Exception)
-
-    companion object {
-        private const val TAG = "FrameProcessorBase"
-    }
 }

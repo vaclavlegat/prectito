@@ -60,6 +60,7 @@ class MyBooksAdapter(val onBookClickedListener: OnBookClickedListener) : Recycle
                     titleTv.text = "$title - $subtitle"
                 }
                 publishedTV.text = publishedDate?.take(4)
+                view.setBackgroundResource(if (position % 2 == 0) R.drawable.pt_item_ripple else R.drawable.pt_item_light_ripple)
             }
         }
     }

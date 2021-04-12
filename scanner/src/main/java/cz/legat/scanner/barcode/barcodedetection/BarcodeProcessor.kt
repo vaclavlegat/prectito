@@ -36,8 +36,7 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
     private val scanner = BarcodeScanning.getClient()
     private val cameraReticleAnimator: CameraReticleAnimator = CameraReticleAnimator(graphicOverlay)
 
-    override fun detectInImage(image: InputImage): Task<List<Barcode>> =
-        scanner.process(image)
+    override fun detectInImage(image: InputImage): Task<List<Barcode>> = scanner.process(image)
 
     @MainThread
     override fun onSuccess(
@@ -65,7 +64,6 @@ class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel
             workflowModel.setWorkflowState(ISBNViewModel.WorkflowState.DETECTING)
         } else {
             cameraReticleAnimator.cancel()
-            // Barcode size in the camera view is sufficient.
             workflowModel.setWorkflowState(ISBNViewModel.WorkflowState.DETECTED)
             workflowModel.detectedBarcode.setValue(barcodeInCenter)
         }

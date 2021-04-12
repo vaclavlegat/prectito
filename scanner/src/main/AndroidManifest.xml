@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application>
-        <activity android:name="cz.legat.scanner.barcode.BarcodeScanningActivity" />
+        <activity
+            android:name="cz.legat.scanner.barcode.BarcodeScanningActivity"
+            android:theme="@style/ScannerTheme" />
     </application>
 </manifest>

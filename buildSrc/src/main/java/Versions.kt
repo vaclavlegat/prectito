@@ -42,6 +42,8 @@ object Versions {
     const val espressoVersion = "3.2.0"
 
     const val jsoupVersion = "1.12.1"
+    const val insetterVersion = "0.5.0"
+    const val dexterVersion = "6.2.2"
 
     const val moshiVersion = "1.10.0"
 

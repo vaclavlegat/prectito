@@ -87,6 +87,6 @@ dependencies {
     androidTestImplementation (Libs.espresso)
     implementation (Libs.timber)
 
-    implementation ("dev.chrisbanes.insetter:insetter:0.5.0")
+    implementation (Libs.insetter)
 
 }

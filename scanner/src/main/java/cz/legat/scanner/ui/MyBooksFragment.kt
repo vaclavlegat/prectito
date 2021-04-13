@@ -1,5 +1,6 @@
 package cz.legat.scanner.ui
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -7,18 +8,23 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.BooksNavigator
 import cz.legat.navigation.MyBooksNavigator
-import cz.legat.scanner.barcode.Utils
 import cz.legat.scanner.databinding.PtMyBooksFragmentBinding
-import cz.legat.scanner.navigation.MyBooksNavigatorImpl
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragmentBinding::inflate) {
@@ -51,7 +57,23 @@ class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragm
         }
 
         binding.ptAddBookBtn.setOnClickListener {
-            startActivity(navigator.getOpenScannerIntent(requireContext()))
+            Dexter.withContext(requireContext())
+                .withPermission(Manifest.permission.CAMERA)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                        startActivity(navigator.getOpenScannerIntent(requireContext()))
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                        permission: PermissionRequest?,
+                        token: PermissionToken?
+                    ) {
+
+                    }
+                }).check()
         }
 
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
@@ -65,8 +87,6 @@ class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragm
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        Utils.requestRuntimePermissions(requireActivity())
 
         binding.ptProgress.visible()
 

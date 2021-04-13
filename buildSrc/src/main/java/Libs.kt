@@ -69,4 +69,7 @@ object Libs {
     val palette = "androidx.palette:palette:${Versions.paletteVersion}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
+
+    val insetter = "dev.chrisbanes.insetter:insetter:${Versions.insetterVersion}"
+    val dexter = "com.karumi:dexter:${Versions.dexterVersion}"
 }

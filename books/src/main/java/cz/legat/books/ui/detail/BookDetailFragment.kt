@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -45,7 +44,7 @@ class BookDetailFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tabsAdapter = TabsAdapter(this)
-        with(binding){
+        with(binding) {
             ptAppbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
 
             pager.adapter = tabsAdapter

@@ -13,7 +13,6 @@ import cz.legat.scanner.ui.ISBNViewModel
 import timber.log.Timber
 import java.io.IOException
 
-/** A processor to run the barcode detector.  */
 class BarcodeProcessor(graphicOverlay: GraphicOverlay, private val workflowModel: ISBNViewModel) :
     FrameProcessorBase<List<Barcode>>() {
 

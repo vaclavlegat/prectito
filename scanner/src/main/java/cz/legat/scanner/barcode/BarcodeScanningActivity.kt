@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
 import cz.legat.scanner.R
-import cz.legat.scanner.barcode.barcodedetection.BarcodeField
 import cz.legat.scanner.barcode.barcodedetection.BarcodeManualFragment
 import cz.legat.scanner.barcode.barcodedetection.BarcodeProcessor
 import cz.legat.scanner.barcode.barcodedetection.BarcodeResultFragment
@@ -24,7 +23,7 @@ import java.io.IOException
 
 /** Demonstrates the barcode scanning workflow using camera preview.  */
 @AndroidEntryPoint
-class BarcodeScanningActivity : AppCompatActivity() {
+class BarcodeScanningActivity : AppCompatActivity(), BarcodeResultFragment.OnDismissResultDialogListener {
 
     private val viewModel: ISBNViewModel by viewModels()
 
@@ -37,7 +36,8 @@ class BarcodeScanningActivity : AppCompatActivity() {
         binding = ActivityBarcodeScanningBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
         binding.cameraPreviewGraphicOverlay.apply {
             cameraSource = CameraSource(this)
@@ -140,28 +140,8 @@ class BarcodeScanningActivity : AppCompatActivity() {
         })
 
         viewModel.searchedBook.observe(this,
-            Observer { savedBook ->
-                if (!savedBook.title.isNullOrEmpty()) {
-                    val barcodeFieldList = ArrayList<BarcodeField>()
-                    barcodeFieldList.add(BarcodeField("Title", savedBook.title ?: ""))
-                    if (savedBook.subtitle?.isNotEmpty() == true) {
-                        barcodeFieldList.add(BarcodeField("Subtitle", savedBook.subtitle!!))
-                    }
-                    barcodeFieldList.add(BarcodeField("Author", savedBook.author ?: ""))
-                    barcodeFieldList.add(
-                        BarcodeField(
-                            "Published date",
-                            savedBook.publishedDate?.take(4) ?: ""
-                        )
-                    )
-                    barcodeFieldList.add(BarcodeField("ISBN", savedBook.isbn ?: ""))
-                    BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList, savedBook)
-                } else {
-                    val barcodeFieldList = ArrayList<BarcodeField>()
-                    barcodeFieldList.add(BarcodeField("Title", ""))
-                    barcodeFieldList.add(BarcodeField("ISBN", savedBook.isbn ?: ""))
-                    BarcodeResultFragment.show(supportFragmentManager, barcodeFieldList, savedBook)
-                }
+            Observer {
+                BarcodeResultFragment.show(supportFragmentManager, it)
             })
 
         viewModel.detectedBarcode.observe(this, Observer { barcode ->
@@ -169,5 +149,9 @@ class BarcodeScanningActivity : AppCompatActivity() {
                 viewModel.getBookByISBN(barcode.rawValue ?: "")
             }
         })
+    }
+
+    override fun onDismissResultDialog() {
+        viewModel.setWorkflowState(ISBNViewModel.WorkflowState.DETECTING)
     }
 }

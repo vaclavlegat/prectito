@@ -4,4 +4,8 @@
     <string name="pt_book_save">Uložit</string>
     <string name="pt_tab_title_my_books">Moje knihy</string>
     <string name="pt_add_book">Přidat knihu</string>
+    <string name="title">Název</string>
+    <string name="author">Autor</string>
+    <string name="isbn">ISBN</string>
+    <string name="saved">Uloženo</string>
 </resources>

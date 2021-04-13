@@ -20,6 +20,8 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var searchNavigator: SearchNavigator
 
+    private val topLevelDestinations = listOf(R.id.homeFragment, R.id.authorsFragment, R.id.myBooksFragment, R.id.searchResultsFragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = PtMainActivityBinding.inflate(layoutInflater)
@@ -35,9 +37,8 @@ class MainActivity : BaseActivity() {
             val fragmentId = when (item.itemId) {
                 R.id.home -> R.id.homeFragment
                 R.id.authors -> R.id.authorsFragment
-                R.id.search -> R.id.searchResultsFragment
                 R.id.mybooks -> R.id.myBooksFragment
-                R.id.settings -> R.id.settingsFragment
+                R.id.search -> R.id.searchResultsFragment
                 else -> null
             }
 
@@ -49,7 +50,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (navController.currentDestination?.id == R.id.homeFragment) {
+        if (topLevelDestinations.contains(navController.currentDestination?.id)) {
             finish()
         } else {
             super.onBackPressed()

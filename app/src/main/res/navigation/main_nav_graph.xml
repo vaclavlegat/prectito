@@ -33,11 +33,4 @@
         tools:layout="@layout/pt_search_results_fragment">
     </fragment>
 
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="cz.legat.prectito.ui.SettingsFragment"
-        android:label="@string/pt_settings"
-        tools:layout="@layout/pt_fragment_authors">
-    </fragment>
-
 </navigation>

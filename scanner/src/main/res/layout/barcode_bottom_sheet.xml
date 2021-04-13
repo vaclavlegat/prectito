@@ -7,13 +7,6 @@
     android:paddingTop="@dimen/barcode_bottom_sheet_padding_vertical"
     android:paddingBottom="@dimen/barcode_bottom_sheet_padding_vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/barcode_field_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="vertical" />
-
     <LinearLayout
         android:id="@+id/pt_custom_book_holder_ll"
         android:layout_width="match_parent"
@@ -25,7 +18,7 @@
             android:id="@+id/pt_custom_book_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/title"
             android:textStyle="bold" />
 
         <EditText
@@ -38,7 +31,7 @@
             android:id="@+id/pt_custom_book_author_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Author"
+            android:text="@string/author"
             android:textStyle="bold" />
 
         <EditText
@@ -51,7 +44,7 @@
             android:id="@+id/pt_custom_book_isbn_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ISBN"
+            android:text="@string/isbn"
             android:textStyle="bold" />
 
         <TextView

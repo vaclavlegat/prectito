@@ -4,4 +4,8 @@
     <string name="pt_book_save">Save</string>
     <string name="pt_tab_title_my_books">My</string>
     <string name="pt_add_book">Add book</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="isbn">ISBN</string>
+    <string name="saved">Saved</string>
 </resources>

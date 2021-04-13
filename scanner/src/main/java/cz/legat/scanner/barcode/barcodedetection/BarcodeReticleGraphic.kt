@@ -7,10 +7,6 @@ import cz.legat.scanner.R
 import cz.legat.scanner.barcode.camera.CameraReticleAnimator
 import cz.legat.scanner.barcode.camera.GraphicOverlay
 
-/**
- * A camera reticle that locates at the center of canvas to indicate the system is active but has
- * not detected a barcode yet.
- */
 internal class BarcodeReticleGraphic(
     overlay: GraphicOverlay,
     private val animator: CameraReticleAnimator

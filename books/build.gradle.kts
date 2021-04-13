@@ -96,5 +96,6 @@ dependencies {
     androidTestImplementation (Libs.espresso)
 
     implementation (Libs.insetter)
+    implementation (Libs.dexter)
 
 }

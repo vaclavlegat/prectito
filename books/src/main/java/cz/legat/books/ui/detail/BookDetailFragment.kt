@@ -1,25 +1,26 @@
 package cz.legat.books.ui.detail
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import cz.legat.books.R
 import cz.legat.books.databinding.PtBookDetailFragmentBinding
-import cz.legat.books.ui.BooksFragment
-import cz.legat.books.ui.NEW
-import cz.legat.books.ui.POPULAR
 import cz.legat.core.extensions.*
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.AuthorsNavigator
@@ -43,60 +44,99 @@ class BookDetailFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ptAppbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
         val tabsAdapter = TabsAdapter(this)
-        binding.pager.adapter = tabsAdapter
-        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
-        TabLayoutMediator(tabLayout, binding.pager) { tab, position ->
-            tab.text = fragmentTitles()[position]
-        }.attach()
+        with(binding){
+            ptAppbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
 
-        binding.ptToolbar.setNavigationOnClickListener {
-            requireActivity().finish()
-        }
+            pager.adapter = tabsAdapter
+            TabLayoutMediator(tabLayout, pager) { tab, position ->
+                tab.text = fragmentTitles()[position]
+            }.attach()
 
-        viewModel.book.observe(viewLifecycleOwner, Observer { book ->
-            book?.let {
-                binding.ptBookTitleTv.fadeInTextFromStart(book.title)
-                binding.ptBookAuthorTv.fadeInText(book.author?.name)
-                binding.ptBookPublishedTv.fadeInText(book.published)
-                binding.ptBookImageIv.loadImg(book.imgLink)
-                binding.ptBookAuthorTv.setOnClickListener {
-                    book.author?.authorId?.let { authorId ->
-                        startActivity(
-                            authorsNavigator.getOpenDetailIntent(
-                                requireContext(),
-                                authorId
+            ptToolbar.setNavigationOnClickListener {
+                requireActivity().finish()
+            }
+
+            viewModel.book.observe(viewLifecycleOwner, Observer { book ->
+                book?.let {
+                    ptBookTitleTv.fadeInTextFromStart(book.title)
+                    ptBookAuthorTv.fadeInText(book.author?.name)
+                    ptBookPublishedTv.fadeInText(book.published)
+                    ptBookImageIv.loadImg(book.imgLink)
+                    ptBookAuthorTv.setOnClickListener {
+                        book.author?.authorId?.let { authorId ->
+                            startActivity(
+                                authorsNavigator.getOpenDetailIntent(
+                                    requireContext(),
+                                    authorId
+                                )
                             )
-                        )
+                        }
+                    }
+
+                    ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
+
+                    ptBookLinkBtn.visibleIf(book.eBookLink != null)
+                    ptBookLinkBtn.setOnClickListener {
+                        Dexter.withContext(requireContext())
+                            .withPermissions(
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            )
+                            .withListener(object : MultiplePermissionsListener {
+                                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                                    viewModel.downloadPdf(book.eBookLink)
+                                }
+
+                                override fun onPermissionRationaleShouldBeShown(
+                                    p0: MutableList<PermissionRequest>?,
+                                    p1: PermissionToken?
+                                ) {
+
+                                }
+
+
+                            }).check()
                     }
                 }
+            })
 
-                binding.ptBookRatingTv.animateRating(book.rating?.toInt() ?: 0)
-            }
-        })
+            viewModel.filePath.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    startActivity(bookNavigator.getOpenPdfIntent(requireContext(), it))
+                }
+            })
 
-        binding.ptAppbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val progress = -verticalOffset / (appBarLayout?.totalScrollRange?.toFloat() ?: 0f)
-            binding.motion.progress = progress
-            binding.motion.translationY = -verticalOffset.toFloat()
-            binding.ptBookRatingTv.goneIf(viewModel.book.value?.ratingsCount.isNullOrEmpty())
-            val result = ColorUtils.blendARGB(getThemeColor(R.attr.colorPrimary), getThemeColor(R.attr.colorPrimaryVariant), progress)
-            binding.ptAppbar.setBackgroundColor(result)
-        })
+            ptAppbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                val progress = -verticalOffset / (appBarLayout?.totalScrollRange?.toFloat() ?: 0f)
+                motion.progress = progress
+                motion.translationY = -verticalOffset.toFloat()
+                ptBookRatingTv.goneIf(viewModel.book.value?.ratingsCount.isNullOrEmpty())
+                val result = ColorUtils.blendARGB(
+                    getThemeColor(R.attr.colorPrimary),
+                    getThemeColor(R.attr.colorPrimaryVariant),
+                    progress
+                )
+                ptAppbar.setBackgroundColor(result)
+            })
 
-        binding.motion.apply {
-            doOnLayout {
-                val toolbarHeight = binding.ptToolbar.measuredHeight
-                val tabsHeight = binding.tabLayout.measuredHeight
+            motion.apply {
+                doOnLayout {
+                    val toolbarHeight = ptToolbar.measuredHeight
+                    val tabsHeight = tabLayout.measuredHeight
 
-                val requiredChildHeight = toolbarHeight + tabsHeight + binding.ptBookImageHolderIv.measuredHeight + context.dpToPx(16)
-                val minimumChildHeight = toolbarHeight + tabsHeight
+                    val requiredChildHeight =
+                        toolbarHeight + tabsHeight + ptBookImageHolderIv.measuredHeight + context.dpToPx(
+                            16
+                        )
+                    val minimumChildHeight = toolbarHeight + tabsHeight
 
-                updateLayoutParams<ViewGroup.LayoutParams> { height = requiredChildHeight }
-                minimumHeight = minimumChildHeight
+                    updateLayoutParams<ViewGroup.LayoutParams> { height = requiredChildHeight }
+                    minimumHeight = minimumChildHeight
+                }
             }
         }
+
     }
 
     private fun fragmentTitles(): List<String> {

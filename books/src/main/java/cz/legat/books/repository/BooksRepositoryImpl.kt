@@ -25,6 +25,7 @@ class BooksRepositoryImpl @Inject constructor(
     private val overviewDao: OverviewDao
 ) : BooksRepository, BaseRepository() {
 
+    private val lastComments = mutableListOf<Comment>()
 
     override suspend fun getMyBooks(): List<SavedBook> {
         return savedBookDao.getAll()
@@ -84,7 +85,13 @@ class BooksRepositoryImpl @Inject constructor(
             when (val result = apiCall { booksService.getBookComments(id = id, page = page) }) {
                 is NetworkResult.Success -> {
                     val comments = PARSER.parseBookComments(result.data)
-                    comments
+                    if(lastComments == comments && page > 1){
+                        listOf()
+                    } else {
+                        lastComments.clear()
+                        lastComments.addAll(comments)
+                        comments
+                    }
                 }
                 is NetworkResult.Error -> listOf()
             }

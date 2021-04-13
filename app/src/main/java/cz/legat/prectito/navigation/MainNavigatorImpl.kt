@@ -6,7 +6,7 @@ import cz.legat.core.extensions.intent
 import cz.legat.navigation.MainNavigator
 import cz.legat.prectito.MainActivity
 
-class MainNavigatorImlp : MainNavigator{
+class MainNavigatorImpl : MainNavigator{
     override fun openMainIntent(context: Context): Intent {
         return context.intent<MainActivity>()
     }

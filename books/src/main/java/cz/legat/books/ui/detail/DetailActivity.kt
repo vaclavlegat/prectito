@@ -8,11 +8,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import cz.legat.books.R
 import cz.legat.books.databinding.PtBookActivityDetailBinding
+import cz.legat.core.base.BaseActivity
 import cz.legat.core.extensions.ID_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
 
     private lateinit var binding: PtBookActivityDetailBinding
     private lateinit var navController: NavController

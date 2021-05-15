@@ -6,18 +6,16 @@ import cz.legat.core.base.BaseRepository
 import cz.legat.core.base.NetworkResult
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
-import cz.legat.core.model.Overview
-import cz.legat.core.persistence.LocalOverview
 import cz.legat.core.persistence.OverviewDao
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.persistence.SavedBookDao
 import cz.legat.core.repository.BooksRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class BooksRepositoryImpl @Inject constructor(
     private val booksService: BooksService,
@@ -31,34 +29,40 @@ class BooksRepositoryImpl @Inject constructor(
         return savedBookDao.getAll()
     }
 
-    override suspend fun getPopularBooks(): List<Book> {
-        return when (val result = apiCall { booksService.getPopularBooks() }) {
-            is NetworkResult.Success -> {
-                val popular = HtmlParser().parseBooks(result.data)
-                popular
+    override fun getPopularBooks(): Flow<List<Book>> {
+        return flow {
+            when (val result = apiCall { booksService.getPopularBooks() }) {
+                is NetworkResult.Success -> {
+                    val popular = HtmlParser().parseBooks(result.data)
+                    emit(popular.dropLast(1))
+                }
+                is NetworkResult.Error -> emit(emptyList())
             }
-            is NetworkResult.Error -> listOf()
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getNewBooks(): List<Book> {
-        return when (val result = apiCall { booksService.getNewBooks() }) {
-            is NetworkResult.Success -> {
-                val new = PARSER.parseBooks(result.data)
-                new
+    override fun getNewBooks(): Flow<List<Book>> {
+        return flow {
+            when (val result = apiCall { booksService.getNewBooks() }) {
+                is NetworkResult.Success -> {
+                    val new = PARSER.parseBooks(result.data)
+                    emit(new.dropLast(1))
+                }
+                is NetworkResult.Error -> emit(emptyList())
             }
-            is NetworkResult.Error -> listOf()
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getEBooks(): List<Book> {
-        return when (val result = apiCall { booksService.getEBooks() }) {
-            is NetworkResult.Success -> {
-                val ebooks = PARSER.parseEBooks(result.data)
-                ebooks
+    override fun getEBooks(): Flow<List<Book>> {
+        return flow {
+            when (val result = apiCall { booksService.getEBooks() }) {
+                is NetworkResult.Success -> {
+                    val ebooks = PARSER.parseEBooks(result.data)
+                    emit(ebooks.dropLast(2))
+                }
+                is NetworkResult.Error -> emit(emptyList())
             }
-            is NetworkResult.Error -> listOf()
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getBook(id: String?): Book? {
@@ -85,7 +89,7 @@ class BooksRepositoryImpl @Inject constructor(
             when (val result = apiCall { booksService.getBookComments(id = id, page = page) }) {
                 is NetworkResult.Success -> {
                     val comments = PARSER.parseBookComments(result.data)
-                    if(lastComments == comments && page > 1){
+                    if (lastComments == comments && page > 1) {
                         listOf()
                     } else {
                         lastComments.clear()

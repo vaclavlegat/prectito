@@ -4,9 +4,8 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.asLiveData
 import cz.legat.core.repository.BooksRepository
-import kotlinx.coroutines.Dispatchers
 
 const val POPULAR = "popular"
 const val NEW = "new"
@@ -17,17 +16,14 @@ class BooksViewModel @ViewModelInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val type = savedStateHandle.get<String>("type") ?: throw NullPointerException("Type must be provided")
+    val type =
+        savedStateHandle.get<String>("type") ?: throw NullPointerException("Type must be provided")
 
-    val books = liveData(Dispatchers.IO) {
-        emit(
-            when (type) {
-                POPULAR -> booksRepository.getPopularBooks().dropLast(1)
-                NEW -> booksRepository.getNewBooks().dropLast(1)
-                EBOOK -> booksRepository.getEBooks().dropLast(2)
-                else -> throw IllegalArgumentException("Unknown book type")
-            }
-
-        )
+    val books = when (type) {
+        POPULAR -> booksRepository.getPopularBooks().asLiveData()
+        NEW -> booksRepository.getNewBooks().asLiveData()
+        EBOOK -> booksRepository.getEBooks().asLiveData()
+        else -> throw IllegalArgumentException("Unknown book type")
     }
+
 }

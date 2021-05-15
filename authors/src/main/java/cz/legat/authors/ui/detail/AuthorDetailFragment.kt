@@ -25,8 +25,7 @@ import cz.legat.core.extensions.loadImg
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.BooksNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
-import timber.log.Timber
+import dev.chrisbanes.insetter.applyInsetter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,7 +39,12 @@ class AuthorDetailFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ptAppbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
+        binding.ptAppbar.applyInsetter {
+            type(ime = true, statusBars = true, navigationBars = true) {
+                padding(left = true, top = true, right = true, bottom = false)
+            }
+            consume(true)
+        }
         val tabsAdapter = TabsAdapter(this)
         binding.pager.adapter = tabsAdapter
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)

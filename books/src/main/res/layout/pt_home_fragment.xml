@@ -12,37 +12,32 @@
         android:background="?attr/colorPrimary"
         android:fitsSystemWindows="true">
 
-        <androidx.constraintlayout.motion.widget.MotionLayout
-            android:id="@+id/motion"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/pt_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutDescription="@xml/fragment_tabs_scene"
-            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed">
+            android:layout_marginStart="16dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:elevation="0dp">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:text="@string/pt_app_name"
                 android:textColor="@color/white"
-                android:textSize="32sp" />
+                android:fontFamily="@font/galindo_family"
+                android:textSize="22sp" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/pt_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                android:elevation="0dp" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:tabIndicatorColor="?attr/colorSurface"
-                app:tabTextColor="@color/tabs_selector" />
-        </androidx.constraintlayout.motion.widget.MotionLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:tabIndicatorColor="?attr/colorSurface"
+            app:tabTextColor="@color/tabs_selector" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2

@@ -23,7 +23,7 @@ import cz.legat.navigation.BooksNavigator
 import cz.legat.navigation.MyBooksNavigator
 import cz.legat.scanner.databinding.PtMyBooksFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import dev.chrisbanes.insetter.applySystemWindowInsetsToPadding
+import dev.chrisbanes.insetter.applyInsetter
 import javax.inject.Inject
 
 
@@ -36,12 +36,18 @@ class MyBooksFragment :
 
     @Inject
     lateinit var navigator: MyBooksNavigator
+
     @Inject
     lateinit var booksNavigator: BooksNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ptAppbar.applySystemWindowInsetsToPadding(top = true, left = true, right = true)
+        binding.ptAppbar.applyInsetter {
+            type(ime = true, statusBars = true, navigationBars = true) {
+                padding(left = true, top = true, right = true, bottom = false)
+            }
+            consume(true)
+        }
         booksAdapter = MyBooksAdapter(object :
             MyBooksAdapter.OnBookClickedListener {
             override fun onBook(book: SavedBook) {

@@ -8,4 +8,6 @@
     <string name="author">Autor</string>
     <string name="isbn">ISBN</string>
     <string name="saved">Uloženo</string>
+    <string name="empty_books_message">Zatím jste nepřidali žádné knihy</string>
+    <string name="add_book">Přidat knihu</string>
 </resources>

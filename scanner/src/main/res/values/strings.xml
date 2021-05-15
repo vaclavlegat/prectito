@@ -8,4 +8,6 @@
     <string name="author">Author</string>
     <string name="isbn">ISBN</string>
     <string name="saved">Saved</string>
+    <string name="empty_books_message">No books yet</string>
+    <string name="add_book">Add book</string>
 </resources>

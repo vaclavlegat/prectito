@@ -7,8 +7,6 @@ import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
-const val LIFECYCLE_TAG = "LIFECYCLE"
-
 @HiltAndroidApp
 class PrectitoApp: Application(), Application.ActivityLifecycleCallbacks{
 
@@ -21,33 +19,33 @@ class PrectitoApp: Application(), Application.ActivityLifecycleCallbacks{
     }
 
     override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-        Log.d(LIFECYCLE_TAG, "onActivityCreated:" + activity.localClassName)
+        Timber.d("onActivityCreated")
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        Log.d(LIFECYCLE_TAG, "onActivityDestroyed:" + activity.localClassName)
+        Timber.d("onActivityDestroyed")
     }
 
     override fun onActivityPaused(activity: Activity) {
-        Log.d(LIFECYCLE_TAG, "onActivityPaused:" + activity.localClassName)
+        Timber.d( "onActivityPaused")
     }
 
     override fun onActivityResumed(activity: Activity) {
-        Log.d(LIFECYCLE_TAG, "onActivityResumed:" + activity.localClassName)
+        Timber.d("onActivityResumed")
     }
 
     override fun onActivitySaveInstanceState(
         activity: Activity,
         outState: Bundle?
     ) {
-        Log.d(LIFECYCLE_TAG, "onActivitySaveInstanceState:" + activity.localClassName)
+        Timber.d("onActivitySaveInstanceState")
     }
 
     override fun onActivityStarted(activity: Activity) {
-        Log.d(LIFECYCLE_TAG, "onActivityStarted:" + activity.localClassName)
+        Timber.d("onActivityStarted")
     }
 
     override fun onActivityStopped(activity: Activity) {
-        Log.d(LIFECYCLE_TAG, "onActivityStopped:" + activity.localClassName)
+        Timber.d("onActivityStopped")
     }
 }

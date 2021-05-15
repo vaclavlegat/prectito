@@ -16,6 +16,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import cz.legat.core.extensions.gone
 import cz.legat.core.extensions.visible
+import cz.legat.core.extensions.visibleIf
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.ui.BindingFragment
 import cz.legat.navigation.BooksNavigator
@@ -27,13 +28,16 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragmentBinding::inflate) {
+class MyBooksFragment :
+    BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragmentBinding::inflate) {
 
     private val viewModel: ISBNViewModel by viewModels()
     lateinit var booksAdapter: MyBooksAdapter
 
-    @Inject lateinit var navigator: MyBooksNavigator
-    @Inject lateinit var booksNavigator: BooksNavigator
+    @Inject
+    lateinit var navigator: MyBooksNavigator
+    @Inject
+    lateinit var booksNavigator: BooksNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,24 +60,12 @@ class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragm
             setHasFixedSize(true)
         }
 
+        binding.addBtn.setOnClickListener {
+            addBook()
+        }
+
         binding.ptAddBookBtn.setOnClickListener {
-            Dexter.withContext(requireContext())
-                .withPermission(Manifest.permission.CAMERA)
-                .withListener(object : PermissionListener {
-                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                        startActivity(navigator.getOpenScannerIntent(requireContext()))
-                    }
-
-                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                    }
-
-                    override fun onPermissionRationaleShouldBeShown(
-                        permission: PermissionRequest?,
-                        token: PermissionToken?
-                    ) {
-
-                    }
-                }).check()
+            addBook()
         }
 
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
@@ -99,7 +91,28 @@ class MyBooksFragment : BindingFragment<PtMyBooksFragmentBinding>(PtMyBooksFragm
             }
             println("Books Count $count")
             booksAdapter.update(books)
+            binding.ptEmptyContainer.visibleIf(books.isEmpty())
         })
+    }
+
+    private fun addBook() {
+        Dexter.withContext(requireContext())
+            .withPermission(Manifest.permission.CAMERA)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                    startActivity(navigator.getOpenScannerIntent(requireContext()))
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+
+                }
+            }).check()
     }
 
     override fun onResume() {

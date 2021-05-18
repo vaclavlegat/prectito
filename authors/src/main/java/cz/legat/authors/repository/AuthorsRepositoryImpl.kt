@@ -5,8 +5,14 @@ import cz.legat.core.base.BaseRepository
 import cz.legat.core.base.NetworkResult
 import cz.legat.core.model.Author
 import cz.legat.core.model.Book
+import cz.legat.core.model.SearchResult
 import cz.legat.core.repository.AuthorsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
+import java.util.*
 import javax.inject.Inject
 
 class AuthorsRepositoryImpl @Inject constructor(private val authorsService: AuthorsService) :
@@ -32,7 +38,13 @@ class AuthorsRepositoryImpl @Inject constructor(private val authorsService: Auth
         }
         return runBlocking {
             when (val result =
-                apiCall { authorsService.getAuthorBooks(authorId = id, page = page, sort = "rn") }) {
+                apiCall {
+                    authorsService.getAuthorBooks(
+                        authorId = id,
+                        page = page,
+                        sort = "rn"
+                    )
+                }) {
                 is NetworkResult.Success -> {
                     val books = PARSER.parseAuthorBooks(result.data, page)
                     books
@@ -56,10 +68,15 @@ class AuthorsRepositoryImpl @Inject constructor(private val authorsService: Auth
         }
     }
 
-    override suspend fun searchAuthor(query: String): List<Author> {
-        return when (val result = apiCall { authorsService.searchAuthor(query) }) {
-            is NetworkResult.Success -> PARSER.parseAuthors(result.data)
-            is NetworkResult.Error -> listOf()
-        }
+    override fun searchAuthor(query: String): Flow<List<SearchResult>> {
+        return flow {
+            when (val result = apiCall { authorsService.searchAuthor(query) }) {
+                is NetworkResult.Success -> emit(PARSER.parseAuthors(result.data).filter {
+                    it.getResultTitle().toLowerCase(Locale.getDefault())
+                        .contains(query.toLowerCase(Locale.getDefault()))
+                })
+                is NetworkResult.Error -> emit(emptyList())
+            }
+        }.flowOn(Dispatchers.IO)
     }
 }

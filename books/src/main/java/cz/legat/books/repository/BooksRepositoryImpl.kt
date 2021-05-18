@@ -6,6 +6,7 @@ import cz.legat.core.base.BaseRepository
 import cz.legat.core.base.NetworkResult
 import cz.legat.core.model.Book
 import cz.legat.core.model.Comment
+import cz.legat.core.model.SearchResult
 import cz.legat.core.persistence.OverviewDao
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.persistence.SavedBookDao
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
+import java.util.*
 import javax.inject.Inject
 
 class BooksRepositoryImpl @Inject constructor(
@@ -65,22 +67,25 @@ class BooksRepositoryImpl @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getBook(id: String?): Book? {
-        if (id == null) {
-            return null
-        }
-        return when (val result = apiCall { booksService.getBook(id) }) {
-            is NetworkResult.Success -> {
-                val book = PARSER.parseBook(id, result.data)
-                val updatedBook = book.copy(
-                    description = if (book.description!!.contains("Popis knihy zde zatím bohužel není.") || !book.description!!.contains(
-                            "celý text"
+    override fun getBook(id: String?): Flow<Book?> {
+        return flow {
+            if (id == null) {
+                emit(null)
+            } else {
+                when (val result = apiCall { booksService.getBook(id) }) {
+                    is NetworkResult.Success -> {
+                        val book = PARSER.parseBook(id, result.data)
+                        val updatedBook = book.copy(
+                            description = if (book.description!!.contains("Popis knihy zde zatím bohužel není.") || !book.description!!.contains(
+                                    "celý text"
+                                )
+                            ) book.description else book.description!!.dropLast(12)
                         )
-                    ) book.description else book.description!!.dropLast(12)
-                )
-                updatedBook
+                        emit(updatedBook)
+                    }
+                    is NetworkResult.Error -> emit(null)
+                }
             }
-            is NetworkResult.Error -> null
         }
     }
 
@@ -102,32 +107,41 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getBookByISBN(isbn: String): SavedBook {
-        return when (val result = apiCall { booksService.getBookByISBN(isbn) }) {
-            is NetworkResult.Success -> {
-                val book = PARSER.parseBook(isbn, result.data)
-                SavedBook(
-                    bookId = book.id,
-                    title = book.title,
-                    author = book.author?.name,
-                    isbn = isbn,
-                    publishedDate = book.published,
-                    pageCount = book.numberOfPages,
-                    language = book.language
-                )
+    override fun getBookByISBN(isbn: String): Flow<SavedBook> {
+        return flow {
+            when (val result = apiCall { booksService.getBookByISBN(isbn) }) {
+                is NetworkResult.Success -> {
+                    val book = PARSER.parseBook(isbn, result.data)
+                    emit(
+                        SavedBook(
+                            bookId = book.id,
+                            title = book.title,
+                            author = book.author?.name,
+                            isbn = isbn,
+                            publishedDate = book.published,
+                            pageCount = book.numberOfPages,
+                            language = book.language
+                        )
+                    )
+                }
+                is NetworkResult.Error -> emit(SavedBook(isbn = isbn))
             }
-            is NetworkResult.Error -> SavedBook(isbn = isbn)
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun searchBook(query: String): List<Book> {
-        return when (val result = apiCall { booksService.searchBook(query) }) {
-            is NetworkResult.Success -> {
-                val searchBooks = PARSER.parseBookSearchResults(result.data)
-                searchBooks
+    override fun searchBook(query: String): Flow<List<SearchResult>> {
+        return flow {
+            when (val result = apiCall { booksService.searchBook(query) }) {
+                is NetworkResult.Success -> {
+                    val searchBooks = PARSER.parseBookSearchResults(result.data)
+                    emit(searchBooks.filter {
+                        it.getResultTitle().toLowerCase(Locale.getDefault())
+                            .contains(query.toLowerCase(Locale.getDefault()))
+                    })
+                }
+                is NetworkResult.Error -> emit(emptyList())
             }
-            is NetworkResult.Error -> listOf()
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     override fun saveBook(savedBook: SavedBook) {

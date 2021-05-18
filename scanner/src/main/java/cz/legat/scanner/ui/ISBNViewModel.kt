@@ -2,9 +2,7 @@ package cz.legat.scanner.ui
 
 import androidx.annotation.MainThread
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.mlkit.vision.barcode.Barcode
 import cz.legat.core.persistence.SavedBook
 import cz.legat.core.repository.BooksRepository
@@ -17,7 +15,6 @@ class ISBNViewModel @ViewModelInject constructor(
 ) :
     ViewModel() {
 
-    val searchedBook: MutableLiveData<SavedBook> = MutableLiveData()
     var myBooks: MutableLiveData<List<SavedBook>> = MutableLiveData()
 
     val workflowState = MutableLiveData<WorkflowState>()
@@ -26,12 +23,9 @@ class ISBNViewModel @ViewModelInject constructor(
     var isCameraLive = false
         private set
 
-    fun getBookByISBN(isbn: String) {
+    fun getBookByISBN(isbn: String): LiveData<SavedBook?> {
         val query = isbn.replace("-", "")
-        viewModelScope.launch {
-            val book = booksRepository.getBookByISBN(query)
-            searchedBook.value = book
-        }
+        return booksRepository.getBookByISBN(query).asLiveData()
     }
 
     fun saveBook(savedBook: SavedBook) {

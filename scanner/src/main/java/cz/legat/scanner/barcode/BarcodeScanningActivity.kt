@@ -23,7 +23,8 @@ import java.io.IOException
 
 /** Demonstrates the barcode scanning workflow using camera preview.  */
 @AndroidEntryPoint
-class BarcodeScanningActivity : AppCompatActivity(), BarcodeResultFragment.OnDismissResultDialogListener {
+class BarcodeScanningActivity : AppCompatActivity(),
+    BarcodeResultFragment.OnDismissResultDialogListener {
 
     private val viewModel: ISBNViewModel by viewModels()
 
@@ -139,14 +140,13 @@ class BarcodeScanningActivity : AppCompatActivity(), BarcodeResultFragment.OnDis
             }
         })
 
-        viewModel.searchedBook.observe(this,
-            Observer {
-                BarcodeResultFragment.show(supportFragmentManager, it)
-            })
-
         viewModel.detectedBarcode.observe(this, Observer { barcode ->
             if (barcode != null) {
-                viewModel.getBookByISBN(barcode.rawValue ?: "")
+                viewModel.getBookByISBN(barcode.rawValue ?: "").observe(this, Observer {
+                    it?.let {
+                        BarcodeResultFragment.show(supportFragmentManager, it)
+                    }
+                })
             }
         })
     }

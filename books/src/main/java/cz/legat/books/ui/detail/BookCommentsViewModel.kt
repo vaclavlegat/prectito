@@ -11,7 +11,6 @@ import androidx.paging.cachedIn
 import cz.legat.core.extensions.ID_KEY
 import cz.legat.core.paging.BasePagingInternalSource
 import cz.legat.core.repository.BooksRepository
-import cz.legat.core.repository.PdfRepository
 
 class BookCommentsViewModel @ViewModelInject constructor(
     private val booksRepository: BooksRepository,

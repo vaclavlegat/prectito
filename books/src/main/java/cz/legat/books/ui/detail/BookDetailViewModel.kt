@@ -3,11 +3,7 @@ package cz.legat.books.ui.detail
 import android.os.Environment
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
@@ -33,9 +29,7 @@ class BookDetailViewModel @ViewModelInject constructor(
 
     val bookId = savedStateHandle.get<String>(ID_KEY)
 
-    val book = liveData(Dispatchers.IO) {
-        emit(booksRepository.getBook(bookId))
-    }
+    val book = booksRepository.getBook(bookId).asLiveData()
 
     val filePath: MutableLiveData<String> = MutableLiveData()
 

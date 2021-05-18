@@ -19,9 +19,11 @@ import cz.legat.navigation.BooksNavigator
 import cz.legat.search.databinding.PtSearchResultsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SearchResultsFragment :

@@ -54,6 +54,7 @@ dependencies {
     implementation(project(Modules.books))
     implementation(project(Modules.scanner))
     implementation(project(Modules.search))
+    implementation(project(Modules.navigation))
 
     implementation (Libs.hilt)
     implementation (Libs.hiltLifecycle)

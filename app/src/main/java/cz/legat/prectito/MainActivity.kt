@@ -20,7 +20,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var searchNavigator: SearchNavigator
 
-    private val topLevelDestinations = listOf(R.id.homeFragment, R.id.authorsFragment, R.id.myBooksFragment, R.id.searchResultsFragment)
+    private val topLevelDestinations = listOf(R.id.overview_nav, R.id.authors_nav, R.id.my_nav, R.id.search_nav)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +33,10 @@ class MainActivity : BaseActivity() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
 
             val fragmentId = when (item.itemId) {
-                R.id.home -> R.id.homeFragment
-                R.id.authors -> R.id.authorsFragment
-                R.id.mybooks -> R.id.myBooksFragment
-                R.id.search -> R.id.searchResultsFragment
+                R.id.home -> R.id.overview_nav
+                R.id.authors -> R.id.authors_nav
+                R.id.mybooks -> R.id.my_nav
+                R.id.search -> R.id.search_nav
                 else -> null
             }
 

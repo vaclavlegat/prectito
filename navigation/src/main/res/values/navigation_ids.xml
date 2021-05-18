@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="overview_nav" type="id" />
+    <item name="authors_nav" type="id" />
+    <item name="my_nav" type="id" />
+    <item name="search_nav" type="id" />
+</resources>
